@@ -1,0 +1,50 @@
+/* * {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+} */
+
+/* // variables
+$border-highlight: #93f4ab;
+$main-bg: #2a9d8f;
+
+// mixins
+@mixin for-mobile {
+  @media only screen and (max-width: 628px) {
+    @content;
+  }
+}
+
+@mixin for-tablet {
+  @media only screen and (max-width: 901px) {
+    @content;
+  }
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  color: #111111;
+  overflow: hidden;
+}
+
+html {
+  background: rgb(135, 180, 175);
+  background: linear-gradient(
+    180deg,
+    rgb(135, 180, 175) 0%,
+    rgba(82, 77, 73, 0.256) 100%
+  );
+  background-repeat: no-repeat;
+  background-size: cover;
+  line-height: 1.5;
+}
+ */
