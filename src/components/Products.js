@@ -1,13 +1,40 @@
+import { Button, Grid } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import { useState } from 'react';
 import { useStoreContext } from '../context/StoreContext';
+import Product from './Product';
 import Spinner from './Spinner';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  container: {
+    flexGrow: 1,
+    background: 'linear-gradient(#EBE4E4, #dec8c8)',
+    backgroundColor: theme.palette.background.default,
+    padding: theme.spacing(2),
+    margin: 0,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+    minHeight: '90vh',
+    width: '100%',
+  },
+  button: {
+    margin: theme.spacing(1),
+  },
+}));
+
+// infinite scroll
 
 const Products = () => {
   const { products, loading } = useStoreContext();
+  const classes = useStyles();
 
   const [productsToShow, setProductsToShow] = useState(products.slice(0, 5));
 
-  console.log(products.slice(0, 5));
   /* const [next, setNext] = useState(5);
   const productsPerPage = 5;
   let arrayForHoldingProducts = [];
@@ -34,21 +61,30 @@ const Products = () => {
     showProducts = 
 
   }; */
+
+  // filter components
+
   return (
-    <section>
+    <main className={classes.container}>
+      {/* <Filter /> */}
       {loading ? (
         <Spinner />
       ) : (
-        productsToShow.map((item) => {
-          return (
-            <div key={item.id} className="div">
-              {item.title}
-            </div>
-          );
-        })
+        <Grid container justify="center" spacing={4}>
+          {products.map((product) => (
+            <Grid key={product.id} item xs={12} sm={6} md={4} lg={3}>
+              <Product product={product} />
+            </Grid>
+          ))}
+        </Grid>
       )}
-      <button /* onClick={handleShowMorePosts} */>Show more</button>
-    </section>
+      <Button
+        variant="contained"
+        color="primary" /* onClick={handleShowMorePosts} */
+      >
+        Show More
+      </Button>
+    </main>
   );
 };
 

@@ -8,43 +8,92 @@ import {
 import reducer from './reducer';
 
 const StoreContext = createContext(null);
-const url = 'https://fakestoreapi.com/products';
+/* const url = 'https://fakestoreapi.com/products/'; */
+const url = 'https://fakestoreapi.com/products?limit=5';
 
 const getLocalStorage = () => {
   const cart = localStorage.getItem('cart');
-  cart ? JSON.parse(localStorage.getItem('cart')) : [];
+
+  /* if (cart) {
+    return JSON.parse(localStorage.getItem('cart'));
+  }
+  return []; */
+  return cart ? JSON.parse(localStorage.getItem('cart')) : [];
 };
 
 const initialState = {
-  products: [],
   loading: false,
   cart: getLocalStorage(),
   totalPrice: 0,
+  amount: 0,
+  products: [],
 };
+
+//ALERT kui vajutab to cart!
 
 const StoreProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(false);
+  /* const [products, setProducts] = useState([]); */
+  /* const [loading, setLoading] = useState(false); */
+  const [filterStatus, setFilterStatus] = useState('all');
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [categories, setCategories] = useState(['all']);
 
   useEffect(() => {
     const fetchProducts = async () => {
-      setLoading(true);
+      dispatch({ type: 'loading' });
+
       try {
         const response = await fetch(url);
         const data = await response.json();
-        console.log(data);
-        setProducts(data);
+        dispatch({ type: 'display_items', payload: data });
+
+        /* setProducts(data); */
       } catch (error) {
         console.log(error);
       } finally {
-        setLoading(false);
+        /* dispatch({ type: 'display_items', payload: data }); */
+        /* setLoading(false); */
       }
     };
     fetchProducts();
   }, []);
 
-  const addToCart = (id, color, amount, product) => {
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        setCategories((prevCategories) => [...prevCategories, ...data]);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchCategories();
+  }, []);
+
+  /*   const filterCategories = (category) => {
+    if (category === 'all') return;
+    setFilteredProducts(products.filter((product) => product[category]));
+  }; */
+
+  /* useEffect(() => {
+    const filterCategories = (category) => {
+      category === 'all'
+        ? setFilteredProducts(products)
+        : setFilteredProducts(products.filter((product) => product[category]));
+    };
+    filterCategories();
+  }, [products, filterStatus]); */
+
+  const addToCart = (id, title, price, description, category, image) => {
+    dispatch({
+      type: 'add_to_cart',
+      payload: { id, title, price, description, category, image },
+    });
+  };
+
+  /*   const addToCart = (id, color, amount, product) => {
     dispatch({ type: ADD_TO_CART, payload: { id, color, amount, product } });
   };
   // remove item
@@ -64,7 +113,7 @@ const StoreProvider = ({ children }) => {
   // clear cart
   const clearCart = () => {
     dispatch({ type: CLEAR_CART });
-  };
+  }; */
 
   /*   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(state.cart))
@@ -72,7 +121,17 @@ const StoreProvider = ({ children }) => {
   }, [state.cart]) */
 
   return (
-    <StoreContext.Provider value={{ products, loading }}>
+    <StoreContext.Provider
+      value={{
+        ...state,
+        /*         products,
+        loading, */
+        filterStatus,
+        setFilterStatus,
+        categories,
+        addToCart,
+      }}
+    >
       {children}
     </StoreContext.Provider>
   );
