@@ -31,7 +31,7 @@ const App = () => {
     /* <div className={classes.root}> */
     <Router>
       <CssBaseline />
-      <Navbar />
+      <Navbar id="back-to-top-anchor" />
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/checkout" component={Checkout} />

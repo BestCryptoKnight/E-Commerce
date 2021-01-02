@@ -2,7 +2,8 @@ import {
   AppBar,
   Badge,
   IconButton,
-  Paper,
+  Menu,
+  MenuItem,
   Tab,
   Tabs,
   Toolbar,
@@ -10,6 +11,7 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { ShoppingCart } from '@material-ui/icons';
+import MenuIcon from '@material-ui/icons/Menu';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useStoreContext } from '../context/StoreContext';
@@ -29,6 +31,24 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
+  tabs: {
+    [theme.breakpoints.down('xs')]: {
+      display: 'none',
+    },
+  },
+  menuButton: {
+    marginRight: theme.spacing(1),
+    [theme.breakpoints.up('sm')]: {
+      display: 'none',
+    },
+  },
+  /*   tab: {
+    border: 'none',
+    background: 'red',
+    margin: theme.spacing(0),
+    padding: theme.spacing(0),
+    width: '10%',
+  }, */
   title: {
     flexGrow: 1,
     alignItems: 'center',
@@ -38,33 +58,55 @@ const useStyles = makeStyles((theme) => ({
   /* image: {
     marginRight: '10px',
   }, */
-  menuButton: {
-    marginRight: theme.spacing(2),
-    [theme.breakpoints.up('sm')]: {
-      display: 'none',
-    },
-  },
+
   grow: {
     flexGrow: 1,
   },
 }));
 
+//LinkList navbar
+
 const Navbar = () => {
   const { cart, amount } = useStoreContext();
   const classes = useStyles();
   const [value, setValue] = useState(0);
+  const [anchorEl, setAnchorEl] = useState(null);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  const handleClick = (event) => setAnchorEl(event.currentTarget);
+
+  const handleClose = () => setAnchorEl(null);
+
+  const handleChange = (event, newValue) => setValue(newValue);
 
   return (
     <AppBar position="fixed" className={classes.appBar} color="inherit">
       <Toolbar>
+        <IconButton
+          edge="start"
+          className={classes.menuButton}
+          onClick={handleClick}
+          color="inherit"
+          aria-label="menu"
+        >
+          <MenuIcon />
+        </IconButton>
+        <Menu
+          id="simple-menu"
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <MenuItem component={Link} to="/" onClick={handleClose}>
+            Home
+          </MenuItem>
+          <MenuItem onClick={handleClose}>Products</MenuItem>
+          <MenuItem onClick={handleClose}>About</MenuItem>
+        </Menu>
         <Typography
           component={Link}
           to="/"
-          variant="h4"
+          variant="h5"
           className={classes.title}
           color="inherit"
         >
@@ -74,21 +116,21 @@ const Navbar = () => {
             height="25px"
             className={classes.image}
           /> */}
-          E-Commerce
+          E-Shop
         </Typography>
-        <Paper className={classes.root}>
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            indicatorColor="primary"
-            textColor="primary"
-            centered
-          >
-            <Tab component={Link} to="/" label="Home" />
-            <Tab label="Products" />
-            <Tab label="About Us" />
-          </Tabs>
-        </Paper>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          indicatorColor="primary"
+          textColor="primary"
+          component="nav"
+          className={classes.tabs}
+          centered
+        >
+          <Tab className={classes.tab} component={Link} to="/" label="Home" />
+          <Tab className={classes.tab} label="Products" />
+          <Tab className={classes.tab} label="About Us" />
+        </Tabs>
         <div className={classes.grow} />
         <div className={classes.button}>
           <IconButton

@@ -11,15 +11,16 @@ const useStyles = makeStyles((theme) => ({
   },
   container: {
     flexGrow: 1,
-    background: 'linear-gradient(#EBE4E4, #dec8c8)',
+    background: theme.palette.background.default,
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing(2),
     margin: 0,
+    marginTop: '6vh',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
-    minHeight: '90vh',
+    minHeight: '100vh',
     width: '100%',
   },
   button: {
@@ -30,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
 // infinite scroll
 
 const Products = () => {
+  /* const [loading, setLoading] = useState(false); */
   const { products, loading } = useStoreContext();
   const classes = useStyles();
 

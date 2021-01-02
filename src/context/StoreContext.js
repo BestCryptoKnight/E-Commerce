@@ -46,6 +46,7 @@ const StoreProvider = ({ children }) => {
       try {
         const response = await fetch(url);
         const data = await response.json();
+        data.map((item) => (item.qty = 1));
         dispatch({ type: 'display_items', payload: data });
 
         /* setProducts(data); */
@@ -72,6 +73,10 @@ const StoreProvider = ({ children }) => {
     fetchCategories();
   }, []);
 
+  useEffect(() => localStorage.setItem('cart', JSON.stringify(state.cart)), [
+    state.cart,
+  ]);
+
   /*   const filterCategories = (category) => {
     if (category === 'all') return;
     setFilteredProducts(products.filter((product) => product[category]));
@@ -86,11 +91,15 @@ const StoreProvider = ({ children }) => {
     filterCategories();
   }, [products, filterStatus]); */
 
-  const addToCart = (id, title, price, description, category, image) => {
+  const addToCart = (id, title, price, description, category, image, qty) => {
     dispatch({
       type: 'add_to_cart',
-      payload: { id, title, price, description, category, image },
+      payload: { id, title, price, description, category, image, qty },
     });
+  };
+
+  const clearCart = () => {
+    dispatch({ type: 'clear_cart' });
   };
 
   /*   const addToCart = (id, color, amount, product) => {
@@ -130,6 +139,7 @@ const StoreProvider = ({ children }) => {
         setFilterStatus,
         categories,
         addToCart,
+        clearCart,
       }}
     >
       {children}

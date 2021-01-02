@@ -45,11 +45,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Product = ({ product /* , onAddToCart */ }) => {
+const Product = ({ product }) => {
   const classes = useStyles();
   const { addToCart } = useStoreContext();
 
-  const { id, title, price, description, category, image } = product;
+  const { id, title, price, description, category, image, qty } = product;
 
   /* const handleAddToCart = () => {addToCart, openSideBarCheckout()}; */
   //category
@@ -84,7 +84,7 @@ const Product = ({ product /* , onAddToCart */ }) => {
         <IconButton
           aria-label="Add to Cart"
           onClick={() =>
-            addToCart(id, title, price, description, category, image)
+            addToCart(id, title, price, description, category, image, qty)
           }
         >
           <Typography variant="button" display="block" color="textPrimary">

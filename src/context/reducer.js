@@ -1,26 +1,22 @@
 const reducer = (state, action) => {
-  switch (action.type) {
+  const { type, payload } = action;
+
+  switch (type) {
     case 'decrease':
       return { ...state };
     case 'add_to_cart':
-      const newItem = {
-        id: action.payload.id,
-        title: action.payload.title,
-        price: action.payload.price,
-        description: action.payload.description,
-        category: action.payload.category,
-        image: action.payload.image,
-      };
-      const cart = [...state.cart, newItem];
-
+      const cart = [...state.cart, payload];
       return { ...state, cart };
-
     case 'loading':
       return { ...state, loading: true };
-
     case 'display_items':
-      return { ...state, products: action.payload, loading: false };
-
+      return {
+        ...state,
+        products: payload,
+        loading: false,
+      };
+    case 'clear_cart':
+      return { ...state, cart: [] };
     default:
       return state;
   }
