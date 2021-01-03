@@ -17,14 +17,14 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '100%',
   },
   media: {
-    height: '100px',
+    height: '0',
     paddingTop: '56.25%',
     marginTop: '100',
-    transition: 'all 0.6s ease-out',
+    /*    transition: 'all 0.6s ease-out',
     '&:hover': {
       paddingTop: '78%',
       transform: 'scale(1.1)',
-    },
+    }, */
   },
   cardContent: {
     paddingBottom: 0,

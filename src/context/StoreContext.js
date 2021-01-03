@@ -14,10 +14,6 @@ const url = 'https://fakestoreapi.com/products?limit=5';
 const getLocalStorage = () => {
   const cart = localStorage.getItem('cart');
 
-  /* if (cart) {
-    return JSON.parse(localStorage.getItem('cart'));
-  }
-  return []; */
   return cart ? JSON.parse(localStorage.getItem('cart')) : [];
 };
 
@@ -29,10 +25,9 @@ const initialState = {
   products: [],
 };
 
-//ALERT kui vajutab to cart!
-
 const StoreProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [alert, setAlert] = useState({ show: false, type: '', msg: '' });
   /* const [products, setProducts] = useState([]); */
   /* const [loading, setLoading] = useState(false); */
   const [filterStatus, setFilterStatus] = useState('all');
@@ -77,6 +72,9 @@ const StoreProvider = ({ children }) => {
     state.cart,
   ]);
 
+  const showAlert = (show = false, type = '', msg = '') =>
+    setAlert({ show, type, msg });
+
   /*   const filterCategories = (category) => {
     if (category === 'all') return;
     setFilteredProducts(products.filter((product) => product[category]));
@@ -96,10 +94,14 @@ const StoreProvider = ({ children }) => {
       type: 'add_to_cart',
       payload: { id, title, price, description, category, image, qty },
     });
+    /* setAlert({ show: true, type: 'success', msg: 'Tere!' }); */
+    showAlert(true, 'success', 'Added to Cart');
   };
 
   const clearCart = () => {
     dispatch({ type: 'clear_cart' });
+    setAlert({ show: true, type: 'error', msg: 'Cart cleared' });
+    /* showAlert(true, 'error', 'Cart cleared!'); */
   };
 
   /*   const addToCart = (id, color, amount, product) => {
@@ -140,6 +142,8 @@ const StoreProvider = ({ children }) => {
         categories,
         addToCart,
         clearCart,
+        alert,
+        setAlert,
       }}
     >
       {children}

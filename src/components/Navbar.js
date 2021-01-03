@@ -2,6 +2,10 @@ import {
   AppBar,
   Badge,
   IconButton,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
   Menu,
   MenuItem,
   Tab,
@@ -10,8 +14,13 @@ import {
   Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { ShoppingCart } from '@material-ui/icons';
-import MenuIcon from '@material-ui/icons/Menu';
+import {
+  FormatListBulleted,
+  Home,
+  Shop,
+  ShoppingCart,
+} from '@material-ui/icons';
+/* import HomeIcon from '@material-ui/icons/Home'; */
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useStoreContext } from '../context/StoreContext';
@@ -41,6 +50,11 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('sm')]: {
       display: 'none',
     },
+  },
+  flexContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    padding: 0,
   },
   /*   tab: {
     border: 'none',
@@ -79,7 +93,7 @@ const Navbar = () => {
   const handleChange = (event, newValue) => setValue(newValue);
 
   return (
-    <AppBar position="fixed" className={classes.appBar} color="inherit">
+    <AppBar position="sticky" className={classes.appBar} color="inherit">
       <Toolbar>
         <IconButton
           edge="start"
@@ -88,7 +102,7 @@ const Navbar = () => {
           color="inherit"
           aria-label="menu"
         >
-          <MenuIcon />
+          <Menu />
         </IconButton>
         <Menu
           id="simple-menu"
@@ -109,6 +123,7 @@ const Navbar = () => {
           variant="h5"
           className={classes.title}
           color="inherit"
+          title="To E-Shop homepage"
         >
           {/*           <img
             src={}
@@ -116,6 +131,7 @@ const Navbar = () => {
             height="25px"
             className={classes.image}
           /> */}
+          <Shop color="primary" />
           E-Shop
         </Typography>
         <Tabs
@@ -131,6 +147,26 @@ const Navbar = () => {
           <Tab className={classes.tab} label="Products" />
           <Tab className={classes.tab} label="About Us" />
         </Tabs>
+        <div className={classes.root}></div>
+
+        <List
+          component="nav"
+          aria-label="main mailbox folders"
+          className={classes.flexContainer}
+        >
+          <ListItem button>
+            <ListItemIcon>
+              <Home />
+            </ListItemIcon>
+            <ListItemText primary="Home" />
+          </ListItem>
+          <ListItem button>
+            <ListItemIcon>
+              <FormatListBulleted />
+            </ListItemIcon>
+            <ListItemText primary="Products" />
+          </ListItem>
+        </List>
         <div className={classes.grow} />
         <div className={classes.button}>
           <IconButton

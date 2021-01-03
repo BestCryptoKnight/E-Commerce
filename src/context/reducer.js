@@ -10,9 +10,10 @@ const reducer = (state, action) => {
     case 'loading':
       return { ...state, loading: true };
     case 'display_items':
+      const products = [...state.products, ...payload];
       return {
         ...state,
-        products: payload,
+        products,
         loading: false,
       };
     case 'clear_cart':

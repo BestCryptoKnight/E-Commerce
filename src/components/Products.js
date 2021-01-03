@@ -11,11 +11,9 @@ const useStyles = makeStyles((theme) => ({
   },
   container: {
     flexGrow: 1,
-    background: theme.palette.background.default,
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing(2),
     margin: 0,
-    marginTop: '6vh',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
