@@ -11,11 +11,8 @@ const StoreContext = createContext(null);
 /* const url = 'https://fakestoreapi.com/products/'; */
 const url = 'https://fakestoreapi.com/products?limit=5';
 
-const getLocalStorage = () => {
-  const cart = localStorage.getItem('cart');
-
-  return cart ? JSON.parse(localStorage.getItem('cart')) : [];
-};
+const getLocalStorage = () =>
+  localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [];
 
 const initialState = {
   loading: false,
@@ -37,14 +34,11 @@ const StoreProvider = ({ children }) => {
   useEffect(() => {
     const fetchProducts = async () => {
       dispatch({ type: 'loading' });
-
       try {
         const response = await fetch(url);
         const data = await response.json();
         data.map((item) => (item.qty = 1));
         dispatch({ type: 'display_items', payload: data });
-
-        /* setProducts(data); */
       } catch (error) {
         console.log(error);
       } finally {
@@ -94,21 +88,15 @@ const StoreProvider = ({ children }) => {
       type: 'add_to_cart',
       payload: { id, title, price, description, category, image, qty },
     });
-    /* setAlert({ show: true, type: 'success', msg: 'Tere!' }); */
     showAlert(true, 'success', 'Added to Cart');
   };
 
   const clearCart = () => {
     dispatch({ type: 'clear_cart' });
-    setAlert({ show: true, type: 'error', msg: 'Cart cleared' });
-    /* showAlert(true, 'error', 'Cart cleared!'); */
-  };
-
-  /*   const addToCart = (id, color, amount, product) => {
-    dispatch({ type: ADD_TO_CART, payload: { id, color, amount, product } });
+    showAlert(true, 'error', 'Cart cleared');
   };
   // remove item
-  const removeItem = (id) => {
+  /*   const removeItem = (id) => {
     dispatch({ type: REMOVE_CART_ITEM, payload: id });
   };
   // toggle amount
@@ -120,10 +108,6 @@ const StoreProvider = ({ children }) => {
         value,
       },
     });
-  };
-  // clear cart
-  const clearCart = () => {
-    dispatch({ type: CLEAR_CART });
   }; */
 
   /*   useEffect(() => {

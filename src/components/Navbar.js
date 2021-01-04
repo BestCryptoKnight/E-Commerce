@@ -17,6 +17,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import {
   FormatListBulleted,
   Home,
+  Menu as MenuIcon,
   Shop,
   ShoppingCart,
 } from '@material-ui/icons';
@@ -56,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'row',
     padding: 0,
   },
-  /*   tab: {
+  /*  tab: {
     border: 'none',
     background: 'red',
     margin: theme.spacing(0),
@@ -102,7 +103,7 @@ const Navbar = () => {
           color="inherit"
           aria-label="menu"
         >
-          <Menu />
+          <MenuIcon />
         </IconButton>
         <Menu
           id="simple-menu"
@@ -125,12 +126,6 @@ const Navbar = () => {
           color="inherit"
           title="To E-Shop homepage"
         >
-          {/*           <img
-            src={}
-            alt="commerce.js"
-            height="25px"
-            className={classes.image}
-          /> */}
           <Shop color="primary" />
           E-Shop
         </Typography>
@@ -148,13 +143,12 @@ const Navbar = () => {
           <Tab className={classes.tab} label="About Us" />
         </Tabs>
         <div className={classes.root}></div>
-
         <List
           component="nav"
           aria-label="main mailbox folders"
           className={classes.flexContainer}
         >
-          <ListItem button>
+          <ListItem button component={Link} to="/" dense>
             <ListItemIcon>
               <Home />
             </ListItemIcon>
@@ -175,7 +169,7 @@ const Navbar = () => {
             aria-label="Show cart items"
             color="inherit"
           >
-            <Badge badgeContent={cart.length} color="secondary">
+            <Badge badgeContent={amount} color="secondary">
               <ShoppingCart />
             </Badge>
           </IconButton>

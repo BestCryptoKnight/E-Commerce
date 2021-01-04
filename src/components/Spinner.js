@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Spinner = () => {
   const classes = useStyles();
+  /* const [open, setOpen] = useState(true); */
 
   return (
     <div className={classes.root}>
