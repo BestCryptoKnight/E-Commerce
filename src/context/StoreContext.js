@@ -25,11 +25,11 @@ const initialState = {
 const StoreProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [alert, setAlert] = useState({ show: false, type: '', msg: '' });
-  /* const [products, setProducts] = useState([]); */
-  /* const [loading, setLoading] = useState(false); */
+  /* const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [filterStatus, setFilterStatus] = useState('all');
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [categories, setCategories] = useState(['all']);
+  const [categories, setCategories] = useState(['all']); */
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -49,7 +49,7 @@ const StoreProvider = ({ children }) => {
     fetchProducts();
   }, []);
 
-  useEffect(() => {
+  /* useEffect(() => {
     const fetchCategories = async () => {
       try {
         const response = await fetch(url);
@@ -60,11 +60,13 @@ const StoreProvider = ({ children }) => {
       }
     };
     fetchCategories();
-  }, []);
+  }, []); */
 
-  useEffect(() => localStorage.setItem('cart', JSON.stringify(state.cart)), [
-    state.cart,
-  ]);
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(state.cart));
+    dispatch({ type: 'count_cart_totals' });
+    dispatch({ type: 'get_total_price' });
+  }, [state.cart]);
 
   const showAlert = (show = false, type = '', msg = '') =>
     setAlert({ show, type, msg });
@@ -89,6 +91,19 @@ const StoreProvider = ({ children }) => {
       payload: { id, title, price, description, category, image, qty },
     });
     showAlert(true, 'success', 'Added to Cart');
+  };
+
+  const increase = (id) => {
+    dispatch({ type: 'increase', payload: id });
+  };
+
+  const decrease = (id) => {
+    dispatch({ type: 'decrease', payload: id });
+  };
+
+  const removeItem = (id) => {
+    dispatch({ type: 'remove_item', payload: id });
+    showAlert(true, 'error', 'Removed item from Cart');
   };
 
   const clearCart = () => {
@@ -119,15 +134,18 @@ const StoreProvider = ({ children }) => {
     <StoreContext.Provider
       value={{
         ...state,
-        /*         products,
-        loading, */
+        /*      products,
+        loading,
         filterStatus,
         setFilterStatus,
-        categories,
+        categories, */
         addToCart,
         clearCart,
         alert,
         setAlert,
+        increase,
+        decrease,
+        removeItem,
       }}
     >
       {children}

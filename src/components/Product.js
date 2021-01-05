@@ -17,9 +17,8 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '100%',
   },
   media: {
-    height: '0',
+    height: 366,
     paddingTop: '56.25%',
-    marginTop: '100',
     /*    transition: 'all 0.6s ease-out',
     '&:hover': {
       paddingTop: '78%',
@@ -31,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
   titleContainer: {
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
   },
   description: {
@@ -53,20 +52,19 @@ const Product = ({ product }) => {
 
   /* const handleAddToCart = () => {addToCart, openSideBarCheckout()}; */
   //category
-  //ALERT kui vajutab to cart!
   return (
     <Card className={classes.root}>
-      <Link to="/error">
+      <Link to="/checkout">
         <CardMedia className={classes.media} image={image} title={title} />
       </Link>
       <CardContent className={classes.cardContent}>
         <div className={classes.titleContainer}>
           <Typography gutterBottom variant="h5" component="h2">
-            {title} {id}
+            {title}
           </Typography>
           <Divider light orientation="vertical" variant="middle" flexItem />
           <Typography gutterBottom variant="h6" component="h2">
-            {price}€
+            €{price.toFixed(2)}
           </Typography>
         </div>
         <Divider light />
@@ -87,7 +85,12 @@ const Product = ({ product }) => {
             addToCart(id, title, price, description, category, image, qty)
           }
         >
-          <Typography variant="button" display="block" color="textPrimary">
+          <Typography
+            variant="button"
+            display="block"
+            color="textPrimary"
+            aria-label="Add to Cart"
+          >
             Add to cart
           </Typography>
           <AddShoppingCart />

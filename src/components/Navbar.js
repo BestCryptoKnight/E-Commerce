@@ -21,7 +21,6 @@ import {
   Shop,
   ShoppingCart,
 } from '@material-ui/icons';
-/* import HomeIcon from '@material-ui/icons/Home'; */
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useStoreContext } from '../context/StoreContext';
@@ -82,10 +81,10 @@ const useStyles = makeStyles((theme) => ({
 //LinkList navbar
 
 const Navbar = () => {
-  const { cart, amount } = useStoreContext();
-  const classes = useStyles();
+  const { amount } = useStoreContext();
   const [value, setValue] = useState(0);
   const [anchorEl, setAnchorEl] = useState(null);
+  const classes = useStyles();
 
   const handleClick = (event) => setAnchorEl(event.currentTarget);
 

@@ -8,17 +8,14 @@ import { useStoreContext } from '../context/StoreContext';
 const useStyles = makeStyles((theme) => ({
   root: {
     position: 'fixed',
-    top: '6.7vh',
+    bottom: 0,
     width: '100%',
-    margin: theme.spacing(0, 'auto'),
+    margin: theme.spacing(1, 0),
     textAlign: 'center',
     display: 'grid',
     placeItems: 'center',
-    '& > * + *': {
-      marginTop: theme.spacing(2),
-    },
+    zIndex: theme.zIndex.snackbar,
     [theme.breakpoints.down('xs')]: {
-      top: '5.9vh',
       display: 'block',
     },
   },

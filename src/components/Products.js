@@ -1,6 +1,5 @@
 import { Button, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { useState } from 'react';
 import { useStoreContext } from '../context/StoreContext';
 import Product from './Product';
 import Spinner from './Spinner';
@@ -13,13 +12,14 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing(2),
-    margin: 0,
+    /* margin: '0 auto', */
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
     minHeight: '100vh',
     width: '100%',
+    gap: '0.75em',
   },
   button: {
     margin: theme.spacing(1),
@@ -33,7 +33,7 @@ const Products = () => {
   const { products, loading } = useStoreContext();
   const classes = useStyles();
 
-  const [productsToShow, setProductsToShow] = useState(products.slice(0, 5));
+  /* const [productsToShow, setProductsToShow] = useState(products.slice(0, 5)); */
 
   /* const [next, setNext] = useState(5);
   const productsPerPage = 5;
@@ -81,6 +81,7 @@ const Products = () => {
       <Button
         variant="contained"
         color="primary" /* onClick={handleShowMorePosts} */
+        aria-label="Show more"
       >
         Show More
       </Button>
