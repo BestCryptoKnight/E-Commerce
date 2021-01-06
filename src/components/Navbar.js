@@ -23,7 +23,8 @@ import {
 } from '@material-ui/icons';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useStoreContext } from '../context/StoreContext';
+import { useCartContext } from '../context/CartContext';
+import CustomTooltip from './CustomTooltip';
 
 const drawerWidth = 0;
 
@@ -81,7 +82,7 @@ const useStyles = makeStyles((theme) => ({
 //LinkList navbar
 
 const Navbar = () => {
-  const { amount } = useStoreContext();
+  const { amount } = useCartContext();
   const [value, setValue] = useState(0);
   const [anchorEl, setAnchorEl] = useState(null);
   const classes = useStyles();
@@ -162,16 +163,18 @@ const Navbar = () => {
         </List>
         <div className={classes.grow} />
         <div className={classes.button}>
-          <IconButton
-            component={Link}
-            to="/checkout"
-            aria-label="Show cart items"
-            color="inherit"
-          >
-            <Badge badgeContent={amount} color="secondary">
-              <ShoppingCart />
-            </Badge>
-          </IconButton>
+          <CustomTooltip title="Show cart items">
+            <IconButton
+              component={Link}
+              to="/checkout"
+              aria-label="Show cart items"
+              color="inherit"
+            >
+              <Badge badgeContent={amount} color="secondary">
+                <ShoppingCart />
+              </Badge>
+            </IconButton>
+          </CustomTooltip>
         </div>
       </Toolbar>
     </AppBar>

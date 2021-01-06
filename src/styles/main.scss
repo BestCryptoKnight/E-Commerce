@@ -1,12 +1,14 @@
 @use "base";
 
-/* .main {
-  min-height: 90vh;
+.main {
+  /* min-height: 90vh;
   display: grid;
   place-items: center;
   max-width: 1140px;
-  margin: 0 auto;
-} */
+  margin: 0 auto; */
+  /* background: rgba(193, 198, 226, 0.15); */
+  background: red;
+}
 
 /* .MuiTab-wrapper {
   background: green;
@@ -16,4 +18,8 @@
 MuiTab-root {
   padding: 0;
   width: 50%;
+} */
+
+/* body {
+  background: rgba(193, 198, 226, 0.2);
 } */

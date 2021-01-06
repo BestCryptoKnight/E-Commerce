@@ -10,7 +10,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import { AddShoppingCart } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
-import { useStoreContext } from '../context/StoreContext';
+import { useCartContext } from '../context/CartContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Product = ({ product }) => {
   const classes = useStyles();
-  const { addToCart } = useStoreContext();
+  const { addToCart } = useCartContext();
 
   const { id, title, price, description, category, image, qty } = product;
 

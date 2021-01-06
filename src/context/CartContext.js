@@ -5,49 +5,27 @@ import {
   useReducer,
   useState,
 } from 'react';
-import reducer from './reducer';
+import cartReducer from './cartReducer';
 
-const StoreContext = createContext(null);
-/* const url = 'https://fakestoreapi.com/products/'; */
-const url = 'https://fakestoreapi.com/products?limit=5';
+const CartContext = createContext(null);
 
 const getLocalStorage = () =>
   localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [];
 
-const initialState = {
-  loading: false,
+const initialCartState = {
   cart: getLocalStorage(),
   totalPrice: 0,
   amount: 0,
-  products: [],
 };
 
-const StoreProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+const CartProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(cartReducer, initialCartState);
   const [alert, setAlert] = useState({ show: false, type: '', msg: '' });
   /* const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [filterStatus, setFilterStatus] = useState('all');
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [categories, setCategories] = useState(['all']); */
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      dispatch({ type: 'loading' });
-      try {
-        const response = await fetch(url);
-        const data = await response.json();
-        data.map((item) => (item.qty = 1));
-        dispatch({ type: 'display_items', payload: data });
-      } catch (error) {
-        console.log(error);
-      } finally {
-        /* dispatch({ type: 'display_items', payload: data }); */
-        /* setLoading(false); */
-      }
-    };
-    fetchProducts();
-  }, []);
 
   /* useEffect(() => {
     const fetchCategories = async () => {
@@ -110,12 +88,8 @@ const StoreProvider = ({ children }) => {
     dispatch({ type: 'clear_cart' });
     showAlert(true, 'error', 'Cart cleared');
   };
-  // remove item
-  /*   const removeItem = (id) => {
-    dispatch({ type: REMOVE_CART_ITEM, payload: id });
-  };
   // toggle amount
-  const toggleAmount = (id, value) => {
+  /* const toggleAmount = (id, value) => {
     dispatch({
       type: TOGGLE_CART_ITEM_AMOUNT,
       payload: {
@@ -123,22 +97,13 @@ const StoreProvider = ({ children }) => {
         value,
       },
     });
-  }; */
-
-  /*   useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(state.cart))
-    dispatch({ type: COUNT_CART_TOTALS })
-  }, [state.cart]) */
+  };  */
 
   return (
-    <StoreContext.Provider
+    <CartContext.Provider
       value={{
         ...state,
-        /*      products,
-        loading,
-        filterStatus,
-        setFilterStatus,
-        categories, */
+        /*categories*/
         addToCart,
         clearCart,
         alert,
@@ -149,10 +114,10 @@ const StoreProvider = ({ children }) => {
       }}
     >
       {children}
-    </StoreContext.Provider>
+    </CartContext.Provider>
   );
 };
 
-const useStoreContext = () => useContext(StoreContext);
+const useCartContext = () => useContext(CartContext);
 
-export { useStoreContext, StoreProvider };
+export { useCartContext, CartProvider };

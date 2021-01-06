@@ -1,4 +1,4 @@
-const reducer = (state, action) => {
+const cartReducer = (state, action) => {
   const { type, payload } = action;
 
   switch (type) {
@@ -37,33 +37,11 @@ const reducer = (state, action) => {
         return { ...state, cart };
       }
 
-      /*       if (state.cart.findIndex((product) => product.id === productId) !== -1) {
-        const cart = state.cart.reduce((cartAcc, product) => {
-          if (product.id === productId) {
-            cartAcc.push({ ...product, qty: product.qty + 1 });
-          } else {
-            cartAcc.push(product);
-          }
-
-          return cartAcc;
-        }, []);
-
-        return { ...state, cart, amount: state.amount + 1 };
-      } */
-
       return {
         ...state,
         cart: [...state.cart, payload],
       };
-    case 'loading':
-      return { ...state, loading: true };
-    case 'display_items':
-      const products = [...state.products, ...payload];
-      return {
-        ...state,
-        products,
-        loading: false,
-      };
+
     case 'increase':
       const cart = state.cart.map((item) =>
         item.id === payload ? { ...item, qty: item.qty + 1 } : item
@@ -96,4 +74,4 @@ const reducer = (state, action) => {
   }
 };
 
-export default reducer;
+export default cartReducer;

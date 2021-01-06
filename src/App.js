@@ -2,7 +2,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Alert from './components/Alert';
 import Navbar from './components/Navbar';
-import { useStoreContext } from './context/StoreContext';
+import { useCartContext } from './context/CartContext';
 import { Checkout, Error, Home } from './views';
 
 /* const useStyles = makeStyles((theme) => ({
@@ -20,7 +20,7 @@ import { Checkout, Error, Home } from './views';
 
 const App = () => {
   /* const classes = useStyles(); */
-  const { alert } = useStoreContext();
+  const { alert } = useCartContext();
   return (
     /* <div className={classes.root}> */
     <Router>

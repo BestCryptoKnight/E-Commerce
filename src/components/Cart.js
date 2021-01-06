@@ -1,15 +1,17 @@
 import { Button, Container, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import DeleteIcon from '@material-ui/icons/Delete';
 import NextWeekIcon from '@material-ui/icons/NextWeek';
-import { Link } from 'react-router-dom';
-import { useStoreContext } from '../context/StoreContext';
+import { Link, useHistory } from 'react-router-dom';
+import { useCartContext } from '../context/CartContext';
 import CartItem from './CartItem';
 
 const useStyles = makeStyles((theme) => ({
   container: {
     display: 'grid',
     placeItems: 'center',
+    /* background: 'rgba(193, 198, 226,0.15)', */
   },
   title: {
     margin: theme.spacing(2, 0),
@@ -19,6 +21,19 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
     gap: theme.spacing(1),
+    position: 'relative',
+  },
+  backButton: {
+    position: 'absolute',
+    top: '50%',
+    left: '160%',
+    transform: 'translate(0,-50%)',
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
+    [theme.breakpoints.up('lg')]: {
+      left: '212%',
+    },
   },
   amount: {
     /* color: theme.palette.primary.dark, */
@@ -39,6 +54,7 @@ const useStyles = makeStyles((theme) => ({
   },
   link: {
     textDecoration: 'none',
+    color: 'inherit',
   },
   cardDetails: {
     width: '100%',
@@ -58,15 +74,15 @@ const useStyles = makeStyles((theme) => ({
     color: '#fafafa',
     padding: '0.3em 0.5em',
     fontSize: '1.8rem',
-    textAlign: 'center',
     /*  border: `4px double ${theme.palette.info.dark}`,
     borderRadius: '0.15em', */
     /* padding: theme.spacing(1), */
   },
   emptyCartContainer: {
-    display: 'grid',
-    placeItems: 'center',
-    /* marginTop: theme.spacing(10), */
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'column',
+    gap: theme.spacing(2),
   },
 }));
 
@@ -78,8 +94,11 @@ const Cart = () => {
     increase,
     decrease,
     removeItem,
-  } = useStoreContext();
+  } = useCartContext();
   const classes = useStyles();
+  const history = useHistory();
+
+  const handleClick = () => history.goBack();
 
   const renderEmptyCart = () => (
     <section className={classes.emptyCartContainer}>
@@ -87,7 +106,17 @@ const Cart = () => {
         You have no items in your shopping cart!
       </Typography>
       <Link className={classes.link} to="/">
-        <Typography variant="subtitle1">Start adding some!</Typography>
+        <Button
+          className={classes.checkoutButton}
+          size="large"
+          type="button"
+          variant="contained"
+          color="primary"
+          startIcon={<NextWeekIcon />}
+          aria-label="Go to products page"
+        >
+          Start adding some!
+        </Button>
       </Link>
     </section>
   );
@@ -107,7 +136,12 @@ const Cart = () => {
         ))}
       </Grid>
       <div className={classes.cardDetails}>
-        <Typography variant="h4" component="p" className={classes.total}>
+        <Typography
+          variant="h4"
+          component="p"
+          className={classes.total}
+          align="center"
+        >
           Subtotal: <strong>{totalPrice.toFixed(2)}</strong>&nbsp;€
         </Typography>
         <div className={classes.btnContainer}>
@@ -119,6 +153,7 @@ const Cart = () => {
             color="secondary"
             onClick={clearCart}
             startIcon={<DeleteIcon />}
+            aria-label="Clear the cart"
           >
             Empty cart
           </Button>
@@ -131,6 +166,7 @@ const Cart = () => {
             variant="contained"
             color="primary"
             startIcon={<NextWeekIcon />}
+            aria-label="Proceed to checkout"
           >
             Checkout
           </Button>
@@ -143,8 +179,20 @@ const Cart = () => {
     <Container className={classes.container}>
       <div className={classes.titleContainer}>
         <Typography className={classes.title} variant="h4" gutterBottom>
-          Back to Products icon / Your Shopping Cart
+          Your Shopping Cart
         </Typography>
+        <Button
+          className={classes.backButton}
+          onClick={handleClick}
+          size="large"
+          type="button"
+          variant="contained"
+          color="primary"
+          startIcon={<ArrowBackIcon />}
+          aria-label="Go back"
+        >
+          Go back
+        </Button>
         {/*         <Typography
           variant="overline"
           component="span"
@@ -153,7 +201,7 @@ const Cart = () => {
           ({amount} items)
         </Typography> */}
       </div>
-      {cart.length > 0 ? renderCart() : renderEmptyCart()}
+      {cart.length ? renderCart() : renderEmptyCart()}
     </Container>
   );
 };

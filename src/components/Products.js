@@ -1,6 +1,6 @@
 import { Button, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { useStoreContext } from '../context/StoreContext';
+import { useProductsContext } from '../context/ProductsContext';
 import Product from './Product';
 import Spinner from './Spinner';
 
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Products = () => {
   /* const [loading, setLoading] = useState(false); */
-  const { products, loading } = useStoreContext();
+  const { products, loading } = useProductsContext();
   const classes = useStyles();
 
   /* const [productsToShow, setProductsToShow] = useState(products.slice(0, 5)); */

@@ -3,7 +3,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import InputLabel from '@material-ui/core/InputLabel';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import { makeStyles } from '@material-ui/core/styles';
-import { useStoreContext } from '../context/StoreContext';
+import { useCartContext } from '../context/CartContext';
 
 const url = 'https://fakestoreapi.com/products/categories';
 
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Filter = () => {
   /* const [categories, setCategories] = useState(['All']); */
-  const { filterStatus, setFilterStatus, categories } = useStoreContext();
+  const { filterStatus, setFilterStatus, categories } = useCartContext();
 
   const classes = useStyles();
 
@@ -41,7 +41,7 @@ const Filter = () => {
   const handleChange = (e) => setFilterStatus(e.target.value);
 
   return (
-    categories.length > 0 && (
+    Boolean(categories.length) && (
       <FormControl className={classes.formControl}>
         <InputLabel htmlFor="category-helper">Category</InputLabel>
         <NativeSelect

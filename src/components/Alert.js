@@ -3,7 +3,7 @@ import CheckIcon from '@material-ui/icons/Check';
 import ErrorIcon from '@material-ui/icons/Error';
 import Alert from '@material-ui/lab/Alert';
 import { useEffect } from 'react';
-import { useStoreContext } from '../context/StoreContext';
+import { useCartContext } from '../context/CartContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
 const IconAlert = () => {
   const classes = useStyles();
-  const { alert, setAlert } = useStoreContext();
+  const { alert, setAlert } = useCartContext();
 
   useEffect(() => {
     const timeout = setTimeout(

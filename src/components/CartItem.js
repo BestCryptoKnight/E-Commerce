@@ -19,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
   },
   cardContent: {
     padding: theme.spacing(1.5, 1),
-    textAlign: 'center',
     background: '#e8eaf6',
     /* background: theme.palette.info.dark,
     color: '#fafafa', */
@@ -84,7 +83,9 @@ const CartItem = ({ item, increase, decrease, removeItem }) => {
     <Card>
       <CardMedia image={image} alt={title} className={classes.media} />
       <CardContent className={classes.cardContent}>
-        <Typography variant="h6">{title}</Typography>
+        <Typography variant="h6" align="center">
+          {title}
+        </Typography>
       </CardContent>
       <Divider variant="fullWidth" />
       <CardContent className={classes.priceContainer}>
@@ -94,10 +95,9 @@ const CartItem = ({ item, increase, decrease, removeItem }) => {
           variant="h6"
           title={totalPrice}
         >
-          <strong>{totalPrice}</strong> €
+          {totalPrice} €
         </Typography>
       </CardContent>
-      {/* <Divider /> */}
       <CardActions className={classes.cardActions}>
         <div className={classes.leftBtns}>
           <Button
