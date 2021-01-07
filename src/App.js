@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Alert from './components/Alert';
 import Navbar from './components/Navbar';
 import { useCartContext } from './context/CartContext';
-import { Checkout, Error, Home } from './views';
+import { Error, Home, ShoppingCart } from './views';
 
 /* const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,7 +29,7 @@ const App = () => {
       {alert.show && <Alert />}
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route exact path="/checkout" component={Checkout} />
+        <Route exact path="/cart" component={ShoppingCart} />
         <Route path="*" component={Error} />
       </Switch>
     </Router>

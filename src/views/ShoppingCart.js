@@ -1,9 +1,9 @@
 import Cart from '../components/Cart';
 
-const Checkout = () => (
+const ShoppingCart = () => (
   <main>
     <Cart />
   </main>
 );
 
-export default Checkout;
+export default ShoppingCart;

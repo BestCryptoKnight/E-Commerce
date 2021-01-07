@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
     zIndex: theme.zIndex.snackbar,
     [theme.breakpoints.down('xs')]: {
       display: 'block',
+      margin: 0,
     },
   },
 }));

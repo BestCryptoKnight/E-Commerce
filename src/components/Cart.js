@@ -1,4 +1,4 @@
-import { Button, Container, Grid, Typography } from '@material-ui/core';
+import { Button, Container, Grid, Paper, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
   container: {
     display: 'grid',
     placeItems: 'center',
+    // height: '90vh',
     /* background: 'rgba(193, 198, 226,0.15)', */
   },
   title: {
@@ -79,10 +80,17 @@ const useStyles = makeStyles((theme) => ({
     /* padding: theme.spacing(1), */
   },
   emptyCartContainer: {
-    display: 'flex',
-    alignItems: 'center',
-    flexDirection: 'column',
-    gap: theme.spacing(2),
+    // gap: theme.spacing(2),
+    // display: 'flex',
+    // alignItems: 'center',
+    // flexDirection: 'column',
+  },
+  paper: {
+    display: 'grid',
+    placeItems: 'center',
+    padding: theme.spacing(3),
+    whiteSpace: 'nowrap',
+    height: 150,
   },
 }));
 
@@ -101,24 +109,33 @@ const Cart = () => {
   const handleClick = () => history.goBack();
 
   const renderEmptyCart = () => (
-    <section className={classes.emptyCartContainer}>
-      <Typography variant="subtitle1">
-        You have no items in your shopping cart!
-      </Typography>
-      <Link className={classes.link} to="/">
-        <Button
-          className={classes.checkoutButton}
-          size="large"
-          type="button"
-          variant="contained"
-          color="primary"
-          startIcon={<NextWeekIcon />}
-          aria-label="Go to products page"
-        >
-          Start adding some!
-        </Button>
-      </Link>
-    </section>
+    <Grid
+      container
+      direction="column"
+      alignItems="center"
+      justify="center"
+      className={classes.emptyCartContainer}
+      component="section"
+    >
+      <Paper elevation={2} className={classes.paper}>
+        <Typography variant="subtitle1">
+          You have no items in your shopping cart!
+        </Typography>
+        <Link className={classes.link} to="/">
+          <Button
+            className={classes.checkoutButton}
+            size="large"
+            type="button"
+            variant="contained"
+            color="primary"
+            startIcon={<NextWeekIcon />}
+            aria-label="Go to products page"
+          >
+            Start adding some!
+          </Button>
+        </Link>
+      </Paper>
+    </Grid>
   );
 
   const renderCart = () => (
@@ -193,13 +210,6 @@ const Cart = () => {
         >
           Go back
         </Button>
-        {/*         <Typography
-          variant="overline"
-          component="span"
-          className={classes.amount}
-        >
-          ({amount} items)
-        </Typography> */}
       </div>
       {cart.length ? renderCart() : renderEmptyCart()}
     </Container>

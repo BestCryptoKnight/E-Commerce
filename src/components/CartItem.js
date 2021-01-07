@@ -11,6 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import RemoveIcon from '@material-ui/icons/Remove';
+import CustomTooltip from './CustomTooltip';
 
 const useStyles = makeStyles((theme) => ({
   media: {
@@ -100,28 +101,34 @@ const CartItem = ({ item, increase, decrease, removeItem }) => {
       </CardContent>
       <CardActions className={classes.cardActions}>
         <div className={classes.leftBtns}>
-          <Button
-            type="button"
-            onClick={() => decrease(id)}
-            variant="outlined"
-            disabled={qty <= 1}
-            className={classes.btnDel}
-            aria-label="remove one item from cart"
-          >
-            <RemoveIcon />
-          </Button>
+          <CustomTooltip title="Remove one item from cart">
+            <span>
+              <Button
+                type="button"
+                onClick={() => decrease(id)}
+                variant="outlined"
+                disabled={qty <= 1}
+                className={classes.btnDel}
+                aria-label="remove one item from cart"
+              >
+                <RemoveIcon />
+              </Button>
+            </span>
+          </CustomTooltip>
           <Typography variant="h6" component="p">
             <strong>{qty}</strong>
           </Typography>
-          <Button
-            type="button"
-            variant="outlined"
-            onClick={() => increase(id)}
-            className={classes.btnAdd}
-            aria-label="add one more item to cart"
-          >
-            <AddIcon />
-          </Button>
+          <CustomTooltip title="Add one additional item to cart">
+            <Button
+              type="button"
+              variant="outlined"
+              onClick={() => increase(id)}
+              className={classes.btnAdd}
+              aria-label="add one more item to cart"
+            >
+              <AddIcon />
+            </Button>
+          </CustomTooltip>
         </div>
         <Button
           variant="contained"

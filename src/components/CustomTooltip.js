@@ -7,6 +7,7 @@ const useStyles = makeStyles((theme) => ({
   },
   tooltip: {
     backgroundColor: theme.palette.common.black,
+    color: theme.palette.grey['50'],
     fontSize: '0.95rem',
   },
 }));
