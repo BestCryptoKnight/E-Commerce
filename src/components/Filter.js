@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useCartContext } from '../context/CartContext';
 
 const url = 'https://fakestoreapi.com/products/categories';
-
+//     background-color: #f2f3f3
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
@@ -37,6 +37,8 @@ const Filter = () => {
     };
     fetchCategories();
   }, []); */
+
+  // https://www.protest.eu/en/rw/category/men/
 
   const handleChange = (e) => setFilterStatus(e.target.value);
 

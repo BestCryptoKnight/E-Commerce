@@ -1,6 +1,7 @@
-import { Button, Grid } from '@material-ui/core';
+import { Button, Container, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useProductsContext } from '../context/ProductsContext';
+import Chips from './Chips';
 import Product from './Product';
 import Spinner from './Spinner';
 
@@ -10,8 +11,8 @@ const useStyles = makeStyles((theme) => ({
   },
   container: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
-    padding: theme.spacing(2),
+    backgroundColor: '#f2f3f3',
+    padding: theme.spacing(1, 12),
     /* margin: '0 auto', */
     display: 'flex',
     justifyContent: 'center',
@@ -23,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     margin: theme.spacing(1),
+  },
+  chipContainer: {
+    padding: theme.spacing(0),
   },
 }));
 
@@ -65,27 +69,34 @@ const Products = () => {
   // filter components
 
   return (
-    <main className={classes.container}>
+    <Container maxWidth="lg" className={classes.container}>
       {/* <Filter /> */}
       {loading ? (
         <Spinner />
       ) : (
-        <Grid container justify="center" spacing={4}>
-          {products.map((product) => (
-            <Grid key={product.id} item xs={12} sm={6} md={4} lg={3}>
-              <Product product={product} />
-            </Grid>
-          ))}
-        </Grid>
+        <>
+          <Container classes={classes.chipContainer}>
+            <Chips>Tere</Chips>
+          </Container>
+
+          <Grid container justify="center" spacing={4}>
+            {products.map((product) => (
+              <Grid key={product.id} item xs={12} sm={6} md={4}>
+                <Product product={product} />
+              </Grid>
+            ))}
+          </Grid>
+        </>
       )}
       <Button
         variant="contained"
         color="primary" /* onClick={handleShowMorePosts} */
         aria-label="Show more"
+        disabled={true}
       >
         Show More
       </Button>
-    </main>
+    </Container>
   );
 };
 

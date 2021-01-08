@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
   container: {
     display: 'grid',
     placeItems: 'center',
+    backgroundColor: '#f2f3f3',
     // height: '90vh',
     /* background: 'rgba(193, 198, 226,0.15)', */
   },

@@ -1,7 +1,7 @@
 import Cart from '../components/Cart';
 
 const ShoppingCart = () => (
-  <main>
+  <main className="main">
     <Cart />
   </main>
 );

@@ -50,8 +50,6 @@ const Product = ({ product }) => {
 
   const { id, title, price, description, category, image, qty } = product;
 
-  /* const handleAddToCart = () => {addToCart, openSideBarCheckout()}; */
-  //category
   return (
     <Card className={classes.root}>
       <Link to="/checkout">
