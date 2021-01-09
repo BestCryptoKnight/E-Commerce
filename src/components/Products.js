@@ -1,7 +1,8 @@
-import { Button, Container, Grid } from '@material-ui/core';
+import { Button, Container, Grid, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useProductsContext } from '../context/ProductsContext';
 import Chips from './Chips';
+import PriceSlider from './PriceSlider';
 import Product from './Product';
 import Spinner from './Spinner';
 
@@ -12,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   container: {
     flexGrow: 1,
     backgroundColor: '#f2f3f3',
-    padding: theme.spacing(1, 12),
+    padding: theme.spacing(1),
     /* margin: '0 auto', */
     display: 'flex',
     justifyContent: 'center',
@@ -21,16 +22,27 @@ const useStyles = makeStyles((theme) => ({
     minHeight: '100vh',
     width: '100%',
     gap: '0.75em',
+
+    [theme.breakpoints.up('md')]: {
+      padding: theme.spacing(1, 12),
+    },
   },
   button: {
     margin: theme.spacing(1),
   },
-  chipContainer: {
-    padding: theme.spacing(0),
+  paper: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    listStyle: 'none',
+    padding: theme.spacing(0.5, 4),
+    margin: 0,
   },
 }));
 
 // infinite scroll
+
+const getPrice = (item) => item.price;
 
 const Products = () => {
   /* const [loading, setLoading] = useState(false); */
@@ -67,6 +79,8 @@ const Products = () => {
   }; */
 
   // filter components
+  const minPrice = Math.min(...products.map(getPrice));
+  const maxPrice = Math.max(...products.map(getPrice));
 
   return (
     <Container maxWidth="lg" className={classes.container}>
@@ -75,10 +89,14 @@ const Products = () => {
         <Spinner />
       ) : (
         <>
-          <Container classes={classes.chipContainer}>
-            <Chips>Tere</Chips>
+          {/* <Container> */}
+          <Chips />
+          {/* </Container> */}
+          <Container>
+            <Paper component="ul" className={classes.paper}>
+              <PriceSlider min={minPrice} max={maxPrice} />
+            </Paper>
           </Container>
-
           <Grid container justify="center" spacing={4}>
             {products.map((product) => (
               <Grid key={product.id} item xs={12} sm={6} md={4}>

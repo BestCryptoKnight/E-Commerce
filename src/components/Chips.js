@@ -1,8 +1,9 @@
-import Chip from '@material-ui/core/Chip';
+import { Chip } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import TagFacesIcon from '@material-ui/icons/TagFaces';
 import { useState } from 'react';
+import CustomTooltip from './CustomTooltip';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,12 +44,14 @@ const Chips = () => {
 
         return (
           <li key={data.key}>
-            <Chip
-              icon={icon}
-              label={data.label}
-              onDelete={data.label === 'React' ? undefined : handleDelete(data)}
-              className={classes.chip}
-            />
+            <CustomTooltip title={`Remove ${data.label} category`}>
+              <Chip
+                icon={icon}
+                label={data.label}
+                onDelete={data.label === 'All' ? undefined : handleDelete(data)}
+                className={classes.chip}
+              />
+            </CustomTooltip>
           </li>
         );
       })}

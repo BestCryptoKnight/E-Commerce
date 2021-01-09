@@ -51,15 +51,12 @@ const useStyles = makeStyles((theme) => ({
 
 const Navbar = () => {
   const { amount } = useCartContext();
-  const [value, setValue] = useState(0);
   const [anchorEl, setAnchorEl] = useState(null);
   const classes = useStyles();
 
   const handleClick = (event) => setAnchorEl(event.currentTarget);
 
   const handleClose = () => setAnchorEl(null);
-
-  const handleChange = (event, newValue) => setValue(newValue);
 
   return (
     <AppBar position="sticky" className={classes.appBar} color="inherit">
