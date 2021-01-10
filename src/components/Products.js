@@ -1,5 +1,6 @@
 import { Button, Container, Grid, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { useEffect, useState } from 'react';
 import { useProductsContext } from '../context/ProductsContext';
 import Chips from './Chips';
 import PriceSlider from './PriceSlider';
@@ -41,13 +42,27 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // infinite scroll
-
 const getPrice = (item) => item.price;
 
 const Products = () => {
   /* const [loading, setLoading] = useState(false); */
   const { products, loading } = useProductsContext();
+  const [filteredPrice, setFilteredPrice] = useState([0, 100000]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const classes = useStyles();
+
+  useEffect(() => {
+    setFilteredProducts(
+      products.filter(
+        (product) => product > filteredPrice[0] && product < filteredPrice[1]
+      )
+    );
+    setFilteredProducts(products);
+  }, [products, filteredPrice]);
+
+  // filter components
+  const minPrice = Math.min(...products.map(getPrice));
+  const maxPrice = Math.max(...products.map(getPrice));
 
   /* const [productsToShow, setProductsToShow] = useState(products.slice(0, 5)); */
 
@@ -78,10 +93,6 @@ const Products = () => {
 
   }; */
 
-  // filter components
-  const minPrice = Math.min(...products.map(getPrice));
-  const maxPrice = Math.max(...products.map(getPrice));
-
   return (
     <Container maxWidth="lg" className={classes.container}>
       {/* <Filter /> */}
@@ -94,11 +105,16 @@ const Products = () => {
           {/* </Container> */}
           <Container>
             <Paper component="ul" className={classes.paper}>
-              <PriceSlider min={minPrice} max={maxPrice} />
+              <PriceSlider
+                min={minPrice}
+                max={maxPrice}
+                filteredPrice={filteredPrice}
+                setFilteredPrice={setFilteredPrice}
+              />
             </Paper>
           </Container>
           <Grid container justify="center" spacing={4}>
-            {products.map((product) => (
+            {filteredProducts.map((product) => (
               <Grid key={product.id} item xs={12} sm={6} md={4}>
                 <Product product={product} />
               </Grid>

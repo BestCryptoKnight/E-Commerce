@@ -1,6 +1,5 @@
 import { Slider, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { useState } from 'react';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -8,13 +7,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const PriceSlider = ({ min = 10, max = 150 }) => {
+const PriceSlider = ({
+  min = 10,
+  max = 150,
+  filteredPrice,
+  setFilteredPrice,
+}) => {
   const classes = useStyles();
-  const [value, setValue] = useState([20, 37]);
+  // const [value, setValue] = useState([min, max]);
+  // const {} = useProductsContext();
 
-  const valuetext = (value) => `${value} €`;
+  const valuetext = (filteredPrice) => `${filteredPrice} €`;
   const handleChange = (event, newValue) => {
-    setValue(newValue);
+    setFilteredPrice(newValue);
   };
 
   const marks = [
@@ -37,12 +42,11 @@ const PriceSlider = ({ min = 10, max = 150 }) => {
         Price range
       </Typography>
       <Slider
-        value={value}
+        value={filteredPrice}
         onChange={handleChange}
-        valueLabelDisplay="auto"
+        valueLabelDisplay="on"
         aria-labelledby="range-slider"
         getAriaValueText={valuetext}
-        // step={0.00000001}
         marks={marks}
         min={min}
         max={max}
