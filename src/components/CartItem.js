@@ -20,9 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
   cardContent: {
     padding: theme.spacing(1.5, 1),
-    background: '#e8eaf6',
-    /* background: theme.palette.info.dark,
-    color: '#fafafa', */
+    background: '#f7f8ff',
   },
   priceContainer: {
     display: 'flex',
@@ -30,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     background: '#3f51b5',
     color: '#fafafa',
-    padding: theme.spacing(1),
+    padding: theme.spacing(0.7, 1),
   },
   priceNumber: {
     border: `2px outset ${theme.palette.info.dark}`,
@@ -47,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
+    // background: '#f7f7f7',
   },
 
   btnDel: {
@@ -63,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
       background: theme.palette.primary.dark,
     },
   },
-  leftBtns: {
+  rightBtns: {
     display: 'flex',
     /* justifyContent: 'space-between', */
     /* gap: '0.75em', */
@@ -88,7 +87,6 @@ const CartItem = ({ item, increase, decrease, removeItem }) => {
           {title}
         </Typography>
       </CardContent>
-      <Divider variant="fullWidth" />
       <CardContent className={classes.priceContainer}>
         <Typography variant="h6">Total price:</Typography>
         <Typography
@@ -100,7 +98,8 @@ const CartItem = ({ item, increase, decrease, removeItem }) => {
         </Typography>
       </CardContent>
       <CardActions className={classes.cardActions}>
-        <div className={classes.leftBtns}>
+        <Typography variant="h6">Quantity:</Typography>
+        <div className={classes.rightBtns}>
           <CustomTooltip title="Remove one item from cart">
             <span>
               <Button
@@ -130,17 +129,20 @@ const CartItem = ({ item, increase, decrease, removeItem }) => {
             </Button>
           </CustomTooltip>
         </div>
-        <Button
-          variant="contained"
-          type="button"
-          color="secondary"
-          onClick={() => removeItem(id)}
-          startIcon={<DeleteIcon />}
-          aria-label="remove item from cart"
-        >
-          Remove
-        </Button>
       </CardActions>
+      <Divider variant="fullWidth" />
+      <Button
+        variant="contained"
+        type="button"
+        color="secondary"
+        onClick={() => removeItem(id)}
+        startIcon={<DeleteIcon />}
+        aria-label="remove item from cart"
+        size="large"
+        fullWidth
+      >
+        Remove
+      </Button>
     </Card>
   );
 };

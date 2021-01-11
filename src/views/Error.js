@@ -4,6 +4,9 @@ import { ArrowBack } from '@material-ui/icons';
 import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
+  container: {
+    minHeight: '93vh',
+  },
   paper: {
     display: 'grid',
     placeItems: 'center',
@@ -27,6 +30,7 @@ const Error = () => {
       alignItems="center"
       justify="center"
       component="section"
+      className={classes.container}
     >
       <Paper elevation={2} className={classes.paper}>
         <Typography variant="h5">Sorry, no matching page!</Typography>

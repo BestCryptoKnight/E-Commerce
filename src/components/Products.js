@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useEffect, useState } from 'react';
 import { useProductsContext } from '../context/ProductsContext';
 import Chips from './Chips';
+import Filter from './Filter';
 import PriceSlider from './PriceSlider';
 import Product from './Product';
 import Spinner from './Spinner';
@@ -14,8 +15,7 @@ const useStyles = makeStyles((theme) => ({
   container: {
     flexGrow: 1,
     backgroundColor: '#f2f3f3',
-    padding: theme.spacing(1),
-    /* margin: '0 auto', */
+    padding: theme.spacing(1, 2),
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
     flexWrap: 'wrap',
     listStyle: 'none',
     padding: theme.spacing(0.5, 4),
@@ -49,15 +49,16 @@ const Products = () => {
   const { products, loading } = useProductsContext();
   const [filteredPrice, setFilteredPrice] = useState([0, 100000]);
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [filterStatus, setFilterStatus] = useState('');
   const classes = useStyles();
 
   useEffect(() => {
     setFilteredProducts(
       products.filter(
-        (product) => product > filteredPrice[0] && product < filteredPrice[1]
+        (product) =>
+          product.price >= filteredPrice[0] && product.price <= filteredPrice[1]
       )
     );
-    setFilteredProducts(products);
   }, [products, filteredPrice]);
 
   // filter components
@@ -100,10 +101,10 @@ const Products = () => {
         <Spinner />
       ) : (
         <>
-          {/* <Container> */}
-          <Chips />
-          {/* </Container> */}
-          <Container>
+          <Container disableGutters>
+            <Chips />
+          </Container>
+          <Container disableGutters>
             <Paper component="ul" className={classes.paper}>
               <PriceSlider
                 min={minPrice}
@@ -111,11 +112,15 @@ const Products = () => {
                 filteredPrice={filteredPrice}
                 setFilteredPrice={setFilteredPrice}
               />
+              <Filter
+                filterStatus={filterStatus}
+                setFilterStatus={setFilterStatus}
+              />
             </Paper>
           </Container>
           <Grid container justify="center" spacing={4}>
             {filteredProducts.map((product) => (
-              <Grid key={product.id} item xs={12} sm={6} md={4}>
+              <Grid key={product.id} item xs={12} sm={6} lg={4}>
                 <Product product={product} />
               </Grid>
             ))}

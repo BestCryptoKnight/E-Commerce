@@ -1,27 +1,34 @@
-import FormControl from '@material-ui/core/FormControl';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import InputLabel from '@material-ui/core/InputLabel';
-import NativeSelect from '@material-ui/core/NativeSelect';
+import { FormControl, InputLabel, Select } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { useCartContext } from '../context/CartContext';
 
 const url = 'https://fakestoreapi.com/products/categories';
 //     background-color: #f2f3f3
+
+const selectItems = [
+  { id: 0, value: '', label: '' },
+  { id: 1, value: 'lowHigh', label: 'Price low - high' },
+  { id: 2, value: 'highLow', label: 'Price high - low' },
+  { id: 3, value: 'category', label: 'Category' },
+];
+
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 120,
+    minWidth: 128,
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
   },
 }));
 
-const Filter = () => {
+const Filter = ({ filterStatus, setFilterStatus }) => {
   /* const [categories, setCategories] = useState(['All']); */
-  const { filterStatus, setFilterStatus, categories } = useCartContext();
-
+  // const [checked, setChecked] = useState(false);
   const classes = useStyles();
+
+  // const handleCheck = (event) => {
+  //   setChecked(event.target.checked);
+  // };
 
   // tee buttonitega
 
@@ -40,29 +47,38 @@ const Filter = () => {
 
   // https://www.protest.eu/en/rw/category/men/
 
-  const handleChange = (e) => setFilterStatus(e.target.value);
+  const handleChange = (e) => {
+    setFilterStatus(e.target.value);
+  };
 
   return (
-    Boolean(categories.length) && (
-      <FormControl className={classes.formControl}>
-        <InputLabel htmlFor="category-helper">Category</InputLabel>
-        <NativeSelect
-          value={filterStatus}
-          onChange={handleChange}
-          inputProps={{
-            name: 'category',
-            id: 'category-helper',
-          }}
-        >
-          {categories.map((category) => (
-            <option key={category} value={category}>
-              {category}
-            </option>
-          ))}
-        </NativeSelect>
-        <FormHelperText>Choose Category</FormHelperText>
-      </FormControl>
-    )
+    /* Boolean(categories.length) && */ <FormControl
+      className={classes.formControl}
+      variant="outlined"
+    >
+      <InputLabel htmlFor="select-sort">Sort</InputLabel>
+      <Select
+        native
+        label="Sort"
+        value={filterStatus}
+        onChange={handleChange}
+        inputProps={{
+          name: 'sort',
+          id: 'select-sort',
+        }}
+      >
+        {selectItems.map(({ id, value, label }) => (
+          <option key={id} value={value}>
+            {/* <Checkbox
+              checked={checked}
+              onChange={handleCheck}
+              inputProps={{ 'aria-label': 'checkbox' }}
+            /> */}
+            {label}
+          </option>
+        ))}
+      </Select>
+    </FormControl>
   );
 };
 

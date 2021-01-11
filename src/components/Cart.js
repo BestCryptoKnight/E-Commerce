@@ -9,11 +9,13 @@ import CartItem from './CartItem';
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    display: 'grid',
-    placeItems: 'center',
+    // display: 'grid',
+    // placeItems: 'center',
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'column',
     backgroundColor: '#f2f3f3',
-    // height: '90vh',
-    /* background: 'rgba(193, 198, 226,0.15)', */
+    minHeight: '93vh',
   },
   title: {
     margin: theme.spacing(2, 0),
@@ -81,6 +83,7 @@ const useStyles = makeStyles((theme) => ({
     /* padding: theme.spacing(1), */
   },
   emptyCartContainer: {
+    margin: theme.spacing(2),
     // gap: theme.spacing(2),
     // display: 'flex',
     // alignItems: 'center',
@@ -113,8 +116,8 @@ const Cart = () => {
     <Grid
       container
       direction="column"
+      justify="space-between"
       alignItems="center"
-      justify="center"
       className={classes.emptyCartContainer}
       component="section"
     >

@@ -38,7 +38,7 @@ const PriceSlider = ({
 
   return (
     <div className={classes.root}>
-      <Typography id="range-slider" align="center" /* gutterBottom */>
+      <Typography id="range-slider" align="center" gutterBottom>
         Price range
       </Typography>
       <Slider
