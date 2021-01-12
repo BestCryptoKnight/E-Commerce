@@ -4,8 +4,8 @@ import { FormatListBulleted, Home, Info } from '@material-ui/icons';
 import { NavLink } from 'react-router-dom';
 
 const linkBorder = '3px solid #e3d498';
-const boxShadow =
-  '0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)';
+// const boxShadow =
+//   '0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,6 +20,10 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('xs')]: {
       display: 'none',
     },
+  },
+  rootIcon: {
+    minWidth: 0,
+    marginRight: theme.spacing(1),
   },
 }));
 
@@ -39,11 +43,14 @@ const NavList = () => {
         to="/"
         activeStyle={{
           borderBottom: linkBorder,
-          boxShadow,
         }}
         className={classes.root}
       >
-        <ListItemIcon>
+        <ListItemIcon
+          classes={{
+            root: classes.rootIcon,
+          }}
+        >
           <Home />
         </ListItemIcon>
         <ListItemText primary="Home" />
@@ -55,10 +62,13 @@ const NavList = () => {
         to="/products"
         activeStyle={{
           borderBottom: linkBorder,
-          boxShadow,
         }}
       >
-        <ListItemIcon>
+        <ListItemIcon
+          classes={{
+            root: classes.rootIcon,
+          }}
+        >
           <FormatListBulleted />
         </ListItemIcon>
         <ListItemText primary="Products" />
@@ -70,10 +80,13 @@ const NavList = () => {
         to="/about"
         activeStyle={{
           borderBottom: linkBorder,
-          boxShadow,
         }}
       >
-        <ListItemIcon>
+        <ListItemIcon
+          classes={{
+            root: classes.rootIcon,
+          }}
+        >
           <Info />
         </ListItemIcon>
         <ListItemText primary="About us" />

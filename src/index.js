@@ -1,4 +1,7 @@
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import {
+  ThemeProvider,
+  unstable_createMuiStrictModeTheme as createMuiTheme,
+} from '@material-ui/core/styles';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';

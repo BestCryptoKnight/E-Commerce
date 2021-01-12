@@ -1,3 +1,5 @@
+// isSuccessful ? successful : Spinner
+
 /* const Successful = () => {
     return (
         <div>

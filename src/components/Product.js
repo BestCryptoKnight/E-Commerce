@@ -4,6 +4,7 @@ import {
   CardContent,
   CardMedia,
   Divider,
+  Grid,
   IconButton,
   Typography,
 } from '@material-ui/core';
@@ -44,11 +45,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Product = ({ product }) => {
+const Product = ({ id, title, price, description, category, image, qty }) => {
   const classes = useStyles();
   const { addToCart } = useCartContext();
-
-  const { id, title, price, description, category, image, qty } = product;
 
   return (
     <Card className={classes.root}>
@@ -56,16 +55,18 @@ const Product = ({ product }) => {
         <CardMedia className={classes.media} image={image} title={title} />
       </Link>
       <CardContent className={classes.cardContent}>
-        <div className={classes.titleContainer}>
+        {/* <div className={classes.titleContainer}> */}
+        <Grid container align="center" justify="center" spacing={2}>
           <Typography gutterBottom variant="h5" component="h2">
             {title}
           </Typography>
-          <Divider light orientation="vertical" variant="middle" flexItem />
+          {/* <Divider light variant="fullWidth" flexItem /> */}
           <Typography gutterBottom variant="h6" component="h2">
             €{price.toFixed(2)}
           </Typography>
-        </div>
-        <Divider light />
+        </Grid>
+        {/* </div> */}
+        <Divider /* light */ />
         <Typography
           gutterBottom
           variant="body2"

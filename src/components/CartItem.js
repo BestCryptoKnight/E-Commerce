@@ -18,9 +18,12 @@ const useStyles = makeStyles((theme) => ({
     height: 326,
     paddingTop: '56.25%', // 16:9
   },
-  cardContent: {
+  title: {
     padding: theme.spacing(1.5, 1),
     background: '#f7f8ff',
+    minHeight: '6.25em',
+    display: 'grid',
+    placeItems: 'center',
   },
   priceContainer: {
     display: 'flex',
@@ -64,25 +67,36 @@ const useStyles = makeStyles((theme) => ({
   },
   rightBtns: {
     display: 'flex',
-    /* justifyContent: 'space-between', */
-    /* gap: '0.75em', */
+    // justifyContent: 'space-between',
     alignItems: 'center',
-    gap: theme.spacing(2),
+    gap: theme.spacing(1.4),
     [theme.breakpoints.down('sm')]: {
       gap: theme.spacing(1),
     },
   },
+  btnRoot: {
+    minWidth: 0,
+  },
 }));
 
-const CartItem = ({ item, increase, decrease, removeItem }) => {
+const CartItem = ({
+  id,
+  image,
+  title,
+  price,
+  qty,
+  increase,
+  decrease,
+  removeItem,
+}) => {
   const classes = useStyles();
-  const { id, image, title, price, qty } = item;
+
   const totalPrice = (qty * price).toFixed(2);
 
   return (
     <Card>
       <CardMedia image={image} alt={title} className={classes.media} />
-      <CardContent className={classes.cardContent}>
+      <CardContent className={classes.title}>
         <Typography variant="h6" align="center">
           {title}
         </Typography>
@@ -108,6 +122,7 @@ const CartItem = ({ item, increase, decrease, removeItem }) => {
                 variant="outlined"
                 disabled={qty <= 1}
                 className={classes.btnDel}
+                classes={{ root: classes.btnRoot }}
                 aria-label="remove one item from cart"
               >
                 <RemoveIcon />
@@ -123,6 +138,7 @@ const CartItem = ({ item, increase, decrease, removeItem }) => {
               variant="outlined"
               onClick={() => increase(id)}
               className={classes.btnAdd}
+              classes={{ root: classes.btnRoot }}
               aria-label="add one more item to cart"
             >
               <AddIcon />

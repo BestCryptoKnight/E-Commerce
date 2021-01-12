@@ -1,27 +1,33 @@
 import { FormControl, InputLabel, Select } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import SortIcon from '@material-ui/icons/Sort';
+import CustomTooltip from './CustomTooltip';
 
 const url = 'https://fakestoreapi.com/products/categories';
 //     background-color: #f2f3f3
 
 const selectItems = [
   { id: 0, value: '', label: '' },
-  { id: 1, value: 'lowHigh', label: 'Price low - high' },
-  { id: 2, value: 'highLow', label: 'Price high - low' },
+  { id: 1, value: 'highLow', label: 'Price high - low' },
+  { id: 2, value: 'lowHigh', label: 'Price low - high' },
   { id: 3, value: 'category', label: 'Category' },
 ];
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 128,
+    minWidth: 160,
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
   },
+  select: {
+    // padding: theme.spacing(0),
+    // margin: theme.spacing(0),
+  },
 }));
 
-const Filter = ({ filterStatus, setFilterStatus }) => {
+const Sort = ({ sortStatus, setSortStatus }) => {
   /* const [categories, setCategories] = useState(['All']); */
   // const [checked, setChecked] = useState(false);
   const classes = useStyles();
@@ -48,7 +54,7 @@ const Filter = ({ filterStatus, setFilterStatus }) => {
   // https://www.protest.eu/en/rw/category/men/
 
   const handleChange = (e) => {
-    setFilterStatus(e.target.value);
+    setSortStatus(e.target.value);
   };
 
   return (
@@ -56,16 +62,20 @@ const Filter = ({ filterStatus, setFilterStatus }) => {
       className={classes.formControl}
       variant="outlined"
     >
-      <InputLabel htmlFor="select-sort">Sort</InputLabel>
+      <CustomTooltip title="Sort products by price or category">
+        <InputLabel htmlFor="select-sort">Sort</InputLabel>
+      </CustomTooltip>
       <Select
         native
         label="Sort"
-        value={filterStatus}
+        value={sortStatus}
         onChange={handleChange}
+        className={classes.select}
         inputProps={{
           name: 'sort',
           id: 'select-sort',
         }}
+        IconComponent={SortIcon}
       >
         {selectItems.map(({ id, value, label }) => (
           <option key={id} value={value}>
@@ -82,7 +92,7 @@ const Filter = ({ filterStatus, setFilterStatus }) => {
   );
 };
 
-export default Filter;
+export default Sort;
 
 {
   /* <div>

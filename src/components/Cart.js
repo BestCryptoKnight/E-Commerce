@@ -24,8 +24,8 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    gap: theme.spacing(1),
     position: 'relative',
+    gap: theme.spacing(1),
   },
   backButton: {
     position: 'absolute',
@@ -47,10 +47,10 @@ const useStyles = makeStyles((theme) => ({
   emptyButton: {
     minWidth: '150px',
     [theme.breakpoints.down('xs')]: {
-      marginBottom: '5px',
+      marginBottom: '0.3em',
     },
     [theme.breakpoints.up('xs')]: {
-      marginRight: '20px',
+      marginRight: '1.25em',
     },
   },
   checkoutButton: {
@@ -68,9 +68,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   btnContainer: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
     margin: theme.spacing(2, 0),
   },
   total: {
@@ -113,42 +110,33 @@ const Cart = () => {
   const handleClick = () => history.goBack();
 
   const renderEmptyCart = () => (
-    <Grid
-      container
-      direction="column"
-      justify="space-between"
-      alignItems="center"
-      className={classes.emptyCartContainer}
-      component="section"
-    >
-      <Paper elevation={2} className={classes.paper}>
-        <Typography variant="subtitle1">
-          You have no items in your shopping cart!
-        </Typography>
-        <Link className={classes.link} to="/">
-          <Button
-            className={classes.checkoutButton}
-            size="large"
-            type="button"
-            variant="contained"
-            color="primary"
-            startIcon={<NextWeekIcon />}
-            aria-label="Go to products page"
-          >
-            Start adding some!
-          </Button>
-        </Link>
-      </Paper>
-    </Grid>
+    <Paper elevation={2} className={classes.paper}>
+      <Typography variant="subtitle1">
+        You have no items in your shopping cart!
+      </Typography>
+      <Link className={classes.link} to="/">
+        <Button
+          className={classes.checkoutButton}
+          size="large"
+          type="button"
+          variant="contained"
+          color="primary"
+          startIcon={<NextWeekIcon />}
+          aria-label="Go to products page"
+        >
+          Start adding some!
+        </Button>
+      </Link>
+    </Paper>
   );
 
   const renderCart = () => (
     <>
       <Grid container spacing={3} justify="center">
         {cart.map((item) => (
-          <Grid item xs={12} sm={6} md={4} key={item.id}>
+          <Grid item xs={12} sm={6} lg={4} key={item.id}>
             <CartItem
-              item={item}
+              {...item}
               increase={increase}
               decrease={decrease}
               removeItem={removeItem}
@@ -165,7 +153,13 @@ const Cart = () => {
         >
           Subtotal: <strong>{totalPrice.toFixed(2)}</strong>&nbsp;€
         </Typography>
-        <div className={classes.btnContainer}>
+        <Grid
+          container
+          direction="row"
+          justify="space-between"
+          align="center"
+          className={classes.btnContainer}
+        >
           <Button
             className={classes.emptyButton}
             size="large"
@@ -191,7 +185,7 @@ const Cart = () => {
           >
             Checkout
           </Button>
-        </div>
+        </Grid>
       </div>
     </>
   );

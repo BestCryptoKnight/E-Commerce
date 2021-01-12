@@ -5,6 +5,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: 300 + theme.spacing(3) * 2,
   },
+  slider: {
+    marginBottom: theme.spacing(1.25),
+  },
 }));
 
 const PriceSlider = ({
@@ -18,6 +21,7 @@ const PriceSlider = ({
   // const {} = useProductsContext();
 
   const valuetext = (filteredPrice) => `${filteredPrice} €`;
+
   const handleChange = (event, newValue) => {
     setFilteredPrice(newValue);
   };
@@ -39,12 +43,13 @@ const PriceSlider = ({
   return (
     <div className={classes.root}>
       <Typography id="range-slider" align="center" gutterBottom>
-        Price range
+        Choose price range:
       </Typography>
       <Slider
+        className={classes.slider}
         value={filteredPrice}
         onChange={handleChange}
-        valueLabelDisplay="on"
+        valueLabelDisplay="auto"
         aria-labelledby="range-slider"
         getAriaValueText={valuetext}
         marks={marks}

@@ -1,11 +1,17 @@
-import { Button, Container, Grid, Paper } from '@material-ui/core';
+import { Button, Container, Divider, Grid, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useEffect, useState } from 'react';
 import { useProductsContext } from '../context/ProductsContext';
+import {
+  getPrice,
+  sortAlphabetically,
+  sortHighLow,
+  sortLowHigh,
+} from '../utils/productSortHelpers';
 import Chips from './Chips';
-import Filter from './Filter';
 import PriceSlider from './PriceSlider';
 import Product from './Product';
+import Sort from './Sort';
 import Spinner from './Spinner';
 
 const useStyles = makeStyles((theme) => ({
@@ -17,12 +23,12 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#f2f3f3',
     padding: theme.spacing(1, 2),
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     flexDirection: 'column',
     minHeight: '100vh',
     width: '100%',
-    gap: '0.75em',
+    gap: '0.7em',
 
     [theme.breakpoints.up('md')]: {
       padding: theme.spacing(1, 12),
@@ -36,22 +42,23 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-around',
     flexWrap: 'wrap',
     listStyle: 'none',
-    padding: theme.spacing(0.5, 4),
+    padding: theme.spacing(1, 4),
     margin: 0,
   },
 }));
 
 // infinite scroll
-const getPrice = (item) => item.price;
+// category for products
 
 const Products = () => {
   /* const [loading, setLoading] = useState(false); */
   const { products, loading } = useProductsContext();
-  const [filteredPrice, setFilteredPrice] = useState([0, 100000]);
-  const [filteredProducts, setFilteredProducts] = useState([]);
-  const [filterStatus, setFilterStatus] = useState('');
+  const [filteredPrice, setFilteredPrice] = useState([0, Infinity]);
+  const [filteredProducts, setFilteredProducts] = useState([...products]);
+  const [sortStatus, setSortStatus] = useState('');
   const classes = useStyles();
 
+  // filter components
   useEffect(() => {
     setFilteredProducts(
       products.filter(
@@ -61,7 +68,42 @@ const Products = () => {
     );
   }, [products, filteredPrice]);
 
-  // filter components
+  // const switchStatement = useCallback(() => {
+  //   switch (sortStatus) {
+  //     case 'lowHigh':
+  //       setFilteredProducts([...filteredProducts].sort(sortLowHigh));
+  //       break;
+  //     case 'highLow':
+  //       const sorted = [...filteredProducts].sort(sortHighLow);
+  //       setFilteredProducts(sorted);
+  //       break;
+  //     case 'category':
+  //       setFilteredProducts([...filteredProducts].sort(sortAlphabetically));
+  //       break;
+  //     default:
+  //       setFilteredProducts(filteredProducts);
+  //   }
+  // }, [filteredProducts, sortStatus]);
+
+  // sort components
+  useEffect(() => {
+    switch (sortStatus) {
+      case 'lowHigh':
+        setFilteredProducts([...filteredProducts].sort(sortLowHigh));
+        break;
+      case 'highLow':
+        const sorted = [...filteredProducts].sort(sortHighLow);
+        setFilteredProducts(sorted);
+        break;
+      case 'category':
+        setFilteredProducts([...filteredProducts].sort(sortAlphabetically));
+        break;
+      default:
+        setFilteredProducts(filteredProducts);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sortStatus]);
+
   const minPrice = Math.min(...products.map(getPrice));
   const maxPrice = Math.max(...products.map(getPrice));
 
@@ -96,7 +138,6 @@ const Products = () => {
 
   return (
     <Container maxWidth="lg" className={classes.container}>
-      {/* <Filter /> */}
       {loading ? (
         <Spinner />
       ) : (
@@ -112,16 +153,14 @@ const Products = () => {
                 filteredPrice={filteredPrice}
                 setFilteredPrice={setFilteredPrice}
               />
-              <Filter
-                filterStatus={filterStatus}
-                setFilterStatus={setFilterStatus}
-              />
+              <Divider orientation="vertical" flexItem />
+              <Sort sortStatus={sortStatus} setSortStatus={setSortStatus} />
             </Paper>
           </Container>
           <Grid container justify="center" spacing={4}>
             {filteredProducts.map((product) => (
               <Grid key={product.id} item xs={12} sm={6} lg={4}>
-                <Product product={product} />
+                <Product {...product} />
               </Grid>
             ))}
           </Grid>
@@ -131,7 +170,7 @@ const Products = () => {
         variant="contained"
         color="primary" /* onClick={handleShowMorePosts} */
         aria-label="Show more"
-        disabled={true}
+        disabled
       >
         Show More
       </Button>
