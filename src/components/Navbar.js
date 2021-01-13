@@ -16,6 +16,23 @@ import CustomTooltip from './CustomTooltip';
 import NavList from './NavList';
 
 const drawerWidth = 0;
+const menuItems = [
+  {
+    id: 0,
+    label: 'Home',
+    path: '/',
+  },
+  {
+    id: 1,
+    label: 'Products',
+    path: '/products',
+  },
+  {
+    id: 2,
+    label: 'About',
+    path: '/about',
+  },
+];
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -77,11 +94,19 @@ const Navbar = () => {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          <MenuItem component={Link} to="/" onClick={handleClose}>
-            Home
-          </MenuItem>
-          <MenuItem onClick={handleClose}>Products</MenuItem>
-          <MenuItem onClick={handleClose}>About</MenuItem>
+          {menuItems.map((item) => {
+            const { id, label, path } = item;
+            return (
+              <MenuItem
+                key={id}
+                component={Link}
+                to={path}
+                onClick={handleClose}
+              >
+                {label}
+              </MenuItem>
+            );
+          })}
         </Menu>
         <CustomTooltip title="To homepage">
           <Typography

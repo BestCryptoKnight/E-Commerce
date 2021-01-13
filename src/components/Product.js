@@ -56,14 +56,27 @@ const Product = ({ id, title, price, description, category, image, qty }) => {
       </Link>
       <CardContent className={classes.cardContent}>
         {/* <div className={classes.titleContainer}> */}
-        <Grid container align="center" justify="center" spacing={2}>
-          <Typography gutterBottom variant="h5" component="h2">
-            {title}
-          </Typography>
+        <Grid container justify="space-between" align="center" spacing={2}>
+          <Grid item xs={12}>
+            <Typography /* gutterBottom  */ variant="h5" component="h2">
+              {title}
+            </Typography>
+          </Grid>
+          <Grid item xs={6} /* sm={6} */>
+            <Typography /* gutterBottom  */ variant="h6" component="h3">
+              €{price.toFixed(2)}
+            </Typography>
+            {/*             <Typography gutterBottom  variant="h6" component="p">
+              {category}
+            </Typography> */}
+          </Grid>
+          <Grid item xs={6} /* sm={6} */>
+            <Typography /* gutterBottom  */ variant="subtitle1" component="h4">
+              {category}
+            </Typography>
+          </Grid>
+
           {/* <Divider light variant="fullWidth" flexItem /> */}
-          <Typography gutterBottom variant="h6" component="h2">
-            €{price.toFixed(2)}
-          </Typography>
         </Grid>
         {/* </div> */}
         <Divider /* light */ />
