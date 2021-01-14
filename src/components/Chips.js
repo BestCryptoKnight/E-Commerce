@@ -5,6 +5,8 @@ import TagFacesIcon from '@material-ui/icons/TagFaces';
 import { useState } from 'react';
 import CustomTooltip from './CustomTooltip';
 
+const url = 'https://fakestoreapi.com/products/categories';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -20,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Chips = () => {
+  const [categories, setCategories] = useState(['All']);
   const classes = useStyles();
   const [chipData, setChipData] = useState([
     { key: 0, label: 'electronics' },
@@ -28,12 +31,29 @@ const Chips = () => {
     { key: 3, label: 'women clothing' },
   ]);
 
+  /* useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+
+        if (data) {
+          setCategories([...categories, ...data]);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchCategories();
+  }, []); */
+
   const handleDelete = (chipToDelete) => () =>
     setChipData((chips) =>
       chips.filter((chip) => chip.key !== chipToDelete.key)
     );
 
   return (
+    // Boolean(categories.length) &&
     <Paper component="ul" className={classes.root}>
       {chipData.map((data) => {
         let icon;

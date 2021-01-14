@@ -94,19 +94,11 @@ const Navbar = () => {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          {menuItems.map((item) => {
-            const { id, label, path } = item;
-            return (
-              <MenuItem
-                key={id}
-                component={Link}
-                to={path}
-                onClick={handleClose}
-              >
-                {label}
-              </MenuItem>
-            );
-          })}
+          {menuItems.map(({ id, label, path }) => (
+            <MenuItem key={id} component={Link} to={path} onClick={handleClose}>
+              {label}
+            </MenuItem>
+          ))}
         </Menu>
         <CustomTooltip title="To homepage">
           <Typography
@@ -129,7 +121,7 @@ const Navbar = () => {
               aria-label="Show cart items"
               color="inherit"
               activeStyle={{
-                background: 'rgba(227, 212, 152, 0.5)',
+                background: 'rgba(227, 212, 152, 0.6)',
               }}
             >
               <Badge badgeContent={amount} color="secondary">

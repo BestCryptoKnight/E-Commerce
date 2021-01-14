@@ -32,11 +32,14 @@ const useStyles = makeStyles((theme) => ({
     top: '50%',
     left: '160%',
     transform: 'translate(0,-50%)',
-    [theme.breakpoints.down('sm')]: {
-      display: 'none',
-    },
     [theme.breakpoints.up('lg')]: {
-      left: '212%',
+      left: '187%',
+    },
+    [theme.breakpoints.down('sm')]: {
+      left: '119%',
+    },
+    [theme.breakpoints.down('xs')]: {
+      display: 'none',
     },
   },
   amount: {

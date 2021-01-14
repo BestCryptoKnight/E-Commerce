@@ -15,8 +15,8 @@ import CustomTooltip from './CustomTooltip';
 
 const useStyles = makeStyles((theme) => ({
   media: {
-    height: 326,
-    paddingTop: '56.25%', // 16:9
+    height: 276,
+    backgroundSize: 'contain',
   },
   title: {
     padding: theme.spacing(1.5, 1),
@@ -95,7 +95,14 @@ const CartItem = ({
 
   return (
     <Card>
-      <CardMedia image={image} alt={title} className={classes.media} />
+      <CardMedia
+        image={image}
+        alt={title}
+        className={classes.media}
+        classes={{
+          root: classes.media,
+        }}
+      />
       <CardContent className={classes.title}>
         <Typography variant="h6" align="center">
           {title}

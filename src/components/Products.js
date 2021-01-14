@@ -29,7 +29,6 @@ const useStyles = makeStyles((theme) => ({
     minHeight: '100vh',
     width: '100%',
     gap: '0.7em',
-
     [theme.breakpoints.up('md')]: {
       padding: theme.spacing(1, 12),
     },
@@ -44,6 +43,11 @@ const useStyles = makeStyles((theme) => ({
     listStyle: 'none',
     padding: theme.spacing(1, 4),
     margin: 0,
+  },
+  divider: {
+    [theme.breakpoints.down('xs')]: {
+      display: 'none',
+    },
   },
 }));
 
@@ -92,8 +96,7 @@ const Products = () => {
         setFilteredProducts([...filteredProducts].sort(sortLowHigh));
         break;
       case 'highLow':
-        const sorted = [...filteredProducts].sort(sortHighLow);
-        setFilteredProducts(sorted);
+        setFilteredProducts([...filteredProducts].sort(sortHighLow));
         break;
       case 'category':
         setFilteredProducts([...filteredProducts].sort(sortAlphabetically));
@@ -136,6 +139,15 @@ const Products = () => {
 
   }; */
 
+  /*  if (loading) {
+    return (
+      <Grid container align="center" justify="center">
+        <Spinner />
+        <Typography>Tere</Typography>
+      </Grid>
+    );
+  } */
+
   return (
     <Container maxWidth="lg" className={classes.container}>
       {loading ? (
@@ -153,7 +165,11 @@ const Products = () => {
                 filteredPrice={filteredPrice}
                 setFilteredPrice={setFilteredPrice}
               />
-              <Divider orientation="vertical" flexItem />
+              <Divider
+                orientation="vertical"
+                flexItem
+                className={classes.divider}
+              />
               <Sort sortStatus={sortStatus} setSortStatus={setSortStatus} />
             </Paper>
           </Container>
