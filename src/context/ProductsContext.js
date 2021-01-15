@@ -1,8 +1,15 @@
-import { createContext, useContext, useEffect, useReducer } from 'react';
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useReducer,
+  useState,
+} from 'react';
 import productsReducer from './productsReducer';
 
 /* const url = 'https://fakestoreapi.com/products/'; */
-const url = 'https://fakestoreapi.com/products?limit=5';
+const url = 'https://fakestoreapi.com/products?limit=';
+const urlProducts = 'https://fakestoreapi.com/products/categories';
 
 const ProductsContext = createContext(null);
 
@@ -13,12 +20,13 @@ const initialProductState = {
 
 const ProductsProvider = ({ children }) => {
   const [state, dispatch] = useReducer(productsReducer, initialProductState);
+  const [categories, setCategories] = useState(['All']);
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchProducts = async (limitNumber = 5) => {
       dispatch({ type: 'loading' });
       try {
-        const response = await fetch(url);
+        const response = await fetch(`${url}${limitNumber}`);
         const data = await response.json();
         data.map((item) => (item.qty = 1));
         dispatch({ type: 'display_items', payload: data });
@@ -29,8 +37,28 @@ const ProductsProvider = ({ children }) => {
         /* setLoading(false); */
       }
     };
-    fetchProducts();
+    fetchProducts(15);
   }, []);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch(urlProducts);
+        const data = await response.json();
+
+        if (data) {
+          setCategories((prevCat) => [...prevCat, ...data]);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchCategories();
+  }, []);
+
+  /* const products = (id) => {
+    dispatch({ type: 'increase', payload: id });
+  }; */
 
   return (
     <ProductsContext.Provider value={{ ...state }}>

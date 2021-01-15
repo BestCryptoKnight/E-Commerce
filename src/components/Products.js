@@ -1,6 +1,6 @@
 import { Button, Container, Divider, Grid, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useProductsContext } from '../context/ProductsContext';
 import {
   getPrice,
@@ -71,6 +71,12 @@ const Products = () => {
       )
     );
   }, [products, filteredPrice]);
+
+  const [maxRange, setMaxRange] = useState(5);
+
+  const showMoreProducts = useCallback(() => {
+    setMaxRange((prevRange) => prevRange + 5);
+  }, []);
 
   // const switchStatement = useCallback(() => {
   //   switch (sortStatus) {
@@ -155,7 +161,7 @@ const Products = () => {
       ) : (
         <>
           <Container disableGutters>
-            <Chips />
+            <Chips products={products} setFilteredPrice={setFilteredPrice} />
           </Container>
           <Container disableGutters>
             <Paper component="ul" className={classes.paper}>
@@ -174,7 +180,7 @@ const Products = () => {
             </Paper>
           </Container>
           <Grid container justify="center" spacing={4}>
-            {filteredProducts.map((product) => (
+            {filteredProducts.slice(0, maxRange).map((product) => (
               <Grid key={product.id} item xs={12} sm={6} lg={4}>
                 <Product {...product} />
               </Grid>
@@ -184,9 +190,10 @@ const Products = () => {
       )}
       <Button
         variant="contained"
-        color="primary" /* onClick={handleShowMorePosts} */
+        color="primary"
+        onClick={showMoreProducts}
         aria-label="Show more"
-        disabled
+        // disabled
       >
         Show More
       </Button>

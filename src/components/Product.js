@@ -1,4 +1,7 @@
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Card,
   CardActions,
   CardContent,
@@ -6,11 +9,11 @@ import {
   Divider,
   Grid,
   IconButton,
-  // Modal,
   Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { AddShoppingCart } from '@material-ui/icons';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { useState } from 'react';
 import Modal from '../components/Modal';
 import { useCartContext } from '../context/CartContext';
@@ -41,12 +44,21 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     cursor: 'pointer',
   },
+  accordion: {
+    padding: theme.spacing(1, 2),
+  },
 }));
 
 const Product = ({ id, title, price, description, category, image, qty }) => {
   const [showModal, setShowModal] = useState();
   const { addToCart } = useCartContext();
   const classes = useStyles();
+
+  const [expanded, setExpanded] = useState(null);
+
+  const handleChange = (panel) => (event, newExpanded) => {
+    setExpanded(newExpanded ? panel : false);
+  };
 
   //breadCrumbs description
 
@@ -67,13 +79,43 @@ const Product = ({ id, title, price, description, category, image, qty }) => {
         {/* <div className={classes.titleContainer}> */}
         <Grid container align="center" spacing={1}>
           <Grid item xs={12}>
-            <Typography /* gutterBottom  */ variant="h5" component="h2">
+            <Accordion
+              expanded={expanded === 'panel1'}
+              onChange={handleChange('panel1')}
+              variant="outlined"
+            >
+              <AccordionSummary
+                aria-controls="panel1d-content"
+                id="panel1d-header"
+                expandIcon={<ExpandMoreIcon />}
+                aria-label="Toggle product description"
+                title="Click to toggle description"
+              >
+                <Typography variant="h6" component="h2">
+                  {title}
+                </Typography>
+              </AccordionSummary>
+              <Divider />
+              <AccordionDetails className={classes.accordion}>
+                <Typography
+                  gutterBottom
+                  variant="body2"
+                  component="p"
+                  color="textPrimary"
+                  className={classes.description}
+                  align="left"
+                >
+                  {description}
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
+            {/* <Typography variant="h5" component="h2">
               {title}
-            </Typography>
+            </Typography> */}
           </Grid>
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <Divider />
-          </Grid>
+          </Grid> */}
           <Grid item xs={6}>
             <Typography
               gutterBottom
@@ -104,7 +146,7 @@ const Product = ({ id, title, price, description, category, image, qty }) => {
           {/* <Divider light variant="fullWidth" flexItem /> */}
         </Grid>
         {/* </div> */}
-        <Divider /* light */ />
+        <Divider />
         {/*       <Typography
           gutterBottom
           variant="body2"

@@ -2,8 +2,6 @@ import { FormControl, InputLabel, Select } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import SortIcon from '@material-ui/icons/Sort';
 
-//     background-color: #f2f3f3
-
 const selectItems = [
   { id: 0, value: '', label: '' },
   { id: 1, value: 'highLow', label: 'Price high - low' },

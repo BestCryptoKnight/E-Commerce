@@ -1,4 +1,5 @@
-import { Button } from '@material-ui/core';
+import { IconButton } from '@material-ui/core';
+import CloseIcon from '@material-ui/icons/Close';
 import { useCallback, useEffect, useRef } from 'react';
 
 const Modal = ({ showModal, setShowModal, img }) => {
@@ -9,28 +10,42 @@ const Modal = ({ showModal, setShowModal, img }) => {
     [setShowModal]
   );
 
-  useEffect(() => {
-    showModal
-      ? document.addEventListener('mousedown', handleClick)
-      : document.removeEventListener('mousedown', handleClick);
+  const handleEscape = useCallback(
+    (e) => (e.key === 'Escape' ? setShowModal(false) : null),
+    [setShowModal]
+  );
 
-    return () => document.removeEventListener('mousedown', handleClick);
-  }, [handleClick, showModal]);
+  const addEventListeners = useCallback(() => {
+    document.addEventListener('keydown', handleEscape);
+    document.addEventListener('mousedown', handleClick);
+  }, [handleClick, handleEscape]);
+
+  const removeEventListeners = useCallback(() => {
+    document.removeEventListener('mousedown', handleClick);
+    document.removeEventListener('keydown', handleEscape);
+  }, [handleClick, handleEscape]);
+
+  useEffect(() => {
+    showModal ? addEventListeners() : removeEventListeners();
+
+    return () => removeEventListeners();
+  }, [addEventListeners, removeEventListeners, showModal]);
 
   return (
     <section className="modal" onClick={handleClick}>
       <div ref={modalRef} className="modal-content">
-        <img src={img} className="image" alt="Product image" />
+        <img src={img} className="image" alt="Product in larger size" />
+        <IconButton
+          type="button"
+          variant="outlined"
+          color="secondary"
+          onClick={() => setShowModal(false)}
+          className="modalBtn"
+          aria-label="Close modal"
+        >
+          <CloseIcon />
+        </IconButton>
       </div>
-      <Button
-        type="button"
-        variant="contained"
-        color="secondary"
-        onClick={() => setShowModal(false)}
-        className="modalBtn"
-      >
-        Close Modal
-      </Button>
     </section>
   );
 };

@@ -1,9 +1,8 @@
 import { Chip } from '@material-ui/core';
+import Avatar from '@material-ui/core/Avatar';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
-import TagFacesIcon from '@material-ui/icons/TagFaces';
 import { useState } from 'react';
-import CustomTooltip from './CustomTooltip';
 
 const url = 'https://fakestoreapi.com/products/categories';
 
@@ -18,11 +17,15 @@ const useStyles = makeStyles((theme) => ({
   },
   chip: {
     margin: theme.spacing(0.5),
+    fontSize: '0.925rem',
   },
 }));
 
-const Chips = () => {
-  const [categories, setCategories] = useState(['All']);
+const Chips = ({ products, setFilteredPrice }) => {
+  const [categories, setCategories] = useState([
+    ...new Set(products.map((product) => product.category)),
+    'All',
+  ]);
   const classes = useStyles();
   const [chipData, setChipData] = useState([
     { key: 0, label: 'electronics' },
@@ -31,31 +34,39 @@ const Chips = () => {
     { key: 3, label: 'women clothing' },
   ]);
 
-  /* useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await fetch(url);
-        const data = await response.json();
-
-        if (data) {
-          setCategories([...categories, ...data]);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchCategories();
-  }, []); */
-
-  const handleDelete = (chipToDelete) => () =>
+  /*   const handleDelete = (chipToDelete) => () =>
     setChipData((chips) =>
       chips.filter((chip) => chip.key !== chipToDelete.key)
-    );
+    ); */
+
+  const handleClick = (clickedCategory) => {
+    console.log(clickedCategory);
+    if (clickedCategory !== 'All') {
+      products.filter((product) => product.category === clickedCategory);
+    }
+    setFilteredPrice(products);
+  };
 
   return (
     // Boolean(categories.length) &&
     <Paper component="ul" className={classes.root}>
-      {chipData.map((data) => {
+      {categories.map((category) => (
+        <li key={category}>
+          <Chip
+            avatar={<Avatar>{category.charAt(0).toUpperCase()}</Avatar>}
+            label={category}
+            onClick={() => handleClick(category)}
+            className={classes.chip}
+            variant="outlined"
+            color="primary"
+            classes={{
+              label: classes.chip,
+            }}
+          />
+        </li>
+      ))}
+
+      {/*       {chipData.map((data) => {
         let icon;
 
         if (data.label === 'women clothing') {
@@ -74,7 +85,7 @@ const Chips = () => {
             </CustomTooltip>
           </li>
         );
-      })}
+      })} */}
     </Paper>
   );
 };

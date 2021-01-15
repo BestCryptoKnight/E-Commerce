@@ -122,19 +122,18 @@ const CartItem = ({
         <Typography variant="h6">Quantity:</Typography>
         <div className={classes.rightBtns}>
           <CustomTooltip title="Remove one item from cart">
-            <span>
-              <Button
-                type="button"
-                onClick={() => decrease(id)}
-                variant="outlined"
-                disabled={qty <= 1}
-                className={classes.btnDel}
-                classes={{ root: classes.btnRoot }}
-                aria-label="remove one item from cart"
-              >
-                <RemoveIcon />
-              </Button>
-            </span>
+            <Button
+              type="button"
+              onClick={() => decrease(id)}
+              variant="outlined"
+              disabled={qty <= 1}
+              className={classes.btnDel}
+              classes={{ root: classes.btnRoot }}
+              aria-label="remove one item from cart"
+              component="span"
+            >
+              <RemoveIcon />
+            </Button>
           </CustomTooltip>
           <Typography variant="h6" component="p">
             <strong>{qty}</strong>

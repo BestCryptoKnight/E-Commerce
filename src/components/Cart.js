@@ -82,16 +82,10 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '0.15em', */
     /* padding: theme.spacing(1), */
   },
-  emptyCartContainer: {
-    margin: theme.spacing(2),
-    // gap: theme.spacing(2),
-    // display: 'flex',
-    // alignItems: 'center',
-    // flexDirection: 'column',
-  },
   paper: {
     display: 'grid',
     placeItems: 'center',
+    margin: theme.spacing(12),
     padding: theme.spacing(3),
     whiteSpace: 'nowrap',
     height: 150,
@@ -202,7 +196,7 @@ const Cart = () => {
         <Button
           className={classes.backButton}
           onClick={handleClick}
-          size="large"
+          size="medium"
           type="button"
           variant="contained"
           color="primary"
