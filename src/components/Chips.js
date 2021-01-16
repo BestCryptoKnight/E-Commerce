@@ -1,10 +1,9 @@
 import { Chip } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
 import Paper from '@material-ui/core/Paper';
-import { makeStyles } from '@material-ui/core/styles';
+import { fade, makeStyles } from '@material-ui/core/styles';
 import { useState } from 'react';
-
-const url = 'https://fakestoreapi.com/products/categories';
+import { CustomTooltip } from '../components';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,77 +14,66 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0.5),
     margin: 0,
   },
+  activeChip: {
+    margin: theme.spacing(0.5),
+    fontSize: '0.925rem',
+    backgroundColor: fade(theme.palette.primary.dark, 0.25),
+  },
   chip: {
     margin: theme.spacing(0.5),
     fontSize: '0.925rem',
   },
+  active: {
+    backgroundColor: 'red',
+  },
 }));
 
-const Chips = ({ products, setFilteredPrice }) => {
-  const [categories, setCategories] = useState([
-    ...new Set(products.map((product) => product.category)),
-    'All',
-  ]);
+const Chips = ({ products, setFilteredProducts }) => {
   const classes = useStyles();
-  const [chipData, setChipData] = useState([
-    { key: 0, label: 'electronics' },
-    { key: 1, label: 'jewelery' },
-    { key: 2, label: 'men clothing' },
-    { key: 3, label: 'women clothing' },
-  ]);
+  const [value, setValue] = useState('All');
 
-  /*   const handleDelete = (chipToDelete) => () =>
-    setChipData((chips) =>
-      chips.filter((chip) => chip.key !== chipToDelete.key)
-    ); */
+  const uniqueCategories = [
+    ...new Set(products.map((product) => product.category)),
+  ];
+
+  const categoriesSorted = [
+    ...uniqueCategories.sort((a, b) => a.localeCompare(b)),
+    'All',
+  ];
 
   const handleClick = (clickedCategory) => {
-    console.log(clickedCategory);
-    if (clickedCategory !== 'All') {
-      products.filter((product) => product.category === clickedCategory);
-    }
-    setFilteredPrice(products);
+    clickedCategory === 'All'
+      ? setFilteredProducts(products)
+      : setFilteredProducts(
+          products.filter((product) => product.category === clickedCategory)
+        );
+    setValue(clickedCategory);
   };
 
   return (
-    // Boolean(categories.length) &&
     <Paper component="ul" className={classes.root}>
-      {categories.map((category) => (
-        <li key={category}>
-          <Chip
-            avatar={<Avatar>{category.charAt(0).toUpperCase()}</Avatar>}
-            label={category}
-            onClick={() => handleClick(category)}
-            className={classes.chip}
-            variant="outlined"
-            color="primary"
-            classes={{
-              label: classes.chip,
-            }}
-          />
+      {categoriesSorted.map((category) => (
+        <li
+          key={category}
+          className={`${value === category ? classes.active : ''}`}
+        >
+          <CustomTooltip title={`Show ${category}`}>
+            <Chip
+              avatar={<Avatar>{category.charAt(0).toUpperCase()}</Avatar>}
+              label={category}
+              onClick={() => handleClick(category)}
+              className={`${
+                value === category ? classes.activeChip : classes.chip
+              }`}
+              variant="outlined"
+              color="primary"
+              classes={{
+                label: classes.chip,
+              }}
+            />
+          </CustomTooltip>
         </li>
       ))}
-
-      {/*       {chipData.map((data) => {
-        let icon;
-
-        if (data.label === 'women clothing') {
-          icon = <TagFacesIcon />;
-        }
-
-        return (
-          <li key={data.key}>
-            <CustomTooltip title={`Remove ${data.label} category`}>
-              <Chip
-                icon={icon}
-                label={data.label}
-                onDelete={data.label === 'All' ? undefined : handleDelete(data)}
-                className={classes.chip}
-              />
-            </CustomTooltip>
-          </li>
-        );
-      })} */}
     </Paper>
   );
 };

@@ -1,6 +1,9 @@
-import { FormControl, InputLabel, Select } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import SortIcon from '@material-ui/icons/Sort';
+import SortByAlphaIcon from '@material-ui/icons/SortByAlpha';
+import ToggleButton from '@material-ui/lab/ToggleButton';
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 
 const selectItems = [
   { id: 0, value: '', label: '' },
@@ -24,12 +27,28 @@ const useStyles = makeStyles((theme) => ({
     // padding: theme.spacing(0),
     // margin: theme.spacing(0),
   },
+  icon: {
+    transform: 'rotate(180deg)',
+  },
+  arrow: {
+    transform: 'rotate(90deg) translateY(-36%)',
+  },
+  arrow2: {
+    transform: 'rotate(-90deg) translateY(36%)',
+  },
+  toggleBtn: {
+    paddingLeft: 0,
+  },
 }));
 
 const Sort = ({ sortStatus, setSortStatus }) => {
   /* const [categories, setCategories] = useState(['All']); */
   // const [checked, setChecked] = useState(false);
   const classes = useStyles();
+
+  const handleSort = (event, newSort) => {
+    setSortStatus(newSort);
+  };
 
   // const handleCheck = (event) => {
   //   setChecked(event.target.checked);
@@ -42,7 +61,45 @@ const Sort = ({ sortStatus, setSortStatus }) => {
   };
 
   return (
-    /* Boolean(categories.length) && */ <FormControl
+    <ToggleButtonGroup
+      value={sortStatus}
+      exclusive
+      onChange={handleSort}
+      aria-label="text alignment"
+    >
+      {/*       <CustomTooltip title="Price high - low">
+        <ToggleButton
+          value="highLow"
+          aria-label="sort high to low"
+          className={classes.toggleBtn}
+        >
+          <ArrowRightAltIcon className={classes.arrow} color="primary" />
+          <SortIcon color="primary" />
+        </ToggleButton>
+      </CustomTooltip> */}
+      <ToggleButton
+        value="highLow"
+        aria-label="sort high to low"
+        className={classes.toggleBtn}
+        title="Sort high to low"
+      >
+        <ArrowRightAltIcon className={classes.arrow} color="primary" />
+        <SortIcon color="primary" />
+      </ToggleButton>
+      <ToggleButton
+        value="lowHigh"
+        aria-label="sort low to high"
+        className={classes.toggleBtn}
+        title="Sort low to high"
+      >
+        <ArrowRightAltIcon className={classes.arrow2} color="primary" />
+        <SortIcon className={classes.icon} color="primary" />
+      </ToggleButton>
+      <ToggleButton value="right" aria-label="right aligned">
+        <SortByAlphaIcon color="primary" />
+      </ToggleButton>
+    </ToggleButtonGroup>
+    /*      <FormControl
       className={classes.formControl}
       variant="outlined"
     >
@@ -65,7 +122,7 @@ const Sort = ({ sortStatus, setSortStatus }) => {
           </option>
         ))}
       </Select>
-    </FormControl>
+    </FormControl> */
   );
 };
 

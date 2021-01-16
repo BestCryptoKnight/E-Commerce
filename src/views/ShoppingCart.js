@@ -1,4 +1,4 @@
-import Cart from '../components/Cart';
+import { Cart } from '../components';
 
 const ShoppingCart = () => (
   <main className="main">

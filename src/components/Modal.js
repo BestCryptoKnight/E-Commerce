@@ -1,6 +1,7 @@
 import { IconButton } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import { useCallback, useEffect, useRef } from 'react';
+import CustomTooltip from './CustomTooltip';
 
 const Modal = ({ showModal, setShowModal, img }) => {
   const modalRef = useRef(null);
@@ -35,16 +36,18 @@ const Modal = ({ showModal, setShowModal, img }) => {
     <section className="modal" onClick={handleClick}>
       <div ref={modalRef} className="modal-content">
         <img src={img} className="image" alt="Product in larger size" />
-        <IconButton
-          type="button"
-          variant="outlined"
-          color="secondary"
-          onClick={() => setShowModal(false)}
-          className="modalBtn"
-          aria-label="Close modal"
-        >
-          <CloseIcon />
-        </IconButton>
+        <CustomTooltip title="Close modal">
+          <IconButton
+            type="button"
+            variant="outlined"
+            color="secondary"
+            onClick={() => setShowModal(false)}
+            className="modalBtn"
+            aria-label="Close modal"
+          >
+            <CloseIcon />
+          </IconButton>
+        </CustomTooltip>
       </div>
     </section>
   );

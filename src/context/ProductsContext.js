@@ -9,7 +9,6 @@ import productsReducer from './productsReducer';
 
 /* const url = 'https://fakestoreapi.com/products/'; */
 const url = 'https://fakestoreapi.com/products?limit=';
-const urlProducts = 'https://fakestoreapi.com/products/categories';
 
 const ProductsContext = createContext(null);
 
@@ -20,10 +19,10 @@ const initialProductState = {
 
 const ProductsProvider = ({ children }) => {
   const [state, dispatch] = useReducer(productsReducer, initialProductState);
-  const [categories, setCategories] = useState(['All']);
+  const [query, setQuery] = useState('');
 
   useEffect(() => {
-    const fetchProducts = async (limitNumber = 5) => {
+    const fetchProducts = async (limitNumber = 15) => {
       dispatch({ type: 'loading' });
       try {
         const response = await fetch(`${url}${limitNumber}`);
@@ -37,31 +36,19 @@ const ProductsProvider = ({ children }) => {
         /* setLoading(false); */
       }
     };
-    fetchProducts(15);
+    fetchProducts();
   }, []);
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await fetch(urlProducts);
-        const data = await response.json();
-
-        if (data) {
-          setCategories((prevCat) => [...prevCat, ...data]);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchCategories();
-  }, []);
-
-  /* const products = (id) => {
-    dispatch({ type: 'increase', payload: id });
+  /*  const filterProducts = () => {
+    const filtered = products.filter((product) =>
+      country.name.toLowerCase().includes(input.toLowerCase())
+    );
+    setInput(input);
+    setProducts(filtered);
   }; */
 
   return (
-    <ProductsContext.Provider value={{ ...state }}>
+    <ProductsContext.Provider value={{ ...state, query, setQuery }}>
       {children}
     </ProductsContext.Provider>
   );

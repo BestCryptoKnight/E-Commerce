@@ -7,23 +7,19 @@ const useStyles = makeStyles((theme) => ({
   },
   slider: {
     marginBottom: theme.spacing(1.25),
+    fontSize: '0.925rem',
   },
 }));
 
-const PriceSlider = ({
-  min = 10,
-  max = 150,
-  filteredPrice,
-  setFilteredPrice,
-}) => {
+const PriceSlider = ({ min = 10, max = 150, filterPrice, setFilterPrice }) => {
   const classes = useStyles();
   // const [value, setValue] = useState([min, max]);
   // const {} = useProductsContext();
 
-  const valuetext = (filteredPrice) => `${filteredPrice} €`;
+  const valuetext = (filterPrice) => `${filterPrice} €`;
 
   const handleChange = (event, newValue) => {
-    setFilteredPrice(newValue);
+    setFilterPrice(newValue);
   };
 
   const marks = [
@@ -47,7 +43,7 @@ const PriceSlider = ({
       </Typography>
       <Slider
         className={classes.slider}
-        value={filteredPrice}
+        value={filterPrice}
         onChange={handleChange}
         valueLabelDisplay="auto"
         aria-labelledby="range-slider"
@@ -55,7 +51,10 @@ const PriceSlider = ({
         marks={marks}
         min={min}
         max={max}
-        step={10}
+        step={1}
+        classes={{
+          markLabel: classes.slider,
+        }}
       />
     </div>
   );

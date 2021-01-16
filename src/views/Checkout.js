@@ -1,4 +1,4 @@
-import CheckoutSteps from '../components/CheckoutSteps';
+import { CheckoutSteps } from '../components';
 
 const Checkout = () => (
   <main className="main">

@@ -1,6 +1,14 @@
-import { Button, Container, Divider, Grid, Paper } from '@material-ui/core';
+import {
+  Button,
+  Container,
+  Divider,
+  Grid,
+  Paper,
+  Typography,
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useCallback, useEffect, useState } from 'react';
+import { Chips, PriceSlider, Product, Sort, Spinner } from '../components';
 import { useProductsContext } from '../context/ProductsContext';
 import {
   getPrice,
@@ -8,11 +16,6 @@ import {
   sortHighLow,
   sortLowHigh,
 } from '../utils/productSortHelpers';
-import Chips from './Chips';
-import PriceSlider from './PriceSlider';
-import Product from './Product';
-import Sort from './Sort';
-import Spinner from './Spinner';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,9 +42,10 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     display: 'flex',
     justifyContent: 'space-around',
+    alignItems: 'center',
     flexWrap: 'wrap',
     listStyle: 'none',
-    padding: theme.spacing(1, 4),
+    padding: theme.spacing(1.5, 4),
     margin: 0,
   },
   divider: {
@@ -56,8 +60,8 @@ const useStyles = makeStyles((theme) => ({
 
 const Products = () => {
   /* const [loading, setLoading] = useState(false); */
-  const { products, loading } = useProductsContext();
-  const [filteredPrice, setFilteredPrice] = useState([0, Infinity]);
+  const { products, loading, query } = useProductsContext();
+  const [filterPrice, setFilterPrice] = useState([0, Infinity]);
   const [filteredProducts, setFilteredProducts] = useState([...products]);
   const [sortStatus, setSortStatus] = useState('');
   const classes = useStyles();
@@ -67,15 +71,15 @@ const Products = () => {
     setFilteredProducts(
       products.filter(
         (product) =>
-          product.price >= filteredPrice[0] && product.price <= filteredPrice[1]
+          product.price >= filterPrice[0] && product.price <= filterPrice[1]
       )
     );
-  }, [products, filteredPrice]);
+  }, [products, filterPrice]);
 
-  const [maxRange, setMaxRange] = useState(5);
+  const [maxRange, setMaxRange] = useState(10);
 
   const showMoreProducts = useCallback(() => {
-    setMaxRange((prevRange) => prevRange + 5);
+    setMaxRange((prevRange) => prevRange + 10);
   }, []);
 
   // const switchStatement = useCallback(() => {
@@ -161,42 +165,55 @@ const Products = () => {
       ) : (
         <>
           <Container disableGutters>
-            <Chips products={products} setFilteredPrice={setFilteredPrice} />
+            <Chips
+              products={products}
+              setFilteredProducts={setFilteredProducts}
+            />
           </Container>
           <Container disableGutters>
-            <Paper component="ul" className={classes.paper}>
+            <Paper className={classes.paper}>
               <PriceSlider
                 min={minPrice}
                 max={maxPrice}
-                filteredPrice={filteredPrice}
-                setFilteredPrice={setFilteredPrice}
+                filterPrice={filterPrice}
+                setFilterPrice={setFilterPrice}
               />
               <Divider
                 orientation="vertical"
                 flexItem
                 className={classes.divider}
               />
-              <Sort sortStatus={sortStatus} setSortStatus={setSortStatus} />
+              <div className="sortContainer">
+                <Typography gutterBottom align="center">
+                  Sort by price:
+                </Typography>
+                <Sort sortStatus={sortStatus} setSortStatus={setSortStatus} />
+              </div>
             </Paper>
           </Container>
           <Grid container justify="center" spacing={4}>
-            {filteredProducts.slice(0, maxRange).map((product) => (
-              <Grid key={product.id} item xs={12} sm={6} lg={4}>
-                <Product {...product} />
-              </Grid>
-            ))}
+            {filteredProducts.slice(0, maxRange).map(
+              (product) =>
+                product.title.toLowerCase().includes(query.toLowerCase()) && (
+                  <Grid key={product.id} item xs={12} sm={6} lg={4}>
+                    <Product {...product} />
+                  </Grid>
+                )
+            )}
           </Grid>
         </>
       )}
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={showMoreProducts}
-        aria-label="Show more"
-        // disabled
-      >
-        Show More
-      </Button>
+      {Boolean(filteredProducts.length) && (
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={showMoreProducts}
+          aria-label="Show more"
+          disabled={maxRange >= filteredProducts.length}
+        >
+          Show More
+        </Button>
+      )}
     </Container>
   );
 };

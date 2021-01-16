@@ -11,9 +11,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Menu as MenuIcon, Shop, ShoppingCart } from '@material-ui/icons';
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import { CustomTooltip, Search } from '../components';
 import { useCartContext } from '../context/CartContext';
-import CustomTooltip from './CustomTooltip';
-import NavList from './NavList';
 
 const drawerWidth = 0;
 const menuItems = [
@@ -112,7 +111,8 @@ const Navbar = () => {
             E-Shop
           </Typography>
         </CustomTooltip>
-        <NavList />
+        <Search />
+        {/* <NavList /> */}
         <div className={classes.button}>
           <CustomTooltip title="Show cart items">
             <IconButton
@@ -124,7 +124,7 @@ const Navbar = () => {
                 background: 'rgba(227, 212, 152, 0.6)',
               }}
             >
-              <Badge badgeContent={amount} color="secondary">
+              <Badge badgeContent={amount} color="secondary" showZero>
                 <ShoppingCart />
               </Badge>
             </IconButton>
