@@ -165,12 +165,7 @@ const Product = ({ id, title, price, description, category, image, qty }) => {
             addToCart(id, title, price, description, category, image, qty)
           }
         >
-          <Typography
-            variant="button"
-            display="block"
-            color="textPrimary"
-            aria-label="Add to Cart"
-          >
+          <Typography variant="button" display="block" color="textPrimary">
             Add to cart
           </Typography>
           <AddShoppingCart />

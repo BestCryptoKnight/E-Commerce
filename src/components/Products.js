@@ -108,7 +108,7 @@ const Products = () => {
       case 'highLow':
         setFilteredProducts([...filteredProducts].sort(sortHighLow));
         break;
-      case 'category':
+      case 'alphabetically':
         setFilteredProducts([...filteredProducts].sort(sortAlphabetically));
         break;
       default:
@@ -185,7 +185,7 @@ const Products = () => {
               />
               <div className="sortContainer">
                 <Typography gutterBottom align="center">
-                  Sort by price:
+                  {/* Sort: */}
                 </Typography>
                 <Sort sortStatus={sortStatus} setSortStatus={setSortStatus} />
               </div>

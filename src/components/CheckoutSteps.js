@@ -155,8 +155,6 @@ const CheckoutSteps = () => {
       </div>
     </div>
   );
-
-  return <h4>Tere</h4>;
 };
 
 export default CheckoutSteps;

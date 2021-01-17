@@ -15,22 +15,20 @@ const useStyles = makeStyles((theme) => ({
     margin: 0,
   },
   activeChip: {
+    background: `${fade(theme.palette.primary.dark, 0.25)} !important`,
     margin: theme.spacing(0.5),
     fontSize: '0.925rem',
-    backgroundColor: fade(theme.palette.primary.dark, 0.25),
+    zIndex: 100,
   },
   chip: {
     margin: theme.spacing(0.5),
     fontSize: '0.925rem',
   },
-  active: {
-    backgroundColor: 'red',
-  },
 }));
 
 const Chips = ({ products, setFilteredProducts }) => {
-  const classes = useStyles();
   const [value, setValue] = useState('All');
+  const classes = useStyles();
 
   const uniqueCategories = [
     ...new Set(products.map((product) => product.category)),
@@ -53,23 +51,15 @@ const Chips = ({ products, setFilteredProducts }) => {
   return (
     <Paper component="ul" className={classes.root}>
       {categoriesSorted.map((category) => (
-        <li
-          key={category}
-          className={`${value === category ? classes.active : ''}`}
-        >
+        <li key={category}>
           <CustomTooltip title={`Show ${category}`}>
             <Chip
               avatar={<Avatar>{category.charAt(0).toUpperCase()}</Avatar>}
               label={category}
               onClick={() => handleClick(category)}
-              className={`${
-                value === category ? classes.activeChip : classes.chip
-              }`}
+              className={value === category ? classes.activeChip : classes.chip}
               variant="outlined"
               color="primary"
-              classes={{
-                label: classes.chip,
-              }}
             />
           </CustomTooltip>
         </li>

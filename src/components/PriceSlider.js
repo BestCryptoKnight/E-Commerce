@@ -13,8 +13,6 @@ const useStyles = makeStyles((theme) => ({
 
 const PriceSlider = ({ min = 10, max = 150, filterPrice, setFilterPrice }) => {
   const classes = useStyles();
-  // const [value, setValue] = useState([min, max]);
-  // const {} = useProductsContext();
 
   const valuetext = (filterPrice) => `${filterPrice} €`;
 
