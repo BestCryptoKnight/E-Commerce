@@ -43,10 +43,17 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-around',
     alignItems: 'center',
+    // gap: '2em',
     flexWrap: 'wrap',
     listStyle: 'none',
-    padding: theme.spacing(1.5, 4),
-    margin: 0,
+    padding: theme.spacing(1, 4),
+    // margin: theme.spacing(1.5, 0),
+    [theme.breakpoints.down('xs')]: {
+      // justifyContent: 'space-between',
+      paddingRight: theme.spacing(1.5),
+      gap: '0em',
+      // padding: theme.spacing(1.5, 3.5),
+    },
   },
   divider: {
     [theme.breakpoints.down('xs')]: {
@@ -81,23 +88,6 @@ const Products = () => {
   const showMoreProducts = useCallback(() => {
     setMaxRange((prevRange) => prevRange + 10);
   }, []);
-
-  // const switchStatement = useCallback(() => {
-  //   switch (sortStatus) {
-  //     case 'lowHigh':
-  //       setFilteredProducts([...filteredProducts].sort(sortLowHigh));
-  //       break;
-  //     case 'highLow':
-  //       const sorted = [...filteredProducts].sort(sortHighLow);
-  //       setFilteredProducts(sorted);
-  //       break;
-  //     case 'category':
-  //       setFilteredProducts([...filteredProducts].sort(sortAlphabetically));
-  //       break;
-  //     default:
-  //       setFilteredProducts(filteredProducts);
-  //   }
-  // }, [filteredProducts, sortStatus]);
 
   // sort components
   useEffect(() => {
@@ -172,6 +162,11 @@ const Products = () => {
           </Container>
           <Container disableGutters>
             <Paper className={classes.paper}>
+              <Typography /* gutterBottom  */ align="center">Sort:</Typography>
+              <Sort sortStatus={sortStatus} setSortStatus={setSortStatus} />
+            </Paper>
+            <Divider />
+            <Paper className={classes.paper}>
               <PriceSlider
                 min={minPrice}
                 max={maxPrice}
@@ -183,7 +178,7 @@ const Products = () => {
                 flexItem
                 className={classes.divider}
               />
-              <div className="sortContainer">
+              <div>
                 <Typography gutterBottom align="center">
                   {/* Sort: */}
                 </Typography>

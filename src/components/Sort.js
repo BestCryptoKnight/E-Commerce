@@ -1,18 +1,19 @@
 import { FormControl, InputLabel, Select } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import SortIcon from '@material-ui/icons/Sort';
-
-const selectItems = [
-  { id: 0, value: '', label: '' },
-  { id: 1, value: 'highLow', label: 'Price high - low' },
-  { id: 2, value: 'lowHigh', label: 'Price low - high' },
-  { id: 3, value: 'category', label: 'Category' },
-];
+import SortByAlphaIcon from '@material-ui/icons/SortByAlpha';
+import ToggleButton from '@material-ui/lab/ToggleButton';
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
+import selectItems from '../utils';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
-    margin: theme.spacing(1),
+    marginLeft: theme.spacing(1),
     minWidth: 160,
+    [theme.breakpoints.down('xs')]: {
+      display: 'none',
+    },
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
@@ -34,7 +35,17 @@ const useStyles = makeStyles((theme) => ({
     transform: 'rotate(-90deg) translateY(36%)',
   },
   toggleBtn: {
+    padding: theme.spacing(0, 1.25, 0, 0),
     paddingLeft: 0,
+  },
+  btnGroup: {
+    // width: '90vw',
+    [theme.breakpoints.up('sm')]: {
+      display: 'none',
+    },
+    // [theme.breakpoints.only('xs')]: {
+    //   display: 'block',
+    // },
   },
 }));
 
@@ -59,11 +70,12 @@ const Sort = ({ sortStatus, setSortStatus }) => {
 
   return (
     <>
-      {/*       <ToggleButtonGroup
+      <ToggleButtonGroup
         value={sortStatus}
         exclusive
         onChange={handleSort}
         aria-label="sort buttons"
+        className={classes.btnGroup}
       >
         <ToggleButton
           value="highLow"
@@ -90,11 +102,11 @@ const Sort = ({ sortStatus, setSortStatus }) => {
         >
           <SortByAlphaIcon color="primary" />
         </ToggleButton>
-      </ToggleButtonGroup> */}
+      </ToggleButtonGroup>
       <FormControl
         className={classes.formControl}
-        variant="outlined"
-        /* fullWidth */ margin="dense"
+        variant="outlined" /* margin="dense" */
+        /* fullWidth */
       >
         <InputLabel htmlFor="select-sort">Sort</InputLabel>
         <Select
@@ -121,16 +133,3 @@ const Sort = ({ sortStatus, setSortStatus }) => {
 };
 
 export default Sort;
-
-{
-  /* <div>
-        <label htmlFor="filter-select">Choose to filter products:</label>
-        <select onChange={handleStatus} name="filter" id="filter-select">
-          {categories.map((category) => (
-            <option key={category} value={category}>
-              {category}
-            </option>
-          ))}
-        </select>
-      </div> */
-}

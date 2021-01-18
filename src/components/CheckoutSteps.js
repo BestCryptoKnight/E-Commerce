@@ -1,41 +1,41 @@
-import {
-  Button,
-  Step,
-  StepButton,
-  Stepper,
-  Typography,
-} from '@material-ui/core';
+import { Button, Step, StepLabel, Stepper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import { useState } from 'react';
+import { AddressForm, Payment, Successful } from '../components';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
   },
-  button: {
+  backButton: {
     marginRight: theme.spacing(1),
   },
-  completed: {
-    display: 'inline-block',
+  instructionContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: theme.spacing(1),
+    padding: theme.spacing(1),
+  },
+  forms: {
+    margin: theme.spacing(1, 'auto'),
+    padding: theme.spacing(1, 2),
+    maxWidth: 567,
   },
   instructions: {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
+    margin: theme.spacing(1, 0),
   },
 }));
 
-function getSteps() {
-  return ['Billing information', 'Payment', 'Confirmation'];
-}
+const getSteps = () => ['Billing information', 'Payment'];
 
 function getStepContent(step) {
   switch (step) {
     case 0:
       return 'Step 1: Select billing information...';
     case 1:
-      return 'Step 2: Pay for you products?';
-    case 2:
-      return 'Step 3: Confirm everything!';
+      return 'Step 2: Payment details';
     default:
       return 'Unknown step';
   }
@@ -49,111 +49,70 @@ const CheckoutSteps = () => {
   const steps = getSteps();
 
   const timeout = setTimeout(() => {
-    setIsFinished(false);
+    setIsFinished(true);
   }, 2000);
 
   const totalSteps = () => steps.length;
 
-  const completedSteps = () => Object.keys(completed).length;
+  const isLastStep = () => activeStep === steps.length - 1;
 
-  const isLastStep = () => activeStep === totalSteps() - 1;
-
-  const allStepsCompleted = () => completedSteps() === totalSteps();
+  const isLastStep2 = activeStep === steps.length - 1;
 
   const handleNext = () => {
-    const newActiveStep =
-      isLastStep() && !allStepsCompleted()
-        ? // It's the last step, but not all steps have been completed,
-          // find the first step that has been completed
-          steps.findIndex((step, i) => !(i in completed))
-        : activeStep + 1;
-    setActiveStep(newActiveStep);
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleStep = (step) => () => {
-    setActiveStep(step);
-  };
-
-  const handleComplete = () => {
-    const newCompleted = completed;
-    newCompleted[activeStep] = true;
-    setCompleted(newCompleted);
-    handleNext();
-  };
-
   const handleReset = () => {
     setActiveStep(0);
-    setCompleted({});
   };
 
   return (
-    <div className={classes.root}>
-      <Stepper nonLinear activeStep={activeStep}>
-        {steps.map((label, index) => (
+    <section className={classes.root}>
+      <Stepper activeStep={activeStep} alternativeLabel>
+        {steps.map((label) => (
           <Step key={label}>
-            <StepButton
-              onClick={handleStep(index)}
-              completed={completed[index]}
-            >
-              {label}
-            </StepButton>
+            <StepLabel>{label}</StepLabel>
           </Step>
         ))}
       </Stepper>
-      <div>
-        {allStepsCompleted() ? (
+      {/* {activeStep >= totalSteps() && } */}
+      <div className={classes.forms}>
+        {activeStep === 0 ? <AddressForm /> : <Payment />}
+      </div>
+      {/* <Divider /> */}
+      <div className={classes.instructionContainer}>
+        {isLastStep() ? (
           <div>
-            <Typography className={classes.instructions}>
-              All steps completed - you&apos;re finished
-            </Typography>
-            <Button onClick={handleReset}>Reset</Button>
+            <Successful handleReset={handleReset} />
+            {/*             <Typography className={classes.instructions}>
+              Thank you for you purchase!
+            </Typography> */}
           </div>
         ) : (
           <div>
-            <Typography className={classes.instructions}>
-              {getStepContent(activeStep)}
-            </Typography>
-            <div>
-              <Button
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                className={classes.button}
-              >
-                Back
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleNext}
-                className={classes.button}
-              >
-                Next
-              </Button>
-              {activeStep !== steps.length &&
-                (completed[activeStep] ? (
-                  <Typography variant="caption" className={classes.completed}>
-                    Step {activeStep + 1} already completed
-                  </Typography>
-                ) : (
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleComplete}
-                  >
-                    {completedSteps() === totalSteps() - 1
-                      ? 'Finish'
-                      : 'Complete Step'}
-                  </Button>
-                ))}
-            </div>
+            <Button
+              disabled={activeStep === 0}
+              onClick={handleBack}
+              className={classes.backButton}
+            >
+              Back
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleNext}
+              endIcon={<ArrowForwardIcon />}
+            >
+              {isLastStep() ? 'Pay' : 'Next'}
+            </Button>
           </div>
         )}
       </div>
-    </div>
+    </section>
   );
 };
 

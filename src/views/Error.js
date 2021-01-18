@@ -14,6 +14,9 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3),
     margin: theme.spacing(6, 0),
     whiteSpace: 'nowrap',
+    [theme.breakpoints.only('xs')]: {
+      width: '96vw',
+    },
   },
 }));
 
