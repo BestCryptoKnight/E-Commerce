@@ -21,11 +21,8 @@ const initialCartState = {
 const CartProvider = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, initialCartState);
   const [alert, setAlert] = useState({ show: false, type: '', msg: '' });
-  /* const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [filterStatus, setFilterStatus] = useState('all');
-  const [filteredProducts, setFilteredProducts] = useState([]);
-  const [categories, setCategories] = useState(['all']); */
+
+  // const [categories, setCategories] = useState(['all']);
 
   /* useEffect(() => {
     const fetchCategories = async () => {
@@ -48,20 +45,6 @@ const CartProvider = ({ children }) => {
 
   const showAlert = (show = false, type = '', msg = '') =>
     setAlert({ show, type, msg });
-
-  /*   const filterCategories = (category) => {
-    if (category === 'all') return;
-    setFilteredProducts(products.filter((product) => product[category]));
-  }; */
-
-  /* useEffect(() => {
-    const filterCategories = (category) => {
-      category === 'all'
-        ? setFilteredProducts(products)
-        : setFilteredProducts(products.filter((product) => product[category]));
-    };
-    filterCategories();
-  }, [products, filterStatus]); */
 
   const addToCart = (id, title, price, description, category, image, qty) => {
     dispatch({
@@ -103,7 +86,6 @@ const CartProvider = ({ children }) => {
     <CartContext.Provider
       value={{
         ...state,
-        /*categories*/
         addToCart,
         clearCart,
         alert,

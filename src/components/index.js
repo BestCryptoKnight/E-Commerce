@@ -11,6 +11,7 @@ export { default as PriceSlider } from './PriceSlider';
 export { default as Product } from './Product';
 export { default as Products } from './Products';
 export { default as Search } from './Search';
-export { default as Sort } from './Sort';
+export { default as SortButtons } from './SortButtons';
+export { default as SortSelect } from './SortSelect';
 export { default as Spinner } from './Spinner';
 export { default as Successful } from './Successful';

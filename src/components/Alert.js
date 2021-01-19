@@ -24,7 +24,10 @@ const useStyles = makeStyles((theme) => ({
 
 const IconAlert = () => {
   const classes = useStyles();
-  const { alert, setAlert } = useCartContext();
+  const {
+    alert: { type, msg },
+    setAlert,
+  } = useCartContext();
 
   useEffect(() => {
     const timeout = setTimeout(
@@ -35,7 +38,7 @@ const IconAlert = () => {
   }, [setAlert]);
 
   const iconPick =
-    alert.type === 'success' ? (
+    type === 'success' ? (
       <CheckIcon fontSize="inherit" />
     ) : (
       <ErrorIcon fontSize="inherit" />
@@ -43,8 +46,8 @@ const IconAlert = () => {
 
   return (
     <div className={classes.root}>
-      <Alert icon={iconPick} severity={alert.type} variant="filled">
-        {alert.msg}!
+      <Alert icon={iconPick} severity={type} variant="filled">
+        {msg}!
       </Alert>
     </div>
   );

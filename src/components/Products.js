@@ -3,12 +3,18 @@ import {
   Container,
   Divider,
   Grid,
+  Hidden,
   Paper,
-  Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useCallback, useEffect, useState } from 'react';
-import { Chips, PriceSlider, Product, Sort, Spinner } from '../components';
+import {
+  Chips,
+  PriceSlider,
+  Product,
+  SortSelect,
+  Spinner,
+} from '../components';
 import { useProductsContext } from '../context/ProductsContext';
 import {
   getPrice,
@@ -18,9 +24,6 @@ import {
 } from '../utils/productSortHelpers';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
   container: {
     flexGrow: 1,
     backgroundColor: '#f2f3f3',
@@ -31,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     minHeight: '100vh',
     width: '100%',
-    gap: '0.7em',
+    gap: '0.6em',
     [theme.breakpoints.up('md')]: {
       padding: theme.spacing(1, 12),
     },
@@ -43,22 +46,10 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-around',
     alignItems: 'center',
-    // gap: '2em',
     flexWrap: 'wrap',
     listStyle: 'none',
     padding: theme.spacing(1, 4),
     // margin: theme.spacing(1.5, 0),
-    [theme.breakpoints.down('xs')]: {
-      // justifyContent: 'space-between',
-      paddingRight: theme.spacing(1.5),
-      gap: '0em',
-      // padding: theme.spacing(1.5, 3.5),
-    },
-  },
-  divider: {
-    [theme.breakpoints.down('xs')]: {
-      display: 'none',
-    },
   },
 }));
 
@@ -161,11 +152,19 @@ const Products = () => {
             />
           </Container>
           <Container disableGutters>
-            <Paper className={classes.paper}>
-              <Typography /* gutterBottom  */ align="center">Sort:</Typography>
-              <Sort sortStatus={sortStatus} setSortStatus={setSortStatus} />
-            </Paper>
-            <Divider />
+            {/* <Hidden smUp>
+              <Paper className={classes.paper}>
+                <SortButtons
+                  sortStatus={sortStatus}
+                  setSortStatus={setSortStatus}
+                />
+                <SortSelect
+                  sortStatus={sortStatus}
+                  setSortStatus={setSortStatus}
+                />
+              </Paper>
+            </Hidden> */}
+            {/* <Divider light /> */}
             <Paper className={classes.paper}>
               <PriceSlider
                 min={minPrice}
@@ -173,20 +172,32 @@ const Products = () => {
                 filterPrice={filterPrice}
                 setFilterPrice={setFilterPrice}
               />
-              <Divider
-                orientation="vertical"
-                flexItem
-                className={classes.divider}
-              />
-              <div>
-                <Typography gutterBottom align="center">
-                  {/* Sort: */}
-                </Typography>
-                <Sort sortStatus={sortStatus} setSortStatus={setSortStatus} />
-              </div>
+              <Hidden only="xs">
+                <Divider orientation="vertical" flexItem />
+                <SortSelect
+                  sortStatus={sortStatus}
+                  setSortStatus={setSortStatus}
+                />
+              </Hidden>
             </Paper>
+            <Divider light />
+            <Hidden smUp>
+              <Paper className={classes.paper}>
+                {/* <Typography>Sort:</Typography> */}
+                <SortSelect
+                  sortStatus={sortStatus}
+                  setSortStatus={setSortStatus}
+                  fullWidth={true}
+                  margin="dense"
+                />
+                {/* <SortSelect
+                  sortStatus={sortStatus}
+                  setSortStatus={setSortStatus}
+                /> */}
+              </Paper>
+            </Hidden>
           </Container>
-          <Grid container justify="center" spacing={4}>
+          <Grid container justify="center" spacing={3}>
             {filteredProducts.slice(0, maxRange).map(
               (product) =>
                 product.title.toLowerCase().includes(query.toLowerCase()) && (

@@ -17,36 +17,66 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#f2f3f3',
     minHeight: '93vh',
   },
-  title: {
-    margin: theme.spacing(2, 0),
-  },
+
   titleContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'relative',
-    gap: theme.spacing(1),
+    // display: 'flex',
+    // alignItems: 'center',
+    // padding: theme.spacing(0, 1),
+    // maxWidth: 960,
+    // display: 'flex',
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    // position: 'relative',
+    // gap: theme.spacing(1),
+    // [theme.breakpoints.down('xs')]: {
+    //   display: 'flex',
+    //   justifyContent: 'center',
+    //   alignItems: 'center',
+    // },
+  },
+  title: {
+    // display: 'flex',
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    margin: theme.spacing(1.75, 0),
+    textAlign: 'right',
+    [theme.breakpoints.only('xs')]: {
+      textAlign: 'center',
+      fontSize: '1.75rem',
+    },
+  },
+  itemAmount: {
+    color: theme.palette.primary.dark,
+    fontSize: '1.325rem',
+    // margin: theme.spacing(0, 0, 1, 0),
+    [theme.breakpoints.only('xs')]: {
+      // textAlign: 'center',
+      fontSize: '1.2rem',
+    },
   },
   backButton: {
-    position: 'absolute',
-    top: '50%',
-    left: '160%',
-    transform: 'translate(0,-50%)',
-    [theme.breakpoints.up('lg')]: {
-      left: '187%',
-    },
-    [theme.breakpoints.down('sm')]: {
-      left: '119%',
-    },
+    // position: 'absolute',
+    // top: '50%',
+    // left: '160%',
+    // transform: 'translate(0,-50%)',
+    // [theme.breakpoints.up('lg')]: {
+    //   left: '187%',
+    // },
+    // [theme.breakpoints.down('sm')]: {
+    //   left: '119%',
+    // },
     [theme.breakpoints.down('xs')]: {
       display: 'none',
     },
   },
-  amount: {
-    /* color: theme.palette.primary.dark, */
-    fontSize: '1.5rem',
-    /* margin: theme.spacing(0, 0, 1), */
+  backContainer: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    [theme.breakpoints.down('xs')]: {
+      display: 'none',
+    },
   },
+
   emptyButton: {
     minWidth: '150px',
     [theme.breakpoints.down('xs')]: {
@@ -100,6 +130,7 @@ const Cart = () => {
     increase,
     decrease,
     removeItem,
+    amount,
   } = useCartContext();
   const classes = useStyles();
   const history = useHistory();
@@ -152,7 +183,6 @@ const Cart = () => {
         </Typography>
         <Grid
           container
-          direction="row"
           justify="space-between"
           align="center"
           className={classes.btnContainer}
@@ -189,23 +219,35 @@ const Cart = () => {
 
   return (
     <Container className={classes.container}>
-      <div className={classes.titleContainer}>
-        <Typography className={classes.title} variant="h4" gutterBottom>
-          Your Shopping Cart
-        </Typography>
-        <Button
-          className={classes.backButton}
-          onClick={handleClick}
-          size="medium"
-          type="button"
-          variant="contained"
-          color="primary"
-          startIcon={<ArrowBackIcon />}
-          aria-label="Go back"
-        >
-          Go back
-        </Button>
-      </div>
+      <Grid
+        container
+        alignItems="center"
+        justify="center"
+        className={classes.titleContainer}
+      >
+        <Grid item xs={12} sm={8}>
+          <Typography className={classes.title} variant="h4" gutterBottom>
+            Your Shopping Cart {}
+            <Typography variant="overline" className={classes.itemAmount}>
+              ({amount} items)
+            </Typography>
+          </Typography>
+        </Grid>
+        <Grid item xs={false} sm={4} className={classes.backContainer}>
+          <Button
+            className={classes.backButton}
+            onClick={handleClick}
+            size="medium"
+            type="button"
+            variant="contained"
+            color="primary"
+            startIcon={<ArrowBackIcon />}
+            aria-label="Go back"
+          >
+            Go back
+          </Button>
+        </Grid>
+      </Grid>
       {cart.length ? renderCart() : renderEmptyCart()}
     </Container>
   );

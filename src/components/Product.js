@@ -9,7 +9,7 @@ import {
   Divider,
   Grid,
   IconButton,
-  Typography,
+  Typography
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { AddShoppingCart } from '@material-ui/icons';
@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Product = ({ id, title, price, description, category, image, qty }) => {
-  const [showModal, setShowModal] = useState();
+  const [showModal, setShowModal] = useState(false);
   const { addToCart } = useCartContext();
   const classes = useStyles();
 
@@ -64,7 +64,6 @@ const Product = ({ id, title, price, description, category, image, qty }) => {
 
   return (
     <Card className={classes.root}>
-      {/* <Link to={`/product/${id}`}> */}
       <CardMedia
         className={classes.media}
         classes={{
@@ -74,7 +73,6 @@ const Product = ({ id, title, price, description, category, image, qty }) => {
         title={title}
         onClick={() => setShowModal(!showModal)}
       />
-      {/* </Link> */}
       <CardContent className={classes.cardContent}>
         {/* <div className={classes.titleContainer}> */}
         <Grid container align="center" spacing={1}>
@@ -109,9 +107,6 @@ const Product = ({ id, title, price, description, category, image, qty }) => {
                 </Typography>
               </AccordionDetails>
             </Accordion>
-            {/* <Typography variant="h5" component="h2">
-              {title}
-            </Typography> */}
           </Grid>
           {/* <Grid item xs={12}>
             <Divider />
@@ -138,24 +133,11 @@ const Product = ({ id, title, price, description, category, image, qty }) => {
             >
               €{price.toFixed(2)}
             </Typography>
-            {/*             <Typography gutterBottom  variant="h6" component="p">
-              {category}
-            </Typography> */}
           </Grid>
-
           {/* <Divider light variant="fullWidth" flexItem /> */}
         </Grid>
         {/* </div> */}
         <Divider />
-        {/*       <Typography
-          gutterBottom
-          variant="body2"
-          component="p"
-          color="textSecondary"
-          className={classes.description}
-        >
-          {description}
-        </Typography> */}
       </CardContent>
       {/* <Divider /> */}
       <CardActions disableSpacing className={classes.cardActions}>

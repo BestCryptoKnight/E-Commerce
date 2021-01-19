@@ -2,45 +2,19 @@ import {
   AppBar,
   Badge,
   IconButton,
-  Menu,
-  MenuItem,
   Toolbar,
   Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { Menu as MenuIcon, Shop, ShoppingCart } from '@material-ui/icons';
-import { useState } from 'react';
+import { Shop, ShoppingCart } from '@material-ui/icons';
 import { Link, NavLink } from 'react-router-dom';
 import { CustomTooltip, Search } from '../components';
 import { useCartContext } from '../context/CartContext';
 
-const drawerWidth = 0;
-const menuItems = [
-  {
-    id: 0,
-    label: 'Home',
-    path: '/',
-  },
-  {
-    id: 1,
-    label: 'Products',
-    path: '/products',
-  },
-  {
-    id: 2,
-    label: 'About',
-    path: '/about',
-  },
-];
-
 const useStyles = makeStyles((theme) => ({
   appBar: {
     boxShadow: 'none',
-    borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
-    [theme.breakpoints.up('sm')]: {
-      width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth,
-    },
+    borderBottom: '1px solid rgba(0, 0, 0, 0.15)',
   },
   toolbar: {
     display: 'flex',
@@ -51,54 +25,23 @@ const useStyles = makeStyles((theme) => ({
       justifyContent: 'space-around',
     },
   },
-  menuButton: {
-    marginRight: theme.spacing(1),
-    [theme.breakpoints.up('sm')]: {
-      display: 'none',
-    },
-  },
-
   title: {
     alignItems: 'center',
     display: 'flex',
     textDecoration: 'none',
+    [theme.breakpoints.only('xs')]: {
+      fontSize: '1.4rem',
+    },
   },
 }));
 
 const Navbar = () => {
   const { amount } = useCartContext();
-  const [anchorEl, setAnchorEl] = useState(null);
   const classes = useStyles();
-
-  const handleClick = (event) => setAnchorEl(event.currentTarget);
-
-  const handleClose = () => setAnchorEl(null);
 
   return (
     <AppBar position="sticky" className={classes.appBar} color="inherit">
       <Toolbar className={classes.toolbar}>
-        <IconButton
-          edge="start"
-          className={classes.menuButton}
-          onClick={handleClick}
-          color="inherit"
-          aria-label="menu"
-        >
-          <MenuIcon />
-        </IconButton>
-        <Menu
-          id="simple-menu"
-          anchorEl={anchorEl}
-          keepMounted
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-        >
-          {menuItems.map(({ id, label, path }) => (
-            <MenuItem key={id} component={Link} to={path} onClick={handleClose}>
-              {label}
-            </MenuItem>
-          ))}
-        </Menu>
         <CustomTooltip title="To homepage">
           <Typography
             component={Link}
