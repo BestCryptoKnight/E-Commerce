@@ -46,10 +46,8 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-around',
     alignItems: 'center',
-    flexWrap: 'wrap',
-    listStyle: 'none',
     padding: theme.spacing(1, 4),
-    // margin: theme.spacing(1.5, 0),
+    // margin: theme.spacing(0.5, 0),
   },
 }));
 
@@ -57,7 +55,6 @@ const useStyles = makeStyles((theme) => ({
 // category for products
 
 const Products = () => {
-  /* const [loading, setLoading] = useState(false); */
   const { products, loading, query } = useProductsContext();
   const [filterPrice, setFilterPrice] = useState([0, Infinity]);
   const [filteredProducts, setFilteredProducts] = useState([...products]);
@@ -100,44 +97,6 @@ const Products = () => {
 
   const minPrice = Math.min(...products.map(getPrice));
   const maxPrice = Math.max(...products.map(getPrice));
-
-  /* const [productsToShow, setProductsToShow] = useState(products.slice(0, 5)); */
-
-  /* const [next, setNext] = useState(5);
-  const productsPerPage = 5;
-  let arrayForHoldingProducts = [];
-
-  const loopWithSlice = (start, end) => {
-    const slicedPosts = products.slice(start, end);
-    arrayForHoldingProducts = [...arrayForHoldingProducts, ...slicedPosts];
-    setProductsToShow(arrayForHoldingProducts);
-  };
-
-  useEffect(() => {
-    loopWithSlice(0, productsPerPage);
-  }, []);
-
-  const handleShowMorePosts = () => {
-    loopWithSlice(next, next + productsPerPage);
-    setNext(next + productsPerPage);
-  }; */
-
-  /* let showProducts = products.slice(0, start); */
-
-  /* const handleClick = () => {
-    const newNumber =start += productsPerPage;
-    showProducts = 
-
-  }; */
-
-  /*  if (loading) {
-    return (
-      <Grid container align="center" justify="center">
-        <Spinner />
-        <Typography>Tere</Typography>
-      </Grid>
-    );
-  } */
 
   return (
     <Container maxWidth="lg" className={classes.container}>
@@ -182,19 +141,19 @@ const Products = () => {
             </Paper>
             <Divider light />
             <Hidden smUp>
-              <Paper className={classes.paper}>
-                {/* <Typography>Sort:</Typography> */}
-                <SortSelect
-                  sortStatus={sortStatus}
-                  setSortStatus={setSortStatus}
-                  fullWidth={true}
-                  margin="dense"
-                />
-                {/* <SortSelect
+              {/* <Paper className={classes.paper}> */}
+              {/* <Typography>Sort:</Typography> */}
+              <SortSelect
+                sortStatus={sortStatus}
+                setSortStatus={setSortStatus}
+                // fullWidth={true}
+                margin="dense"
+              />
+              {/* <SortSelect
                   sortStatus={sortStatus}
                   setSortStatus={setSortStatus}
                 /> */}
-              </Paper>
+              {/* </Paper> */}
             </Hidden>
           </Container>
           <Grid container justify="center" spacing={3}>

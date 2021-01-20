@@ -28,17 +28,18 @@ const useStyles = makeStyles((theme) => ({
     // alignItems: 'center',
     // position: 'relative',
     // gap: theme.spacing(1),
-    // [theme.breakpoints.down('xs')]: {
-    //   display: 'flex',
-    //   justifyContent: 'center',
-    //   alignItems: 'center',
-    // },
+    [theme.breakpoints.only('xs')]: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      flexWrap: 'wrap',
+    },
   },
   title: {
     // display: 'flex',
     // justifyContent: 'center',
     // alignItems: 'center',
-    margin: theme.spacing(1.75, 0),
+    margin: theme.spacing(1, 0),
     textAlign: 'right',
     [theme.breakpoints.only('xs')]: {
       textAlign: 'center',
@@ -54,40 +55,12 @@ const useStyles = makeStyles((theme) => ({
       fontSize: '1.2rem',
     },
   },
-  backButton: {
-    // position: 'absolute',
-    // top: '50%',
-    // left: '160%',
-    // transform: 'translate(0,-50%)',
-    // [theme.breakpoints.up('lg')]: {
-    //   left: '187%',
-    // },
-    // [theme.breakpoints.down('sm')]: {
-    //   left: '119%',
-    // },
-    [theme.breakpoints.down('xs')]: {
-      display: 'none',
-    },
-  },
   backContainer: {
     display: 'flex',
     justifyContent: 'flex-end',
     [theme.breakpoints.down('xs')]: {
       display: 'none',
     },
-  },
-
-  emptyButton: {
-    minWidth: '150px',
-    [theme.breakpoints.down('xs')]: {
-      marginBottom: '0.3em',
-    },
-    [theme.breakpoints.up('xs')]: {
-      marginRight: '1.25em',
-    },
-  },
-  checkoutButton: {
-    minWidth: '150px',
   },
   link: {
     textDecoration: 'none',
@@ -188,7 +161,6 @@ const Cart = () => {
           className={classes.btnContainer}
         >
           <Button
-            className={classes.emptyButton}
             size="large"
             type="button"
             variant="contained"
@@ -200,7 +172,6 @@ const Cart = () => {
             Empty cart
           </Button>
           <Button
-            className={classes.checkoutButton}
             component={Link}
             to="/checkout"
             size="large"
@@ -219,14 +190,9 @@ const Cart = () => {
 
   return (
     <Container className={classes.container}>
-      <Grid
-        container
-        alignItems="center"
-        justify="center"
-        className={classes.titleContainer}
-      >
+      <Grid container alignItems="center" className={classes.titleContainer}>
         <Grid item xs={12} sm={8}>
-          <Typography className={classes.title} variant="h4" gutterBottom>
+          <Typography className={classes.title} variant="h4">
             Your Shopping Cart {}
             <Typography variant="overline" className={classes.itemAmount}>
               ({amount} items)
@@ -235,16 +201,15 @@ const Cart = () => {
         </Grid>
         <Grid item xs={false} sm={4} className={classes.backContainer}>
           <Button
-            className={classes.backButton}
             onClick={handleClick}
-            size="medium"
             type="button"
             variant="contained"
             color="primary"
             startIcon={<ArrowBackIcon />}
             aria-label="Go back"
+            title="Go back"
           >
-            Go back
+            Back
           </Button>
         </Grid>
       </Grid>

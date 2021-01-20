@@ -1,8 +1,10 @@
 import { Button, Step, StepLabel, Stepper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import { useState } from 'react';
-import { AddressForm, Payment, Successful } from '../components';
+import { AddressForm, Confirmation, Successful } from '../components';
+import { useCartContext } from '../context/CartContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
     margin: theme.spacing(1),
-    padding: theme.spacing(1),
+    padding: theme.spacing(1, 1, 2),
   },
   forms: {
     margin: theme.spacing(1, 'auto'),
@@ -28,37 +30,29 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const getSteps = () => ['Billing information', 'Payment'];
-
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return 'Step 1: Select billing information...';
-    case 1:
-      return 'Step 2: Payment details';
-    default:
-      return 'Unknown step';
-  }
-}
+const steps = ['Billing information', 'Review and confirmation'];
 
 const CheckoutSteps = () => {
+  const { totalPrice } = useCartContext();
   const [isFinished, setIsFinished] = useState(false);
-  const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
-  const [completed, setCompleted] = useState({});
-  const steps = getSteps();
+  const [userBilling, setUserBilling] = useState([]);
+  const classes = useStyles();
 
-  const timeout = setTimeout(() => {
-    setIsFinished(true);
-  }, 2000);
+  const timeout = () =>
+    setTimeout(() => {
+      setIsFinished(true);
+    }, 2000);
 
   const totalSteps = () => steps.length;
-
-  const isLastStep = () => activeStep === steps.length - 1;
-
-  const isLastStep2 = activeStep === steps.length - 1;
+  const isLastStep = () => activeStep === totalSteps() - 1;
+  const isOver = () => activeStep === totalSteps();
+  const isFirst = activeStep === 0;
 
   const handleNext = () => {
+    if (isLastStep()) {
+      timeout();
+    }
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
@@ -79,39 +73,49 @@ const CheckoutSteps = () => {
           </Step>
         ))}
       </Stepper>
-      {/* {activeStep >= totalSteps() && } */}
-      <div className={classes.forms}>
-        {activeStep === 0 ? <AddressForm /> : <Payment />}
-      </div>
-      {/* <Divider /> */}
-      <div className={classes.instructionContainer}>
-        {isLastStep() ? (
-          <div>
-            <Successful handleReset={handleReset} />
-            {/*             <Typography className={classes.instructions}>
-              Thank you for you purchase!
-            </Typography> */}
-          </div>
-        ) : (
-          <div>
-            <Button
-              disabled={activeStep === 0}
-              onClick={handleBack}
-              className={classes.backButton}
-            >
-              Back
-            </Button>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleNext}
-              endIcon={<ArrowForwardIcon />}
-            >
-              {isLastStep() ? 'Pay' : 'Next'}
-            </Button>
-          </div>
-        )}
-      </div>
+      {isOver() ? (
+        <div className={classes.instructionContainer}>
+          <Successful
+            handleReset={handleReset}
+            isFinished={isFinished}
+            setIsFinished={setIsFinished}
+          />
+        </div>
+      ) : (
+        <div className={classes.forms}>
+          {activeStep === 0 ? (
+            <AddressForm
+              handleNext={handleNext}
+              setUserBilling={setUserBilling}
+            />
+          ) : (
+            <Confirmation />
+          )}
+        </div>
+      )}
+      {isLastStep() && (
+        <div className={classes.instructionContainer}>
+          <Button
+            disabled={isFirst}
+            onClick={handleBack}
+            startIcon={<ArrowBackIcon />}
+            className={classes.backButton}
+            // size="large"
+          >
+            Back
+          </Button>
+          <Button
+            variant="contained"
+            type="submit"
+            color="primary"
+            onClick={handleNext}
+            endIcon={<ArrowForwardIcon />}
+            // size="large"
+          >
+            Pay {totalPrice} €
+          </Button>
+        </div>
+      )}
     </section>
   );
 };

@@ -2,11 +2,12 @@ import { Button, Paper, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Home } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
+import Spinner from './Spinner';
 
 const useStyles = makeStyles((theme) => ({
-  container: {
-    minHeight: '80vh',
-  },
+  // container: {
+  //   minHeight: '80vh',
+  // },
   paper: {
     display: 'grid',
     placeItems: 'center',
@@ -23,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Successful = ({ handleReset }) => {
+const Successful = ({ handleReset, isFinished }) => {
   const classes = useStyles();
 
   return (
@@ -34,24 +35,31 @@ const Successful = ({ handleReset }) => {
     //   justify="center"
     //   className={classes.container}
     // >
-    <Paper elevation={2} className={classes.paper}>
-      <Typography variant="h6" gutterBottom>
-        Thank you for you purchase!
-      </Typography>
-      <Button
-        component={Link}
-        to="/"
-        size="large"
-        type="button"
-        variant="contained"
-        color="primary"
-        aria-label="Go homepage"
-        startIcon={<Home />}
-        onClick={handleReset}
-      >
-        Back to homepage
-      </Button>
-    </Paper>
+    <>
+      {!isFinished ? (
+        <Spinner />
+      ) : (
+        <Paper elevation={2} className={classes.paper}>
+          <Typography variant="h6" gutterBottom>
+            Thank you for you purchase!
+          </Typography>
+          <Button
+            component={Link}
+            to="/"
+            size="large"
+            type="button"
+            variant="contained"
+            color="primary"
+            aria-label="Go homepage"
+            startIcon={<Home />}
+            onClick={handleReset}
+          >
+            Back to homepage
+          </Button>
+        </Paper>
+      )}
+    </>
+
     // </Grid>
   );
 };
