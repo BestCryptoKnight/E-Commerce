@@ -12,11 +12,10 @@ const useStyles = makeStyles((theme) => ({
     display: 'grid',
     placeItems: 'center',
     height: 155,
-    width: '60vw',
-    maxWidth: 576,
+    width: 700,
     // minWidth: 256,
     padding: theme.spacing(3),
-    margin: theme.spacing(2, 0),
+    margin: theme.spacing(1.5, 0),
     whiteSpace: 'nowrap',
     [theme.breakpoints.only('xs')]: {
       width: '96vw',
@@ -39,7 +38,7 @@ const Successful = ({ handleReset, isFinished }) => {
       {!isFinished ? (
         <Spinner />
       ) : (
-        <Paper elevation={2} className={classes.paper}>
+        <Paper variant="outlined" className={classes.paper}>
           <Typography variant="h6" gutterBottom>
             Thank you for you purchase!
           </Typography>

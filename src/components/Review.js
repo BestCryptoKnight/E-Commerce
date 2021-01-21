@@ -1,5 +1,4 @@
 import {
-  Divider,
   List,
   ListItem,
   ListItemText,
@@ -12,26 +11,30 @@ import { useCartContext } from '../context/CartContext';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    padding: theme.spacing(1, 4),
-    marginTop: theme.spacing(2),
+    padding: theme.spacing(0.25, 4, 2),
+    marginTop: theme.spacing(1.5),
   },
   title: {
-    margin: theme.spacing(1, 0),
+    margin: theme.spacing(1.25, 0),
   },
   productItem: {
-    padding: theme.spacing(1, 0),
+    padding: theme.spacing(0.2, 1),
     flexWrap: 'wrap',
-    // borderBottom: '1px solid #b8b8b8',
-    // '&:last-of-type': {
-    //   border: 'none !important',
-    // },
+    border: '1px solid #e6e6e6',
+    '&:nth-of-type(even)': {
+      backgroundColor: 'rgba(0, 0, 0,0.04)',
+    },
+    '&:not(:last-of-type)': {
+      borderBottomWidth: 0,
+    },
   },
   total: {
-    padding: theme.spacing(1, 0),
+    padding: theme.spacing(0.8),
+    border: '3px double #d6d6d6',
   },
 }));
 
-const Review = () => {
+const Review = ({ shippingOption }) => {
   const { cart, totalPrice, amount } = useCartContext();
   const classes = useStyles();
 
@@ -44,15 +47,18 @@ const Review = () => {
         {cart.map(({ id, title, qty, price }) => (
           <ListItem className={classes.productItem} key={id}>
             <ListItemText primary={title} secondary={`Quantity: ${qty}`} />
-            <Typography variant="subtitle2">
+            <Typography variant="body1">
               {(qty * price).toFixed(2)} €
             </Typography>
           </ListItem>
         ))}
-        <Divider component="li" />
         <ListItem className={classes.total}>
-          <ListItemText primary="Total:" />
-          <Typography variant="subtitle1">{totalPrice} €</Typography>
+          <ListItemText primary="Total:" secondary={`${amount} items`} />
+          <ListItemText
+            primary={`${(totalPrice + shippingOption).toFixed(2)} €`}
+            secondary={`${shippingOption} € delivery fee included`}
+            align="right"
+          />
         </ListItem>
       </List>
     </Paper>

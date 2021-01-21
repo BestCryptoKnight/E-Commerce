@@ -10,9 +10,9 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     display: 'grid',
     placeItems: 'center',
-    height: 155,
+    height: 176,
+    width: 500,
     padding: theme.spacing(3),
-    margin: theme.spacing(6, 0),
     whiteSpace: 'nowrap',
     [theme.breakpoints.only('xs')]: {
       width: '96vw',

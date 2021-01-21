@@ -9,7 +9,7 @@ import {
   Divider,
   Grid,
   IconButton,
-  Typography
+  Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { AddShoppingCart } from '@material-ui/icons';
@@ -51,16 +51,13 @@ const useStyles = makeStyles((theme) => ({
 
 const Product = ({ id, title, price, description, category, image, qty }) => {
   const [showModal, setShowModal] = useState(false);
+  const [expanded, setExpanded] = useState(null);
   const { addToCart } = useCartContext();
   const classes = useStyles();
-
-  const [expanded, setExpanded] = useState(null);
 
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
-
-  //breadCrumbs description
 
   return (
     <Card className={classes.root}>

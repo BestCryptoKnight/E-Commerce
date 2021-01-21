@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'flex-start',
     alignItems: 'center',
     flexDirection: 'column',
-    minHeight: '100vh',
+    minHeight: '92vh',
     width: '100%',
     gap: '0.6em',
     [theme.breakpoints.up('md')]: {
@@ -139,14 +139,14 @@ const Products = () => {
                 />
               </Hidden>
             </Paper>
-            <Divider light />
+            {/* <Divider light /> */}
             <Hidden smUp>
               {/* <Paper className={classes.paper}> */}
               {/* <Typography>Sort:</Typography> */}
               <SortSelect
                 sortStatus={sortStatus}
                 setSortStatus={setSortStatus}
-                // fullWidth={true}
+                fullWidth={true}
                 margin="dense"
               />
               {/* <SortSelect

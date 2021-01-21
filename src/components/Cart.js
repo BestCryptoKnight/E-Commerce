@@ -17,24 +17,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#f2f3f3',
     minHeight: '93vh',
   },
-
-  titleContainer: {
-    // display: 'flex',
-    // alignItems: 'center',
-    // padding: theme.spacing(0, 1),
-    // maxWidth: 960,
-    // display: 'flex',
-    // justifyContent: 'center',
-    // alignItems: 'center',
-    // position: 'relative',
-    // gap: theme.spacing(1),
-    [theme.breakpoints.only('xs')]: {
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      flexWrap: 'wrap',
-    },
-  },
   title: {
     // display: 'flex',
     // justifyContent: 'center',
@@ -43,12 +25,12 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'right',
     [theme.breakpoints.only('xs')]: {
       textAlign: 'center',
-      fontSize: '1.75rem',
+      fontSize: '1.65rem',
     },
   },
   itemAmount: {
     color: theme.palette.primary.dark,
-    fontSize: '1.325rem',
+    fontSize: '1.3rem',
     // margin: theme.spacing(0, 0, 1, 0),
     [theme.breakpoints.only('xs')]: {
       // textAlign: 'center',
@@ -80,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
     background: '#3f51b5',
     color: '#fafafa',
     padding: '0.3em 0.5em',
-    fontSize: '1.8rem',
+    fontSize: '1.6rem',
     /*  border: `4px double ${theme.palette.info.dark}`,
     borderRadius: '0.15em', */
     /* padding: theme.spacing(1), */
@@ -94,6 +76,8 @@ const useStyles = makeStyles((theme) => ({
     height: 150,
   },
 }));
+
+const amountText = (amount) => (amount === 1 ? 'item' : 'items');
 
 const Cart = () => {
   const {
@@ -151,8 +135,9 @@ const Cart = () => {
           component="p"
           className={classes.total}
           align="center"
+          title={totalPrice.toFixed(2)}
         >
-          Subtotal: <strong>{totalPrice.toFixed(2)}</strong>&nbsp;€
+          Subtotal: <strong>{totalPrice.toFixed(2)}&nbsp;€</strong>
         </Typography>
         <Grid
           container
@@ -190,12 +175,16 @@ const Cart = () => {
 
   return (
     <Container className={classes.container}>
-      <Grid container alignItems="center" className={classes.titleContainer}>
+      <Grid container alignItems="center">
         <Grid item xs={12} sm={8}>
           <Typography className={classes.title} variant="h4">
             Your Shopping Cart {}
-            <Typography variant="overline" className={classes.itemAmount}>
-              ({amount} items)
+            <Typography
+              variant="button"
+              component="span"
+              className={classes.itemAmount}
+            >
+              ({amount} {amountText(amount)})
             </Typography>
           </Typography>
         </Grid>

@@ -15,10 +15,10 @@ const useStyles = makeStyles((theme) => ({
     margin: 0,
   },
   activeChip: {
-    background: `${fade(theme.palette.primary.dark, 0.25)} !important`,
+    background: `${fade(theme.palette.primary.main, 0.85)} !important`,
     margin: theme.spacing(0.5),
     fontSize: '0.925rem',
-    zIndex: 100,
+    color: theme.palette.grey['50'],
   },
   chip: {
     margin: theme.spacing(0.5),
@@ -35,8 +35,8 @@ const Chips = ({ products, setFilteredProducts }) => {
   ];
 
   const categoriesSorted = [
-    ...uniqueCategories.sort((a, b) => a.localeCompare(b)),
     'All',
+    ...uniqueCategories.sort((a, b) => a.localeCompare(b)),
   ];
 
   const handleClick = (clickedCategory) => {

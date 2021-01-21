@@ -5,6 +5,7 @@ export { default as CheckoutSteps } from './CheckoutSteps';
 export { default as Chips } from './Chips';
 export { default as Confirmation } from './Confirmation';
 export { default as CustomTooltip } from './CustomTooltip';
+export { default as Modal } from './Modal';
 export { default as Navbar } from './Navbar';
 export { default as NavList } from './NavList';
 export { default as PriceSlider } from './PriceSlider';

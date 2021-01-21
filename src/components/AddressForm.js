@@ -1,15 +1,16 @@
 import {
   Button,
+  Divider,
   FormControl,
   Grid,
   InputLabel,
+  Paper,
   Select,
   Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import formInputs from '../utils/formInputs';
@@ -20,15 +21,23 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
   },
   btnContainer: {
-    margin: theme.spacing(2.25, 0, 1),
+    margin: theme.spacing(1, 0, 2),
   },
   backButton: {
     marginRight: theme.spacing(1),
   },
+  paper: {
+    padding: theme.spacing(1.5, 2),
+    marginTop: theme.spacing(1),
+  },
 }));
 
-const AddressForm = ({ handleNext, setUserBilling }) => {
-  const [shippingOption, setShippingOption] = useState('');
+const AddressForm = ({
+  handleNext,
+  setUserBilling,
+  shippingOption,
+  setShippingOption,
+}) => {
   const classes = useStyles();
   const methods = useForm();
   const { handleSubmit } = methods;
@@ -36,20 +45,14 @@ const AddressForm = ({ handleNext, setUserBilling }) => {
 
   const handleClick = () => history.goBack();
 
-  const handleForm = async (data, e) => {
+  const handleForm = (data, e) => {
     e.preventDefault();
-    setUserBilling(data);
-    console.log(data);
+    setUserBilling({ ...data, shippingOption });
     handleNext();
-    // e.preventDefault();
-    // setData(data1);
-    // console.log(data1);
   };
 
-  //shipping variant select
-
   return (
-    <>
+    <Paper variant="outlined" className={classes.paper}>
       <Typography variant="h6" align="center" style={{ marginBottom: '0.8em' }}>
         Step 1: Select billing information...
       </Typography>
@@ -59,98 +62,59 @@ const AddressForm = ({ handleNext, setUserBilling }) => {
             {formInputs.map((item) => (
               <FormInput key={item.id} {...item} />
             ))}
-          </Grid>
-          <Grid item xs={12} sm={12}>
-            <InputLabel htmlFor="shipping-options">Shipping option</InputLabel>
-            <Select
-              fullWidth
-              native
-              label="Shipping options"
-              variant="outlined"
-              labelId="shipping-options"
-              id="shipping-options"
-              inputProps={{
-                name: 'options',
-                id: 'shipping-options',
-              }}
-              value={shippingOption}
-              fullWidth
-              onChange={(e) => setShippingOption(e.target.value)}
+            <Grid item xs={12}>
+              <Divider />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControl variant="outlined" fullWidth size="medium">
+                <InputLabel htmlFor="select-delivery">Delivery</InputLabel>
+                <Select
+                  native
+                  id="select-delivery"
+                  label="Delivery"
+                  value={shippingOption}
+                  onChange={(e) => setShippingOption(+e.target.value)}
+                >
+                  <option value={5}>Standard (up to 7 days)&nbsp; +5 € </option>
+                  <option value={10}>
+                    Express&nbsp;&nbsp;&nbsp;(up to 3 days)&nbsp; +10 €
+                  </option>
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid
+              container
+              justify="center"
+              alignItems="center"
+              className={classes.btnContainer}
             >
-              <option aria-label="None" value="" />
-              <option value={10}>Express</option>
-              <option value={20}>Express+</option>
-              {/* <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem> */}
-            </Select>
-          </Grid>
-          <FormControl
-            className={classes.formControl}
-            variant="outlined"
-            fullWidth
-            size="medium"
-          >
-            <InputLabel htmlFor="select-sort">Sort</InputLabel>
-            <Select
-              native
-              label="Sort"
-              value={shippingOption}
-              onChange={
-                ((e) => setShippingOption(e.target.value),
-                console.log(shippingOption))
-              }
-              // value={sortStatus}
-              // onChange={handleChange}
-              // className={classes.select}
-              // classes={{
-              //   outlined: classes.select,
-              // }}
-              inputProps={{
-                name: 'sort',
-                id: 'select-sort',
-              }}
-            >
-              <option aria-label="None" value="" />
-              <option value={10}>Express</option>
-              <option value={20}>Express+</option>
-            </Select>
-          </FormControl>
-          <Grid
-            container
-            justify="center"
-            alignItems="center"
-            className={classes.btnContainer}
-          >
-            <Button
-              onClick={handleClick}
-              // size="large"
-              type="button"
-              // variant="contained"
-              // color="primary"
-              startIcon={<ArrowBackIcon />}
-              aria-label="Go back"
-              title="Go back"
-              className={classes.backButton}
-            >
-              Back
-            </Button>
-            <Button
-              variant="contained"
-              type="submit"
-              color="primary"
-              // size="large"
-              endIcon={<ArrowForwardIcon />}
-            >
-              Next
-            </Button>
+              <Button
+                onClick={handleClick}
+                size="large"
+                type="button"
+                // variant="contained"
+                // color="primary"
+                startIcon={<ArrowBackIcon />}
+                aria-label="Go back"
+                title="Go back"
+                className={classes.backButton}
+              >
+                Back
+              </Button>
+              <Button
+                variant="contained"
+                type="submit"
+                color="primary"
+                size="large"
+                endIcon={<ArrowForwardIcon />}
+              >
+                Next
+              </Button>
+            </Grid>
           </Grid>
         </form>
       </FormProvider>
-    </>
+    </Paper>
   );
 };
 

@@ -11,12 +11,14 @@ import { makeStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import RemoveIcon from '@material-ui/icons/Remove';
-import CustomTooltip from './CustomTooltip';
+import { useState } from 'react';
+import { CustomTooltip, Modal } from '../components';
 
 const useStyles = makeStyles((theme) => ({
   media: {
     height: 276,
     backgroundSize: 'contain',
+    cursor: 'pointer',
   },
   title: {
     padding: theme.spacing(1.5, 1),
@@ -89,6 +91,7 @@ const CartItem = ({
   decrease,
   removeItem,
 }) => {
+  const [showModal, setShowModal] = useState(false);
   const classes = useStyles();
 
   const totalPrice = (qty * price).toFixed(2);
@@ -102,6 +105,7 @@ const CartItem = ({
         classes={{
           root: classes.media,
         }}
+        onClick={() => setShowModal(true)}
       />
       <CardContent className={classes.title}>
         <Typography variant="h6" align="center">
@@ -165,6 +169,9 @@ const CartItem = ({
       >
         Remove
       </Button>
+      {showModal && (
+        <Modal showModal={showModal} setShowModal={setShowModal} img={image} />
+      )}
     </Card>
   );
 };

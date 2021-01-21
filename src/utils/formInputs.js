@@ -4,7 +4,7 @@ const formInputs = [
   { id: 2, name: 'email', label: 'Email' },
   { id: 3, name: 'address', label: 'Address line' },
   { id: 4, name: 'city', label: 'City' },
-  { id: 5, name: 'zip', label: 'Zip / Postal code' },
+  { id: 5, name: 'country', label: 'Country' },
 ];
 
 export default formInputs;

@@ -17,16 +17,30 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    margin: theme.spacing(1),
-    padding: theme.spacing(1, 1, 2),
+    margin: theme.spacing(2.5),
+  },
+  btnContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    margin: theme.spacing(1, 'auto'),
+    padding: theme.spacing(1, 0),
+    maxWidth: 700,
   },
   forms: {
-    margin: theme.spacing(1, 'auto'),
-    padding: theme.spacing(1, 2),
-    maxWidth: 567,
+    margin: theme.spacing(0, 'auto'),
+    maxWidth: 700,
   },
   instructions: {
     margin: theme.spacing(1, 0),
+  },
+  whiteBg: {
+    background: 'white',
+  },
+  stepper: {
+    maxWidth: 700,
+    margin: '0 auto',
+    paddingBottom: theme.spacing(1.5),
   },
 }));
 
@@ -36,7 +50,8 @@ const CheckoutSteps = () => {
   const { totalPrice } = useCartContext();
   const [isFinished, setIsFinished] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
-  const [userBilling, setUserBilling] = useState([]);
+  const [userBilling, setUserBilling] = useState({});
+  const [shippingOption, setShippingOption] = useState(5);
   const classes = useStyles();
 
   const timeout = () =>
@@ -66,10 +81,16 @@ const CheckoutSteps = () => {
 
   return (
     <section className={classes.root}>
-      <Stepper activeStep={activeStep} alternativeLabel>
-        {steps.map((label) => (
-          <Step key={label}>
-            <StepLabel>{label}</StepLabel>
+      <Stepper
+        elevation={2}
+        variant="outlined"
+        activeStep={activeStep}
+        alternativeLabel
+        className={classes.stepper}
+      >
+        {steps.map((step) => (
+          <Step key={step}>
+            <StepLabel>{step}</StepLabel>
           </Step>
         ))}
       </Stepper>
@@ -87,20 +108,22 @@ const CheckoutSteps = () => {
             <AddressForm
               handleNext={handleNext}
               setUserBilling={setUserBilling}
+              shippingOption={shippingOption}
+              setShippingOption={setShippingOption}
             />
           ) : (
-            <Confirmation />
+            <Confirmation userBilling={userBilling} />
           )}
         </div>
       )}
       {isLastStep() && (
-        <div className={classes.instructionContainer}>
+        <div className={classes.btnContainer}>
           <Button
             disabled={isFirst}
             onClick={handleBack}
             startIcon={<ArrowBackIcon />}
             className={classes.backButton}
-            // size="large"
+            size="large"
           >
             Back
           </Button>
@@ -110,9 +133,9 @@ const CheckoutSteps = () => {
             color="primary"
             onClick={handleNext}
             endIcon={<ArrowForwardIcon />}
-            // size="large"
+            size="large"
           >
-            Pay {totalPrice} €
+            Pay {(totalPrice + shippingOption).toFixed(2)} €
           </Button>
         </div>
       )}
