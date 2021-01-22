@@ -38,7 +38,7 @@ const cartReducer = (state, action) => {
 
       return {
         ...state,
-        cart: [...state.cart, payload],
+        cart: [...state.cart, { ...payload, qty: 1 }],
       };
 
     case 'increase':

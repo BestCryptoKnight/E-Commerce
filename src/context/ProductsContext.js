@@ -7,8 +7,8 @@ import {
 } from 'react';
 import productsReducer from './productsReducer';
 
-/* const url = 'https://fakestoreapi.com/products/'; */
-const url = 'https://fakestoreapi.com/products?limit=';
+const url = 'https://fakestoreapi.com/products/';
+// const url = 'https://fakestoreapi.com/products?limit=';
 
 const ProductsContext = createContext(null);
 
@@ -22,12 +22,12 @@ const ProductsProvider = ({ children }) => {
   const [query, setQuery] = useState('');
 
   useEffect(() => {
-    const fetchProducts = async (limitNumber = 15) => {
+    const fetchProducts = async () => {
       dispatch({ type: 'loading' });
       try {
-        const response = await fetch(`${url}${limitNumber}`);
+        const response = await fetch(url);
         const data = await response.json();
-        data.map((item) => (item.qty = 1));
+        // data.map((item) => (item.qty = 1));
         dispatch({ type: 'display_items', payload: data });
       } catch (error) {
         console.log(error);

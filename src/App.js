@@ -1,7 +1,6 @@
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Alert from './components/Alert';
-import Navbar from './components/Navbar';
+import { Alert, Navbar } from './components';
 import { useCartContext } from './context/CartContext';
 import { Checkout, Error, Home, ShoppingCart } from './views';
 

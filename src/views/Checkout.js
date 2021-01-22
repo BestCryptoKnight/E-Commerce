@@ -1,9 +1,9 @@
-import { CheckoutSteps } from '../components';
+import { Checkout } from '../components';
 
-const Checkout = () => (
+const CheckoutPage = () => (
   <main className="main">
-    <CheckoutSteps />
+    <Checkout />
   </main>
 );
 
-export default Checkout;
+export default CheckoutPage;
