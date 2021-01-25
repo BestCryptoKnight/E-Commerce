@@ -1,3 +1,7 @@
+const showAlert = (show = false, type = '', msg = '') => {
+  return { show, type, msg };
+};
+
 const cartReducer = (state, action) => {
   const { type, payload } = action;
 
@@ -8,24 +12,6 @@ const cartReducer = (state, action) => {
         (product) => product.id === productId
       );
 
-      /*       const existingItemAdd = () => {
-        const cart = state.cart.map((product) =>
-          product.id === productId
-            ? { ...product, qty: product.qty + 1 }
-            : product
-        );
-        return { ...state, cart };
-      };
-
-      const newItemAdd = () => {
-        return {
-          ...state,
-          cart: [...state.cart, payload],
-        };
-      };
-
-      existingCartItem ? existingItemAdd() : newItemAdd();
- */
       if (existingCartItem) {
         const cart = state.cart.map((product) =>
           product.id === productId
@@ -33,12 +19,17 @@ const cartReducer = (state, action) => {
             : product
         );
 
-        return { ...state, cart };
+        return {
+          ...state,
+          cart,
+          alert: showAlert(true, 'success', 'Added to Cart'),
+        };
       }
 
       return {
         ...state,
         cart: [...state.cart, { ...payload, qty: 1 }],
+        alert: showAlert(true, 'success', 'Added to Cart'),
       };
 
     case 'increase':
@@ -56,9 +47,17 @@ const cartReducer = (state, action) => {
     case 'remove_item':
       const itemRemoved = state.cart.filter((item) => item.id !== payload);
 
-      return { ...state, cart: itemRemoved };
+      return {
+        ...state,
+        cart: itemRemoved,
+        alert: showAlert(true, 'error', 'Removed item from Cart'),
+      };
     case 'clear_cart':
-      return { ...state, cart: [] };
+      return {
+        ...state,
+        cart: [],
+        alert: showAlert(true, 'error', 'Cart cleared'),
+      };
     case 'count_cart_totals':
       const amount = state.cart.reduce((acc, item) => acc + item.qty, 0);
 
@@ -73,21 +72,10 @@ const cartReducer = (state, action) => {
 
       return { ...state, totalPrice };
 
-    // const { total, amount } = state.cart.reduce(
-    //   (cartTotal, cartItem) => {
-    //     const { price, amount } = cartItem;
-    //     const itemTotal = price * amount;
-    //     cartTotal.total += itemTotal;
-    //     cartTotal.amount += amount;
-    //     return cartTotal;
-    //   },
-    //   {
-    //     total: 0,
-    //     amount: 0,
-    //   }
-    // );
-    // total = parseFloat(total.toFixed(2));
-    // return { ...state, total, amount };
+    // alert
+    case 'clear_alert': {
+      return { ...state, alert: showAlert() };
+    }
 
     default:
       return state;

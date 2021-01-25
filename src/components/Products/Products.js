@@ -23,51 +23,81 @@ import {
 } from '../../utils/productSortHelpers';
 import useStyles from './styles';
 
+const getLocalStorageRange = () =>
+  localStorage.getItem('range')
+    ? JSON.parse(localStorage.getItem('range'))
+    : [0, Infinity];
+
 const Products = () => {
   const { products, loading, query } = useProductsContext();
-  const [filterPrice, setFilterPrice] = useState([0, Infinity]);
+  const [filterPrice, setFilterPrice] = useState(getLocalStorageRange());
   const [filteredProducts, setFilteredProducts] = useState([...products]);
   const [sortStatus, setSortStatus] = useState('');
-  const [maxRange, setMaxRange] = useState(10);
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [maxRange, setMaxRange] = useState(20);
+
   const classes = useStyles();
 
-  // filter components
-  useEffect(() => {
-    setFilteredProducts(
-      products.filter(
-        (product) =>
-          product.price >= filterPrice[0] && product.price <= filterPrice[1]
-      )
+  // filter products
+  const filterByPrice = useCallback(() => {
+    const filteredListCategory = products.filter(
+      ({ price, category }) =>
+        price >= filterPrice[0] &&
+        price <= filterPrice[1] &&
+        category === selectedCategory
     );
-  }, [products, filterPrice]);
+    const filteredListAll = products.filter(
+      ({ price }) => price >= filterPrice[0] && price <= filterPrice[1]
+    );
 
-  // sort components
+    selectedCategory !== 'All'
+      ? setFilteredProducts(filteredListCategory)
+      : setFilteredProducts(filteredListAll);
+  }, [selectedCategory, filterPrice, products]);
+
+  useEffect(() => {
+    filterByPrice();
+    localStorage.setItem('range', JSON.stringify(filterPrice));
+  }, [products, filterPrice, selectedCategory, filterByPrice]);
+
+  // sort products
   useEffect(() => {
     switch (sortStatus) {
-      case 'lowHigh':
-        setFilteredProducts([...filteredProducts].sort(sortLowHigh));
-        break;
       case 'highLow':
-        setFilteredProducts([...filteredProducts].sort(sortHighLow));
+        setFilteredProducts((prevProducts) =>
+          [...prevProducts].sort(sortHighLow)
+        );
+        break;
+      case 'lowHigh':
+        setFilteredProducts((prevProducts) =>
+          [...prevProducts].sort(sortLowHigh)
+        );
         break;
       case 'alphabetically':
-        setFilteredProducts([...filteredProducts].sort(sortAlphabetically));
+        setFilteredProducts((prevProducts) =>
+          [...prevProducts].sort(sortAlphabetically)
+        );
         break;
       default:
-        setFilteredProducts(filteredProducts);
+        setFilteredProducts((prevProducts) => prevProducts);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sortStatus]);
+  }, [sortStatus, selectedCategory]);
 
-  const showMoreProducts = useCallback(() => {
-    setMaxRange((prevRange) => prevRange + 10);
-  }, []);
-
+  // query
   const queryMatch = (product) =>
     product.title.toLowerCase().includes(query.toLowerCase());
 
+  const arrayQueryLength = filteredProducts.filter((item) => queryMatch(item))
+    .length;
+
+  // max min
   const minPrice = Math.min(...products.map(getPrice));
   const maxPrice = Math.max(...products.map(getPrice));
+
+  // show more button
+  const showMoreProducts = useCallback(() => {
+    setMaxRange((prevRange) => prevRange + 10);
+  }, []);
 
   return (
     <Container maxWidth="lg" className={classes.container}>
@@ -77,8 +107,9 @@ const Products = () => {
         <>
           <Container disableGutters>
             <Chips
-              products={products}
               setFilteredProducts={setFilteredProducts}
+              selectedCategory={selectedCategory}
+              setSelectedCategory={setSelectedCategory}
             />
           </Container>
           <Container disableGutters>
@@ -97,15 +128,12 @@ const Products = () => {
                 />
               </Hidden>
             </Paper>
-            {/* <Divider light /> */}
             <Hidden smUp>
               <Paper elevation={0} className={classes.sortWrapper}>
-                {/* <Typography>Sort:</Typography> */}
                 <SortSelect
                   sortStatus={sortStatus}
                   setSortStatus={setSortStatus}
                   fullWidth
-                  // margin="dense"
                 />
               </Paper>
             </Hidden>
@@ -122,7 +150,7 @@ const Products = () => {
           </Grid>
         </>
       )}
-      {Boolean(filteredProducts.length) && (
+      {Boolean(filteredProducts.length) && arrayQueryLength > 0 && (
         <Button
           variant="contained"
           color="primary"

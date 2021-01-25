@@ -9,16 +9,13 @@ const IconAlert = () => {
   const classes = useStyles();
   const {
     alert: { type, msg },
-    setAlert,
+    clearAlert,
   } = useCartContext();
 
   useEffect(() => {
-    const timeout = setTimeout(
-      () => setAlert({ show: false, type: '', msg: '' }),
-      3000
-    );
+    const timeout = setTimeout(() => clearAlert(), 3000);
     return () => clearTimeout(timeout);
-  }, [setAlert]);
+  }, [clearAlert]);
 
   const iconPick =
     type === 'success' ? (

@@ -10,7 +10,7 @@ export default makeStyles((theme) => ({
     margin: 0,
   },
   activeChip: {
-    background: `${fade(theme.palette.primary.main, 0.85)} !important`,
+    background: `${fade(theme.palette.primary.main, 0.88)} !important`,
     margin: theme.spacing(0.5),
     fontSize: '0.925rem',
     color: theme.palette.grey['50'],

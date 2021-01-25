@@ -35,7 +35,7 @@ export default makeStyles({
     right: '0.3em',
     background: 'rgb(240, 240, 240)',
     border: '2px solid rgb(204, 124, 124)',
-    borderRadius: '0.5em',
+    borderRadius: '50%',
     padding: '0.2em',
     color: 'rgb(192, 3, 3)',
     display: 'flex',

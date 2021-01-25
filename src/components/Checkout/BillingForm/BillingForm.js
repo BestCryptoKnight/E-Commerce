@@ -12,7 +12,7 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
-import formInputs from './../../../utils/formInputs';
+import formInputs from '../../../utils/formInputs';
 import FormInput from './FormInput';
 import useStyles from './styles';
 

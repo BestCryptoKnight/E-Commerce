@@ -8,9 +8,6 @@ const SortSelect = ({
   fullWidth = false,
   margin = 'none',
 }) => {
-  // const handleCheck = (event) => {
-  //   setChecked(event.target.checked);
-  // };
   const handleChange = (e) => {
     setSortStatus(e.target.value);
   };

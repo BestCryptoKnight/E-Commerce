@@ -10,6 +10,8 @@ const productsReducer = (state, action) => {
         products: payload,
         loading: false,
       };
+    case 'search_value':
+      return { ...state, query: payload };
     default:
       return state;
   }

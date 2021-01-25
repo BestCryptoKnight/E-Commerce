@@ -1,13 +1,5 @@
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useReducer,
-  useState,
-} from 'react';
+import { createContext, useContext, useEffect, useReducer } from 'react';
 import cartReducer from './cartReducer';
-
-const CartContext = createContext(null);
 
 const getLocalStorage = () =>
   localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [];
@@ -16,26 +8,13 @@ const initialCartState = {
   cart: getLocalStorage(),
   totalPrice: 0,
   amount: 0,
+  alert: { show: false, type: '', msg: '' },
 };
+
+const CartContext = createContext(initialCartState);
 
 const CartProvider = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, initialCartState);
-  const [alert, setAlert] = useState({ show: false, type: '', msg: '' });
-
-  // const [categories, setCategories] = useState(['all']);
-
-  /* useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await fetch(url);
-        const data = await response.json();
-        setCategories((prevCategories) => [...prevCategories, ...data]);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchCategories();
-  }, []); */
 
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(state.cart));
@@ -43,15 +22,11 @@ const CartProvider = ({ children }) => {
     dispatch({ type: 'get_total_price' });
   }, [state.cart]);
 
-  const showAlert = (show = false, type = '', msg = '') =>
-    setAlert({ show, type, msg });
-
   const addToCart = (id, title, price, description, category, image, qty) => {
     dispatch({
       type: 'add_to_cart',
       payload: { id, title, price, description, category, image, qty },
     });
-    showAlert(true, 'success', 'Added to Cart');
   };
 
   const increase = (id) => {
@@ -64,23 +39,15 @@ const CartProvider = ({ children }) => {
 
   const removeItem = (id) => {
     dispatch({ type: 'remove_item', payload: id });
-    showAlert(true, 'error', 'Removed item from Cart');
   };
 
   const clearCart = () => {
     dispatch({ type: 'clear_cart' });
-    showAlert(true, 'error', 'Cart cleared');
   };
-  // toggle amount
-  /* const toggleAmount = (id, value) => {
-    dispatch({
-      type: TOGGLE_CART_ITEM_AMOUNT,
-      payload: {
-        id,
-        value,
-      },
-    });
-  };  */
+
+  const clearAlert = () => {
+    dispatch({ type: 'clear_alert' });
+  };
 
   return (
     <CartContext.Provider
@@ -88,11 +55,10 @@ const CartProvider = ({ children }) => {
         ...state,
         addToCart,
         clearCart,
-        alert,
-        setAlert,
         increase,
         decrease,
         removeItem,
+        clearAlert,
       }}
     >
       {children}
