@@ -8,14 +8,23 @@ const Search = () => {
   const classes = useStyles();
   // const inputRef = useRef(null);
   const { products, setSearchValue, query } = useProductsContext();
+  // const [value, setValue] = useState('');
 
   const handleChangeSelect = (e, value) => {
     value ? setSearchValue(value) : setSearchValue('');
   };
+  // onInputChange={(event, newInputValue, reason) => {
+  //   if (reason === 'reset') {
+  //     setValue('')
+  //     return
+  //   } else {
+  //     setValue(newInputValue)
+  //   }
+  // }}
 
-  const handleChangeText = (e) => {
-    setSearchValue(e.target.value);
-  };
+  // const handleChangeText = (e) => {
+  //   setSearchValue(e.target.value);
+  // };
 
   // const handleClose = (e, reason) => {
   //   if (reason === 'blur') {
@@ -79,11 +88,15 @@ const Search = () => {
         fullWidth
         options={options}
         // classes={{
+        //   root: classes.inputRoot,
+        //   input: classes.inputInput,
+        // }}
+        // classes={{
         //   inputRoot: classes.input,
         // }}
         // groupBy={(option) => option.category}
         // getOptionLabel={(option) => option.title}
-        className={classes.input}
+        // className={classes.input}
         onChange={handleChangeSelect}
         // value={query}
         // onClose={handleClose}
@@ -94,9 +107,9 @@ const Search = () => {
             // margin="normal"
             variant="outlined"
             InputProps={{ ...params.InputProps }}
-            className={classes.input2}
+            // className={classes.input2}
             // onChange={handleChangeText}
-            // value={query}
+            value={query}
           />
         )}
       />

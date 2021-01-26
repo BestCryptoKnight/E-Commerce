@@ -2,15 +2,18 @@ import {
   Button,
   Container,
   Divider,
+  Fab,
   Grid,
   Hidden,
   Paper,
 } from '@material-ui/core';
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { useCallback, useEffect, useState } from 'react';
 import {
   Chips,
   PriceSlider,
   Product,
+  ScrollTop,
   SortSelect,
   Spinner,
 } from '../../components';
@@ -107,6 +110,7 @@ const Products = () => {
         <>
           <Container disableGutters>
             <Chips
+              id="back-to-top-anchor"
               setFilteredProducts={setFilteredProducts}
               selectedCategory={selectedCategory}
               setSelectedCategory={setSelectedCategory}
@@ -161,6 +165,16 @@ const Products = () => {
           Show More
         </Button>
       )}
+      <ScrollTop>
+        <Fab
+          color="secondary"
+          size="small"
+          aria-label="scroll back to top"
+          title="scroll back to top"
+        >
+          <KeyboardArrowUpIcon />
+        </Fab>
+      </ScrollTop>
     </Container>
   );
 };

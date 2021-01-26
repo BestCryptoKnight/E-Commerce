@@ -15,5 +15,6 @@ export { default as Products } from './Products/Products';
 export { default as PriceSlider } from './Products/Slider/PriceSlider';
 export { default as SortButtons } from './Products/Sort/SortButtons';
 export { default as SortSelect } from './Products/Sort/SortSelect';
+export { default as ScrollTop } from './ScrollTop/ScrollTop';
 export { default as Spinner } from './Spinner/Spinner';
 export { default as CustomTooltip } from './Tooltip/CustomTooltip';

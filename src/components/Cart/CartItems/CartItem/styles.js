@@ -36,7 +36,7 @@ export default makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    // background: '#f7f7f7',
+    background: '#f7f7f7',
   },
   btnDel: {
     background: theme.palette.secondary.main,
