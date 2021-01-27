@@ -1,7 +1,7 @@
 import { Button } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { BillingForm, Confirmation, Steps, Successful } from '../../components';
 import { useCartContext } from '../../context/CartContext';
 import useStyles from './styles';
@@ -37,9 +37,9 @@ const Checkout = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleReset = () => {
+  const handleReset = useCallback(() => {
     setActiveStep(0);
-  };
+  }, []);
 
   return (
     <section className={classes.root}>

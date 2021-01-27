@@ -1,11 +1,11 @@
 import { Button, Paper, Typography } from '@material-ui/core';
 import { Home } from '@material-ui/icons';
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
-import { Spinner } from './../../../components';
-// import Spinner from '../../Spinner/Spinner';
+import { Spinner } from '../../../components';
 import useStyles from './styles';
 
-const Successful = ({ handleReset, isFinished }) => {
+const Successful = memo(({ handleReset, isFinished }) => {
   const classes = useStyles();
 
   return (
@@ -34,6 +34,6 @@ const Successful = ({ handleReset, isFinished }) => {
       )}
     </>
   );
-};
+});
 
 export default Successful;

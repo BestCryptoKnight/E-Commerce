@@ -4,9 +4,13 @@ export default makeStyles((theme) => ({
   paper: {
     display: 'grid',
     placeItems: 'center',
-    margin: theme.spacing(12),
+    height: 176,
+    width: 500,
+    // margin: theme.spacing(15),
     padding: theme.spacing(3),
     whiteSpace: 'nowrap',
-    height: 150,
+    [theme.breakpoints.only('xs')]: {
+      width: '94vw',
+    },
   },
 }));

@@ -8,7 +8,7 @@ const EmptyCart = () => {
 
   return (
     <Paper elevation={2} className={classes.paper}>
-      <Typography variant="subtitle1">
+      <Typography variant="h6" component="p">
         You have no items in your shopping cart!
       </Typography>
       <Button

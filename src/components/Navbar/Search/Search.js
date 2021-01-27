@@ -91,9 +91,9 @@ const Search = () => {
         //   root: classes.inputRoot,
         //   input: classes.inputInput,
         // }}
-        // classes={{
-        //   inputRoot: classes.input,
-        // }}
+        classes={{
+          clearIndicator: classes.indicator,
+        }}
         // groupBy={(option) => option.category}
         // getOptionLabel={(option) => option.title}
         // className={classes.input}

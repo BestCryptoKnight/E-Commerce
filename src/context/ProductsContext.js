@@ -2,7 +2,6 @@ import { createContext, useContext, useEffect, useReducer } from 'react';
 import productsReducer from './productsReducer';
 
 const url = 'https://fakestoreapi.com/products';
-// const url = 'https://fakestoreapi.com/products?limit=30';
 
 const initialProductState = {
   loading: false,

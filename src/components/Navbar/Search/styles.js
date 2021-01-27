@@ -18,6 +18,9 @@ export default makeStyles((theme) => ({
       width: '300px',
     },
   },
+  indicator: {
+    color: theme.palette.secondary.main,
+  },
   // searchIcon: {
   //   padding: theme.spacing(0, 1),
   //   height: '100%',

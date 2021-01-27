@@ -12,10 +12,11 @@ const useStyles = makeStyles((theme) => ({
     placeItems: 'center',
     height: 176,
     width: 500,
+    marginBottom: theme.spacing(15),
     padding: theme.spacing(3),
     whiteSpace: 'nowrap',
     [theme.breakpoints.only('xs')]: {
-      width: '96vw',
+      width: '94vw',
     },
   },
 }));
@@ -36,7 +37,9 @@ const Error = () => {
       className={classes.container}
     >
       <Paper elevation={2} className={classes.paper}>
-        <Typography variant="h5">Sorry, no matching page!</Typography>
+        <Typography variant="h5" component="p">
+          Sorry, no matching page!
+        </Typography>
         <Button
           onClick={handleClick}
           size="large"
