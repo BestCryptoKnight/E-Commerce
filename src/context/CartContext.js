@@ -18,8 +18,7 @@ const CartProvider = ({ children }) => {
 
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(state.cart));
-    dispatch({ type: 'count_cart_totals' });
-    dispatch({ type: 'get_total_price' });
+    dispatch({ type: 'get_totals' });
   }, [state.cart]);
 
   const addToCart = (id, title, price, description, category, image, qty) => {

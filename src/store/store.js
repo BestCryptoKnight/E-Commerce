@@ -1,27 +1,18 @@
-import { createStore } from 'react-redux';
-import {
-  addToCart,
-  clearAlert,
-  clearCart,
-  decrease,
-  increase,
-  removeItem,
-} from './actions/cartActions';
-import { setSearchValue } from './actions/productsActions';
+import { applyMiddleware, compose, createStore } from 'redux';
+import thunk from 'redux-thunk';
 import rootReducer from './reducers';
 
-const store = createStore(
-  rootReducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-store.dispatch(setSearchValue(searchValue));
-store.dispatch(addToCart(id, title, price, description, category, image, qty));
-store.dispatch(increase(id));
-store.dispatch(decrease(id));
-store.dispatch(removeItem(id));
-store.dispatch(clearCart());
-store.dispatch(clearAlert());
+const store = createStore(rootReducer, composeEnhancer(applyMiddleware(thunk)));
+
+// store.dispatch(setSearchValue(searchValue));
+// store.dispatch(addToCart(id, title, price, description, category, image, qty));
+// store.dispatch(increase(id));
+// store.dispatch(decrease(id));
+// store.dispatch(removeItem(id));
+// store.dispatch(clearCart());
+// store.dispatch(clearAlert());
 
 // const counter = useSelector((state) => state.counter);
 // const currentUser = useSelector((state) => state.currentUser);
@@ -31,6 +22,8 @@ store.dispatch(clearAlert());
 // useEffect(() => {
 //     dispatch(allActions.userActions.setUser(user))
 //   }, [])
+
+// https://levelup.gitconnected.com/react-redux-hooks-useselector-and-usedispatch-f7d8c7f75cdd
 
 // const mapStateToProps = state => ({
 //     error: getProductsError(state),
@@ -47,4 +40,4 @@ store.dispatch(clearAlert());
 //     mapDispatchToProps
 // )(ProductView );
 
-export default store(reducers);
+export default store;

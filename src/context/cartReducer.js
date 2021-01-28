@@ -58,19 +58,36 @@ const cartReducer = (state, action) => {
         cart: [],
         alert: showAlert(true, 'error', 'Cart cleared'),
       };
-    case 'count_cart_totals':
-      const amount = state.cart.reduce((acc, item) => acc + item.qty, 0);
+    // case 'count_cart_totals':
+    //   const amount = state.cart.reduce((acc, item) => acc + item.qty, 0);
 
-      return { ...state, amount };
-    case 'get_total_price':
-      const totalPrice = state.cart.reduce((cartTotal, cartItem) => {
-        const { qty, price } = cartItem;
-        const itemTotal = qty * price;
+    //   return { ...state, amount };
+    // case 'get_total_price':
+    //   const totalPrice = state.cart.reduce((cartTotal, cartItem) => {
+    //     const { qty, price } = cartItem;
+    //     const itemTotal = qty * price;
 
-        return cartTotal + itemTotal;
-      }, 0);
+    //     return cartTotal + itemTotal;
+    //   }, 0);
 
-      return { ...state, totalPrice };
+    //   return { ...state, totalPrice };
+    case 'get_totals': {
+      let { totalPrice, amount } = state.cart.reduce(
+        (cartTotal, cartItem) => {
+          const { price, qty } = cartItem;
+          const itemTotal = price * qty;
+          cartTotal.totalPrice += itemTotal;
+          cartTotal.amount += qty;
+          return cartTotal;
+        },
+        {
+          totalPrice: 0,
+          amount: 0,
+        }
+      );
+      // totalPrice = parseFloat(totalPrice.toFixed(2));
+      return { ...state, totalPrice, amount };
+    }
 
     // alert
     case 'clear_alert': {

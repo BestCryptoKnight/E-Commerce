@@ -8,42 +8,41 @@ import {
   INCREASE,
   REMOVE_ITEM,
 } from '../constants/actionTypes';
+import store from '../store';
 
 const getCartTotals = () => {
-  dispatch({ type: COUNT_CART_AMOUNT });
+  store.dispatch({ type: COUNT_CART_AMOUNT });
 };
 const getTotalPrice = () => {
-  dispatch({ type: GET_TOTAL_PRICE });
+  store.dispatch({ type: GET_TOTAL_PRICE });
 };
 
-const addToCart = (id, title, price, description, category, image, qty) => {
-  dispatch({
-    type: ADD_TO_CART,
-    payload: { id, title, price, description, category, image, qty },
-  });
-};
+const addToCart = (id, title, price, description, category, image, qty) => ({
+  type: ADD_TO_CART,
+  payload: { id, title, price, description, category, image, qty },
+});
 
 const increase = (id) => {
-  dispatch({ type: INCREASE, payload: id });
+  store.dispatch({ type: INCREASE, payload: id });
 };
 
 const decrease = (id) => {
-  dispatch({ type: DECREASE, payload: id });
+  store.dispatch({ type: DECREASE, payload: id });
 };
 
 const removeItem = (id) => {
-  dispatch({ type: REMOVE_ITEM, payload: id });
+  store.dispatch({ type: REMOVE_ITEM, payload: id });
 };
 
 const clearCart = () => {
-  dispatch({ type: CLEAR_CART });
+  store.dispatch({ type: CLEAR_CART });
 };
 
 const clearAlert = () => {
-  dispatch({ type: CLEAR_ALERT });
+  store.dispatch({ type: CLEAR_ALERT });
 };
 
-export default {
+const cartActions = {
   addToCart,
   increase,
   decrease,
@@ -53,6 +52,8 @@ export default {
   getCartTotals,
   getTotalPrice,
 };
+
+export default cartActions;
 // export {
 //   addToCart,
 //   increase,
