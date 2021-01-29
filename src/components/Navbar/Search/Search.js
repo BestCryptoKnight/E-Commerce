@@ -1,121 +1,58 @@
 import { TextField } from '@material-ui/core';
 // import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { useProductsContext } from '../../../context/ProductsContext';
+import { memo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import allActions from '../../../store/actions';
 import useStyles from './styles';
 
-const Search = () => {
+const selectProducts = (state) => state.products.products;
+const selectQuery = (state) => state.products.query;
+
+const Search = memo(() => {
+  const products = useSelector(selectProducts);
+  const query = useSelector(selectQuery);
+  const dispatch = useDispatch();
   const classes = useStyles();
-  // const inputRef = useRef(null);
-  const { products, setSearchValue, query } = useProductsContext();
-  // const [value, setValue] = useState('');
 
   const handleChangeSelect = (e, value) => {
-    value ? setSearchValue(value) : setSearchValue('');
+    value
+      ? dispatch(allActions.productsActions.setSearchValue(value))
+      : dispatch(allActions.productsActions.setSearchValue(''));
   };
-  // onInputChange={(event, newInputValue, reason) => {
-  //   if (reason === 'reset') {
-  //     setValue('')
-  //     return
-  //   } else {
-  //     setValue(newInputValue)
-  //   }
-  // }}
-
-  // const handleChangeText = (e) => {
-  //   setSearchValue(e.target.value);
-  // };
-
-  // const handleClose = (e, reason) => {
-  //   if (reason === 'blur') {
-  //     setSearchTerm('');
-  //   }
-  //   console.log(reason);
-  //   console.log(e.target.value);
-  // };
-
-  //autocomplete
-
-  /*     const updateInput = async (input) => {
-    const filtered = countryListDefault.filter(country => {
-     return country.name.toLowerCase().includes(input.toLowerCase())
-    })
-    setInput(input);
-    setCountryList(filtered);
- } */
 
   const options = products
     .map((product) => product.title)
     .sort((a, b) => a.localeCompare(b));
 
-  // const options2 = products.sort((a, b) => a.title.localeCompare(b.title));
-
-  // const options3 = products;
-
-  // console.log(options);
-  // console.log(options2);
-  // console.log(options3);
-
   return (
-    // <div className={classes.search}>
-    /* <InputBase
-        placeholder="Search products…"
-        classes={{
-          root: classes.inputRoot,
-          input: classes.inputInput,
-        }}
-        inputProps={{ 'aria-label': 'search' }}
-        autoComplete={query.toString()}
-        autoFocus
-        onChange={handleChange}
-        value={query}
-      /> */
-
     <div className={classes.search}>
-      {/* <div className={classes.searchIcon}>
-        <SearchIcon />
-      </div> */}
       <Autocomplete
         freeSolo
         id="search autocomplete"
         selectOnFocus
         size="small"
         autoComplete
-        // blurOnSelect
         clearOnEscape
         clearOnBlur
-        // inputValue={inputValue}
         fullWidth
         options={options}
-        // classes={{
-        //   root: classes.inputRoot,
-        //   input: classes.inputInput,
-        // }}
         classes={{
           clearIndicator: classes.indicator,
         }}
-        // groupBy={(option) => option.category}
-        // getOptionLabel={(option) => option.title}
-        // className={classes.input}
         onChange={handleChangeSelect}
-        // value={query}
-        // onClose={handleClose}
         renderInput={(params) => (
           <TextField
             {...params}
             label="Search products..."
-            // margin="normal"
             variant="outlined"
             InputProps={{ ...params.InputProps }}
-            // className={classes.input2}
-            // onChange={handleChangeText}
             value={query}
           />
         )}
       />
     </div>
-    /* </div> */
   );
-};
+});
 
 export default Search;

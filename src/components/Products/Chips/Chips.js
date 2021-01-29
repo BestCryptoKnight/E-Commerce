@@ -2,13 +2,17 @@ import { Chip } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
 import Paper from '@material-ui/core/Paper';
 import { memo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { CustomTooltip } from '../../../components';
-import { useProductsContext } from '../../../context/ProductsContext';
+import allActions from '../../../store/actions';
 import useStyles from './styles';
+
+const selectProducts = (state) => state.products.products;
 
 const Chips = memo(
   ({ setFilteredProducts, selectedCategory, setSelectedCategory }) => {
-    const { setSearchValue, products } = useProductsContext();
+    const products = useSelector(selectProducts);
+    const dispatch = useDispatch();
     const classes = useStyles();
 
     const uniqueCategories = [
@@ -27,7 +31,7 @@ const Chips = memo(
             products.filter((product) => product.category === clickedCategory)
           );
       setSelectedCategory(clickedCategory);
-      setSearchValue('');
+      dispatch(allActions.productsActions.setSearchValue(''));
     };
 
     return (

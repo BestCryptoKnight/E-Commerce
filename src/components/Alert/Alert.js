@@ -2,20 +2,24 @@ import CheckIcon from '@material-ui/icons/Check';
 import ErrorIcon from '@material-ui/icons/Error';
 import Alert from '@material-ui/lab/Alert';
 import { useEffect } from 'react';
-import { useCartContext } from '../../context/CartContext';
+import { useDispatch, useSelector } from 'react-redux';
+import allActions from '../../store/actions';
 import useStyles from './styles';
 
+const selectAlert = (state) => state.cart.alert;
+
 const IconAlert = () => {
+  const dispatch = useDispatch();
+  const { type, msg } = useSelector(selectAlert);
   const classes = useStyles();
-  const {
-    alert: { type, msg },
-    clearAlert,
-  } = useCartContext();
 
   useEffect(() => {
-    const timeout = setTimeout(() => clearAlert(), 3000);
+    const timeout = setTimeout(
+      () => dispatch(allActions.cartActions.clearAlert()),
+      3000
+    );
     return () => clearTimeout(timeout);
-  }, [clearAlert]);
+  }, [dispatch]);
 
   const iconPick =
     type === 'success' ? (

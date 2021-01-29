@@ -6,11 +6,17 @@ import {
   Typography,
 } from '@material-ui/core';
 import React from 'react';
-import { useCartContext } from '../../../../context/CartContext';
+import { useSelector } from 'react-redux';
 import useStyles from './styles';
 
+const selectCart = (state) => state.cart.cart;
+const selectTotalPrice = (state) => state.cart.totalPrice;
+const selectAmount = (state) => state.cart.amount;
+
 const OrderReview = ({ shippingOption }) => {
-  const { cart, totalPrice, amount } = useCartContext();
+  const cart = useSelector(selectCart);
+  const totalPrice = useSelector(selectTotalPrice);
+  const amount = useSelector(selectAmount);
   const classes = useStyles();
 
   return (

@@ -1,11 +1,27 @@
 import CssBaseline from '@material-ui/core/CssBaseline';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Alert, Navbar } from './components';
-import { useCartContext } from './context/CartContext';
+import allActions from './store/actions';
 import { Checkout, Error, Home, ShoppingCart } from './views';
 
+const selectAlert = (state) => state.cart.alert;
+const selectCart = (state) => state.cart.cart;
+
 const App = () => {
-  const { alert } = useCartContext();
+  const cart = useSelector(selectCart);
+  const alert = useSelector(selectAlert);
+  const dispatch = useDispatch();
+
+  useEffect(() => dispatch(allActions.productsActions.fetchProducts()), [
+    dispatch,
+  ]);
+
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(cart));
+    dispatch(allActions.cartActions.getTotals());
+  }, [cart, dispatch]);
 
   return (
     <Router>

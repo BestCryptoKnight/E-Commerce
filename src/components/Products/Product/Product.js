@@ -14,15 +14,16 @@ import {
 import { AddShoppingCart } from '@material-ui/icons';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { useState } from 'react';
-import { useCartContext } from '../../../context/CartContext';
+import { useDispatch } from 'react-redux';
+import allActions from '../../../store/actions';
 import Modal from '../../Modal/Modal';
 import useStyles from './styles';
 
 const Product = ({ id, title, price, description, category, image, qty }) => {
   const [showModal, setShowModal] = useState(false);
   const [expanded, setExpanded] = useState(null);
-  const { addToCart } = useCartContext();
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
@@ -73,9 +74,6 @@ const Product = ({ id, title, price, description, category, image, qty }) => {
               </AccordionDetails>
             </Accordion>
           </Grid>
-          {/* <Grid item xs={12}>
-            <Divider />
-          </Grid> */}
           <Grid item xs={6}>
             <Typography
               gutterBottom
@@ -99,16 +97,24 @@ const Product = ({ id, title, price, description, category, image, qty }) => {
               €{price.toFixed(2)}
             </Typography>
           </Grid>
-          {/* <Divider light variant="fullWidth" flexItem /> */}
         </Grid>
         <Divider />
       </CardContent>
-      {/* <Divider /> */}
       <CardActions disableSpacing className={classes.cardActions}>
         <IconButton
           aria-label="Add to Cart"
           onClick={() =>
-            addToCart(id, title, price, description, category, image, qty)
+            dispatch(
+              allActions.cartActions.addToCart(
+                id,
+                title,
+                price,
+                description,
+                category,
+                image,
+                qty
+              )
+            )
           }
         >
           <Typography variant="button" display="block" color="textPrimary">

@@ -2,14 +2,16 @@ import { Button } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import { useCallback, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { BillingForm, Confirmation, Steps, Successful } from '../../components';
-import { useCartContext } from '../../context/CartContext';
 import useStyles from './styles';
 
 const steps = ['Billing information', 'Review and confirmation'];
 
+const selectPrice = (state) => state.cart.totalPrice;
+
 const Checkout = () => {
-  const { totalPrice } = useCartContext();
+  const totalPrice = useSelector(selectPrice);
   const [isFinished, setIsFinished] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
   const [userBilling, setUserBilling] = useState({});

@@ -6,19 +6,6 @@ const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(rootReducer, composeEnhancer(applyMiddleware(thunk)));
 
-// store.dispatch(setSearchValue(searchValue));
-// store.dispatch(addToCart(id, title, price, description, category, image, qty));
-// store.dispatch(increase(id));
-// store.dispatch(decrease(id));
-// store.dispatch(removeItem(id));
-// store.dispatch(clearCart());
-// store.dispatch(clearAlert());
-
-// const counter = useSelector((state) => state.counter);
-// const currentUser = useSelector((state) => state.currentUser);
-
-// const dispatch = useDispatch();
-
 // useEffect(() => {
 //     dispatch(allActions.userActions.setUser(user))
 //   }, [])

@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { useCallback, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import {
   Chips,
   PriceSlider,
@@ -17,7 +18,6 @@ import {
   SortSelect,
   Spinner,
 } from '../../components';
-import { useProductsContext } from '../../context/ProductsContext';
 import {
   getPrice,
   sortAlphabetically,
@@ -31,15 +31,20 @@ const getLocalStorageRange = () =>
     ? JSON.parse(localStorage.getItem('range'))
     : [0, Infinity];
 
+const selectProducts = (state) => state.products.products;
+const selectLoading = (state) => state.products.loading;
+const selectQuery = (state) => state.products.query;
+
 const Products = () => {
-  const { products, loading, query } = useProductsContext();
+  const products = useSelector(selectProducts);
+  const loading = useSelector(selectLoading);
+  const query = useSelector(selectQuery);
+  const classes = useStyles();
   const [filterPrice, setFilterPrice] = useState(getLocalStorageRange());
   const [filteredProducts, setFilteredProducts] = useState([...products]);
   const [sortStatus, setSortStatus] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [maxRange, setMaxRange] = useState(20);
-
-  const classes = useStyles();
 
   // filter products
   const filterByPrice = useCallback(() => {
@@ -170,7 +175,7 @@ const Products = () => {
           color="secondary"
           size="small"
           aria-label="scroll back to top"
-          title="scroll back to top"
+          title="Scroll back to top"
         >
           <KeyboardArrowUpIcon />
         </Fab>

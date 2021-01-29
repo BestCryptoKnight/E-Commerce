@@ -8,13 +8,15 @@ import {
 } from '@material-ui/core';
 import { Shop, ShoppingCart } from '@material-ui/icons';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { useSelector } from 'react-redux';
 import { Link, NavLink, useHistory, useLocation } from 'react-router-dom';
 import { CustomTooltip, Search } from '../../components';
-import { useCartContext } from '../../context/CartContext';
 import useStyles from './styles';
 
+const selectAmount = (state) => state.cart.amount;
+
 const Navbar = () => {
-  const { amount } = useCartContext();
+  const amount = useSelector(selectAmount);
   const { pathname } = useLocation();
   const history = useHistory();
   const classes = useStyles();

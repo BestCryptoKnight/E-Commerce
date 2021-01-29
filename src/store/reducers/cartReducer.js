@@ -2,16 +2,13 @@ import {
   ADD_TO_CART,
   CLEAR_ALERT,
   CLEAR_CART,
-  COUNT_CART_AMOUNT,
   DECREASE,
-  GET_TOTAL_PRICE,
+  GET_TOTALS,
   INCREASE,
   REMOVE_ITEM,
 } from '../constants/actionTypes';
 
-const showAlert = (show = false, type = '', msg = '') => {
-  return { show, type, msg };
-};
+const showAlert = (show = false, type = '', msg = '') => ({ show, type, msg });
 
 const getLocalStorage = () =>
   localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [];
@@ -23,10 +20,27 @@ const initialCartState = {
   alert: { show: false, type: '', msg: '' },
 };
 
-const cartReducer = (state = { initialCartState }, action) => {
+const cartReducer = (state = initialCartState, action) => {
   const { type, payload } = action;
 
   switch (type) {
+    case GET_TOTALS: {
+      let { totalPrice, amount } = state.cart.reduce(
+        (cartTotal, cartItem) => {
+          const { price, qty } = cartItem;
+          const itemTotal = price * qty;
+          cartTotal.totalPrice += itemTotal;
+          cartTotal.amount += qty;
+          return cartTotal;
+        },
+        {
+          totalPrice: 0,
+          amount: 0,
+        }
+      );
+      totalPrice = parseFloat(totalPrice.toFixed(2));
+      return { ...state, totalPrice, amount };
+    }
     case ADD_TO_CART:
       const productId = payload.id;
       const existingCartItem = state.cart.find(
@@ -79,33 +93,13 @@ const cartReducer = (state = { initialCartState }, action) => {
         cart: [],
         alert: showAlert(true, 'error', 'Cart cleared'),
       };
-    case COUNT_CART_AMOUNT:
-      const amount = state.cart.reduce((acc, item) => acc + item.qty, 0);
-
-      return { ...state, amount };
-    case GET_TOTAL_PRICE:
-      const totalPrice = state.cart.reduce((cartTotal, cartItem) => {
-        const { qty, price } = cartItem;
-        const itemTotal = qty * price;
-
-        return cartTotal + itemTotal;
-      }, 0);
-
-      return { ...state, totalPrice };
-
     // alert
     case CLEAR_ALERT: {
       return { ...state, alert: showAlert() };
     }
-
     default:
       return state;
   }
 };
-
-export const getCart = (state) => state.cart;
-export const getTotalPrice = (state) => state.totalPrice;
-export const getAmount = (state) => state.amount;
-export const getAlert = (state) => state.alert;
 
 export default cartReducer;

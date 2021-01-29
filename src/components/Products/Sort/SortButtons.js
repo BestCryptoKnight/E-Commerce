@@ -16,13 +16,6 @@ const useStyles = makeStyles((theme) => ({
   selectEmpty: {
     marginTop: theme.spacing(2),
   },
-  select: {
-    [theme.breakpoints.down('xs')]: {
-      // minWidth: '60vw',
-    },
-    // padding: theme.spacing(0),
-    // margin: theme.spacing(0),
-  },
   icon: {
     transform: 'rotate(180deg)',
   },
@@ -37,13 +30,9 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: 0,
   },
   btnGroup: {
-    // width: '90vw',
     [theme.breakpoints.up('sm')]: {
       display: 'none',
     },
-    // [theme.breakpoints.only('xs')]: {
-    //   display: 'block',
-    // },
   },
 }));
 

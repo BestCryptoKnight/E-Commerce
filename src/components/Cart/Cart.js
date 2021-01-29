@@ -1,14 +1,17 @@
 import { Container, Fab, Grid, Typography } from '@material-ui/core';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import { useSelector } from 'react-redux';
 import { ScrollTop } from '../../components';
-import { useCartContext } from '../../context/CartContext';
 import { CartItems, EmptyCart } from '../Cart';
 import useStyles from './styles';
 
 const amountText = (amount) => (amount === 1 ? 'item' : 'items');
+const selectAmount = (state) => state.cart.amount;
+const selectCart = (state) => state.cart.cart;
 
 const Cart = () => {
-  const { cart, amount } = useCartContext();
+  const cart = useSelector(selectCart);
+  const amount = useSelector(selectAmount);
   const classes = useStyles();
 
   return (
@@ -32,7 +35,12 @@ const Cart = () => {
       </Grid>
       {cart.length ? <CartItems /> : <EmptyCart />}
       <ScrollTop>
-        <Fab color="secondary" size="small" aria-label="scroll back to top">
+        <Fab
+          color="secondary"
+          size="small"
+          aria-label="Scroll back to top"
+          title="Scroll back to top"
+        >
           <KeyboardArrowUpIcon />
         </Fab>
       </ScrollTop>

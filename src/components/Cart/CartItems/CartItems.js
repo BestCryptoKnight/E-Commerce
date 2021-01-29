@@ -1,33 +1,27 @@
 import { Button, Grid, Typography } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import NextWeekIcon from '@material-ui/icons/NextWeek';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { useCartContext } from '../../../context/CartContext';
+import allActions from '../../../store/actions';
 import CartItem from './CartItem/CartItem';
 import useStyles from './styles';
 
+const selectCart = (state) => state.cart.cart;
+const selectTotalPrice = (state) => state.cart.totalPrice;
+
 const CartItems = () => {
-  const {
-    cart,
-    totalPrice,
-    clearCart,
-    increase,
-    decrease,
-    removeItem,
-  } = useCartContext();
+  const cart = useSelector(selectCart);
+  const totalPrice = useSelector(selectTotalPrice);
+  const dispatch = useDispatch();
   const classes = useStyles();
 
   return (
     <>
-      <Grid container spacing={2} justify="center">
+      <Grid container spacing={3} justify="center">
         {cart.map((item) => (
           <Grid item xs={12} sm={6} lg={4} key={item.id}>
-            <CartItem
-              {...item}
-              increase={increase}
-              decrease={decrease}
-              removeItem={removeItem}
-            />
+            <CartItem {...item} />
           </Grid>
         ))}
       </Grid>
@@ -37,9 +31,9 @@ const CartItems = () => {
           component="p"
           className={classes.total}
           align="center"
-          title={totalPrice.toFixed(2)}
+          title={totalPrice}
         >
-          Subtotal: <strong>{totalPrice.toFixed(2)}&nbsp;€</strong>
+          Subtotal: <strong>{totalPrice}&nbsp;€</strong>
         </Typography>
         <Grid
           container
@@ -52,7 +46,7 @@ const CartItems = () => {
             type="button"
             variant="contained"
             color="secondary"
-            onClick={clearCart}
+            onClick={() => dispatch(allActions.cartActions.clearCart())}
             startIcon={<DeleteIcon />}
             aria-label="Clear the cart"
           >

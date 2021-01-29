@@ -1,7 +1,7 @@
 import { Grid, TextField } from '@material-ui/core';
 import { Controller, useFormContext } from 'react-hook-form';
 
-function FormInput({ name, label }) {
+const FormInput = ({ name, label }) => {
   const { control } = useFormContext();
 
   return (
@@ -18,6 +18,6 @@ function FormInput({ name, label }) {
       />
     </Grid>
   );
-}
+};
 
 export default FormInput;
