@@ -1,26 +1,50 @@
-## E-Commerce site built in React
+## E-Commerce site built with React/Redux
 
-<!-- You can check out the LIVE project [**HERE**](https://quiz-app-mr.netlify.app/ 'Completed project'). -->
+You can check out the LIVE project [**HERE**](https://e-commerce-mr.netlify.app/ 'Completed project').
 
-Store data fetched from [Fake Store API](https://fakestoreapi.com/ 'Fake Store API homepage')
+---
+
+Store data fetched from [Fake Store API](https://fakestoreapi.com/ 'Fake Store API homepage').
+
+---
 
 ### Frameworks/libraries used:
 
 - **ReactJS**
-- **SASS** (SCSS modules)
-- **Material-UI** for design and layout
+- **Redux** for state management
+- **Material-UI** for styling and components
 - **React Router** for routing
-<!-- - **Framer Motion** for animations
-- **React Icons** for icons -->
 
 ---
 
 ### Screenshots of the live project:
 
-Homepage:
+Products:
 
-<!-- <p align="center">
-<img src="https://i.imgur.com/cVA1Bdw.png" alt="Screencapture of the deployed Quiz App project. User can create a custom quiz and then play it." title="Screenshot of the homepage"/>
+<p align="center">
+<img src="https://i.imgur.com/wbcn1p0.png" alt="Screencapture of the deployed E-Commerce project landing page. User can choose products from different categories and sort and filter by price" title="Screenshot of the landing page"/>
 </p>
 
---- -->
+---
+
+Cart:
+
+<p align="center">
+<img src="https://i.imgur.com/OxJ1VMx.png" alt="Screencapture of the deployed E-Commerce project cart page. User can add or remove products." title="Screenshot of the cart"/>
+</p>
+
+---
+
+Billing:
+
+<p align="center">
+<img src="https://i.imgur.com/RUcBbh3.png" alt="Screencapture of the deployed E-Commerce project billing page. User can select his/her billing information." title="Screenshot of the billing page"/>
+</p>
+
+---
+
+Review:
+
+<p align="center">
+<img src="https://i.imgur.com/F0crXNH.png" alt="Screencapture of the deployed E-Commerce project review page. User can review his/her billing information." title="Screenshot of the review page"/>
+</p>
