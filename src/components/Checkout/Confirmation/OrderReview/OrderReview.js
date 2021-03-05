@@ -45,4 +45,5 @@ const OrderReview = ({ shippingOption }) => {
     </Paper>
   );
 };
+
 export default OrderReview;

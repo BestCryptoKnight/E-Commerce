@@ -20,9 +20,7 @@ const initialCartState = {
   alert: { show: false, type: '', msg: '' },
 };
 
-const cartReducer = (state = initialCartState, action) => {
-  const { type, payload } = action;
-
+const cartReducer = (state = initialCartState, { type, payload }) => {
   switch (type) {
     case GET_TOTALS: {
       let { totalPrice, amount } = state.cart.reduce(

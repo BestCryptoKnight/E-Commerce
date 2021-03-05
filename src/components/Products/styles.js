@@ -24,10 +24,8 @@ export default makeStyles((theme) => ({
     justifyContent: 'space-around',
     alignItems: 'center',
     padding: theme.spacing(0.8, 4),
-    // margin: theme.spacing(0.5, 0),
   },
   sortWrapper: {
-    // padding: theme.spacing(0, 0),
     marginTop: theme.spacing(1),
   },
 }));
