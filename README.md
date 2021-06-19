@@ -1,6 +1,6 @@
 ## E-Commerce site
 
-Users can search and borwse for products from 4 different categories. They can sort and filter products by price or category, and add or remove items to cart. The checkout includes a billing form and an order summary as the final step.
+Users can search for products from 4 categories. They can sort and filter products by price or category, and add items to cart. The checkout includes a billing form and an order summary.
 
 You can check out the LIVE project [**HERE**](https://e-commerce-mr.netlify.app/ 'Completed project').
 
